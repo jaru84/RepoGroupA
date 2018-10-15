@@ -26,35 +26,49 @@ public class Validator {
 	public void validate(SearcherFile file) throws CustomSearchException {
 		validatePath(file);
 		validateFileName(file);
-		//validateExtension(file);
+		validateExtension(file);
 	} 
 	/**
      *  method in charge to validate the path value inserted.*/
 	private void validatePath(SearcherFile file) throws CustomSearchException {
-		File dir = new File(file.path);
-		if (!dir.exists()) { 
-			throw new CustomSearchException("The path inserted does not exist.");
-			}
-			else if (!dir.isDirectory()){
-				throw new CustomSearchException("The path inserted is not valid directory.");	
-			}
+		if(file.path.isEmpty())
+			file.path="*";
+		else
+		{
+			File dir = new File(file.path);
+			if (!dir.exists()) { 
+				throw new CustomSearchException("The path inserted does not exist.");
+				}
+				else if (!dir.isDirectory()){
+					throw new CustomSearchException("The path inserted is not valid directory.");	
+				}
+		}
+		
 	}
 	/**
      *  method in charge to validate the file name value inserted.*/
 	private void validateFileName(SearcherFile file) throws CustomSearchException {
-		if (file.fileName.length() >50) {
-			throw new CustomSearchException("Your file name inserted exceeds the limit of letters allowed 50");
-			}
-			else if (checkSymbols(file.fileName)) {
-				throw new CustomSearchException("Your file name can't contain any of following characters: \\/:*?\"<>");
-			}
+		if (file.fileName.isEmpty())
+			file.fileName="*";
+		else{
+			if (file.fileName.length() >50) {
+				throw new CustomSearchException("Your file name inserted exceeds the limit of letters allowed 50");
+				}
+				else if (checkSymbols(file.fileName)) {
+					throw new CustomSearchException("Your file name can't contain any of following characters: \\/:*?\"<>");
+				}
+		}
 	}
 	/**
      *  method in charge to validate the extension value inserted.*/
 	private void validateExtension(SearcherFile file) throws CustomSearchException {
-		extensionsAllowed();
-		if (!extMap.containsValue(file.ext))
-			throw new CustomSearchException("The extension inserted does not exist.");
+		if (file.ext.isEmpty())
+			file.ext="*";
+		else {
+			extensionsAllowed();
+			if (!extMap.containsValue(file.ext))
+				throw new CustomSearchException("The extension inserted does not exist.");
+		}
 	}
 	
 	private void extensionsAllowed() {

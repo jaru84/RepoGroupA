@@ -74,8 +74,10 @@ public class Controller {
       	System.out.println("Insert a valid file name:");
 		return reader.readLine(); 		
 	}
-	private String getExtension() {
-		return "";
+	private String getExtension() throws IOException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); 
+      	System.out.println("Insert a valid extension:");
+		return reader.readLine(); 	
 	}
 	/**
      *  method used to call to the method in charge to get results for the search process, the method should be in model package.*/

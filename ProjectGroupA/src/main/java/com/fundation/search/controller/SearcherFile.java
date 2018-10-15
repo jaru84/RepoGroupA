@@ -22,9 +22,9 @@ public class SearcherFile {
 	public String ext;
 	
 	public SearcherFile() {
-		path= "ALL";
-		fileName= "ALL";
-		ext="ALL";
+		path= "";
+		fileName= "";
+		ext="";
 		
 	}
 }
