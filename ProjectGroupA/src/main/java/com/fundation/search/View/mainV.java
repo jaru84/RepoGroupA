@@ -12,12 +12,18 @@
 
 package com.fundation.search.View;
 
+/**
+ * Main class to test the View.
+ *
+ * @author Jose Colina
+ * @version 1.0.
+ */
+
 public class mainV {
     static SearchWindow win;
     public static void main(String[] args){
         win = new SearchWindow();
         win.setSearchListener(new ActionSearch(win));
-        win.setVisible(true);
     }
 
 }

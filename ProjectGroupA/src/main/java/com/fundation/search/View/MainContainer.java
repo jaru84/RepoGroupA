@@ -11,27 +11,34 @@
  */
 
 package com.fundation.search.View;
-
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import java.awt.Container;
+import java.awt.GridLayout;
 import java.util.Map;
-
+/**
+ * This class contains the panels which displays the results and parameters,
+ * in right side the parameters panel and the results panel in the left.
+ *
+ * @author Jose Colina
+ * @version 1.0.
+ */
 public class MainContainer extends Container {
     private ResultsPanel resultsPanel;
-    private ParametersPanel paramnetersPanel;
+    private ParametersPanel parametersPanel;
 
     public MainContainer(){
         resultsPanel = new ResultsPanel();
-        paramnetersPanel = new ParametersPanel();
+        parametersPanel = new ParametersPanel();
 
         setLayout(new GridLayout(1,2));
-        add(paramnetersPanel);
+        add(parametersPanel);
         add(resultsPanel);
     }
-    public Map<String,String> getParemeters(){
-        return paramnetersPanel.getParameters();
+    // This method returns a Map with the text of parameters using the name field as key
+    public Map<String,String> getParameters(){
+        return parametersPanel.getParameters();
     }
     public JButton getSearchButton(){
-        return paramnetersPanel.getSearchButton();
+        return parametersPanel.getSearchButton();
     }
 }

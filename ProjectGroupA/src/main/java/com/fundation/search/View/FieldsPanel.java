@@ -11,11 +11,18 @@
  */
 
 package com.fundation.search.View;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.*;
-
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import java.awt.GridLayout;
+import java.util.Map;
+import java.util.HashMap;
+/**
+ * This panel contains the field names and text fields to enter the searching criteria.
+ *
+ * @author Jose Colina
+ * @version 1.0.
+ */
 public class FieldsPanel extends JPanel {
     private JTextField pathText;
     private JTextField nameText;
@@ -23,10 +30,14 @@ public class FieldsPanel extends JPanel {
     private JLabel pathLabel;
     private JLabel nameLabel;
     private JLabel extensionLabel;
-    private int SIZE_TEXT_BOX = 20;
+    private final int SIZE_TEXT_BOX = 20;
 
     public FieldsPanel(){
         setLayout(new GridLayout(3,2));
+        init();
+    }
+
+    public void init(){
         pathText = new JTextField();
         pathText.setColumns(SIZE_TEXT_BOX);
         nameText = new JTextField();
@@ -36,10 +47,6 @@ public class FieldsPanel extends JPanel {
         pathLabel = new JLabel("Path: ");
         nameLabel = new JLabel("File Name: ");
         extensionLabel = new JLabel("Extension: ");
-        addElements();
-    }
-
-    public void addElements(){
         add(pathLabel);
         add(pathText);
         add(nameLabel);
@@ -47,6 +54,7 @@ public class FieldsPanel extends JPanel {
         add(extensionLabel);
         add(extensionText);
     }
+    // This method returns a map with text entered in search fields using field name as key
     public Map<String,String> getTextFields(){
         Map<String,String> parameters = new HashMap<String,String>();
         parameters.put("path",pathText.getText());

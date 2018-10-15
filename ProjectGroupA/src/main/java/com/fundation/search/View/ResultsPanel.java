@@ -11,9 +11,14 @@
  */
 
 package com.fundation.search.View;
-
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import java.awt.FlowLayout;
+/**
+ * This class displays the results of searching in a table.
+ *
+ * @author Jose Colina
+ * @version 1.0.
+ */
 
 public class ResultsPanel extends JPanel {
     public ResultsPanel(){
