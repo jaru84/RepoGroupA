@@ -9,7 +9,7 @@
  *  accordance with the terms of the license agreement you entered into
  *  with Jalasoft.
  *******************************************************************************/
-package com.fundation.search.controller;
+package com.fundation.search.model;
 /**
  * Class created to manage the file object and its attributes.
  *

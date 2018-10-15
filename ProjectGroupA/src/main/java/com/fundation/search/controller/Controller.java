@@ -13,6 +13,8 @@ package com.fundation.search.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import com.fundation.search.model.SearcherFile;
 /**
  * This class is going to interact with the view and model class.
  *

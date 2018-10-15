@@ -13,6 +13,8 @@ package com.fundation.search.controller;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.fundation.search.model.SearcherFile;
 /**
  * This class is in charge to make validations to the values for path, file name and extension.
  *
@@ -70,9 +72,10 @@ public class Validator {
 				throw new CustomSearchException("The extension inserted does not exist.");
 		}
 	}
-	
+	/**
+     *  method in charge to load the extensions allowed.*/
 	private void extensionsAllowed() {
-		Map<Integer, String> extMap = new HashMap<Integer, String>();
+		extMap = new HashMap<Integer, String>();
 		extMap.put(1, ".txt");		
 		extMap.put(2, ".pdf");		
 		extMap.put(3, ".jpg");	
@@ -80,6 +83,8 @@ public class Validator {
 		extMap.put(5, ".docx");		
 		extMap.put(6, ".gif");
 	}
+	/**
+     *  method in charge to validate special chars not allowed in file name.*/
 	private boolean checkSymbols(String fiName) {
 		boolean flag = false;
 		String[] chars = new String[fiName.length()];
