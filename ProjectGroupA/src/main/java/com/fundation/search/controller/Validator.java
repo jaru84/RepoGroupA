@@ -11,10 +11,7 @@
  *******************************************************************************/
 package com.fundation.search.controller;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.fundation.search.model.SearcherFile;
+import com.fundation.search.model.SearcherCriteria;
 /**
  * This class is in charge to make validations to the values for path, file name and extension.
  *
@@ -22,17 +19,17 @@ import com.fundation.search.model.SearcherFile;
  * @version 1.0.
  */
 public class Validator {
-	private Map<Integer, String> extMap;
 	/**
      *  method in charge to send the file object to be validated.*/
-	public void validate(SearcherFile file) throws CustomSearchException {
+	public void validate(SearcherCriteria file) throws CustomSearchException {
 		validatePath(file);
 		validateFileName(file);
 		validateExtension(file);
+		validateSize(file);
 	} 
 	/**
      *  method in charge to validate the path value inserted.*/
-	private void validatePath(SearcherFile file) throws CustomSearchException {
+	private void validatePath(SearcherCriteria file) throws CustomSearchException {
 		if(file.path.isEmpty())
 			file.path="*";
 		else
@@ -49,7 +46,7 @@ public class Validator {
 	}
 	/**
      *  method in charge to validate the file name value inserted.*/
-	private void validateFileName(SearcherFile file) throws CustomSearchException {
+	private void validateFileName(SearcherCriteria file) throws CustomSearchException {
 		if (file.fileName.isEmpty())
 			file.fileName="*";
 		else{
@@ -63,38 +60,49 @@ public class Validator {
 	}
 	/**
      *  method in charge to validate the extension value inserted.*/
-	private void validateExtension(SearcherFile file) throws CustomSearchException {
+	private void validateExtension(SearcherCriteria file) throws CustomSearchException {
 		if (file.ext.isEmpty())
 			file.ext="*";
 		else {
-			extensionsAllowed();
-			if (!extMap.containsValue(file.ext))
-				throw new CustomSearchException("The extension inserted does not exist.");
+				if (checkSymbols(file.ext))
+				throw new CustomSearchException("Your extension can't contain any of following characters: \\\\/:*?\\\"<>.");
 		}
 	}
 	/**
-     *  method in charge to load the extensions allowed.*/
-	private void extensionsAllowed() {
-		extMap = new HashMap<Integer, String>();
-		extMap.put(1, ".txt");		
-		extMap.put(2, ".pdf");		
-		extMap.put(3, ".jpg");	
-		extMap.put(4, ".java");	
-		extMap.put(5, ".docx");		
-		extMap.put(6, ".gif");
-	}
-	/**
-     *  method in charge to validate special chars not allowed in file name.*/
-	private boolean checkSymbols(String fiName) {
+     *  method in charge to validate special chars not allowed in file name and extension fields.*/
+	private boolean checkSymbols(String wordCheck) {
 		boolean flag = false;
-		String[] chars = new String[fiName.length()];
-		for (int i = 0; i < fiName.length(); i++) {
-		    chars[i] = Character.toString(fiName.charAt(i));
+		String[] chars = new String[wordCheck.length()];
+		for (int i = 0; i < wordCheck.length(); i++) {
+		    chars[i] = Character.toString(wordCheck.charAt(i));
 		    if(chars[i].matches("^[;:*?\"<>\\\\/|]+$")) {
 		    	flag = true;
 		    	break;
 		    }
 		}
 		return flag;
+	}
+	/**
+     *  method in charge to validate the size value inserted.*/
+	private void validateSize(SearcherCriteria file) throws CustomSearchException{
+		if((file.size== null) ||(file.size.isEmpty()))
+			file.size="0";
+		else {
+			if(onlyNumbers(file.size))
+			{
+				if(Integer.valueOf(file.size) < 0)
+					throw new CustomSearchException("You only can insert numbers greater than 0.");
+			}
+			else
+				throw new CustomSearchException("You only can insert integer numbers on size field.");	
+		}
+	}
+	/**
+     *  method in charge to validate that size only allows integer numbers.*/
+	private boolean onlyNumbers(String sFile) {
+		if (sFile.matches("^[0-9]*$"))
+			return true;
+		else
+			return false;
 	}
 }
