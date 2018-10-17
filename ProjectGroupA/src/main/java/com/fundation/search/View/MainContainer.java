@@ -14,7 +14,6 @@ package com.fundation.search.View;
 import javax.swing.JButton;
 import java.awt.Container;
 import java.awt.GridLayout;
-import java.util.Map;
 /**
  * This class contains the panels which displays the results and parameters,
  * in right side the parameters panel and the results panel in the left.
@@ -34,9 +33,18 @@ public class MainContainer extends Container {
         add(parametersPanel);
         add(resultsPanel);
     }
-    // This method returns a Map with the text of parameters using the name field as key
-    public Map<String,String> getParameters(){
-        return parametersPanel.getParameters();
+    // These methods return the values in text fields in a String
+    public String getPath(){
+        return parametersPanel.getPath();
+
+    }
+    public String getName(){
+        return parametersPanel.getName();
+
+    }
+    public String getExtension(){
+        return parametersPanel.getExtension();
+
     }
     public JButton getSearchButton(){
         return parametersPanel.getSearchButton();

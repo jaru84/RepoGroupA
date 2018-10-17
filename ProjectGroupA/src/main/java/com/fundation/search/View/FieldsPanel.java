@@ -15,8 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.GridLayout;
-import java.util.Map;
-import java.util.HashMap;
 /**
  * This panel contains the field names and text fields to enter the searching criteria.
  *
@@ -54,13 +52,17 @@ public class FieldsPanel extends JPanel {
         add(extensionLabel);
         add(extensionText);
     }
-    // This method returns a map with text entered in search fields using field name as key
-    public Map<String,String> getTextFields(){
-        Map<String,String> parameters = new HashMap<String,String>();
-        parameters.put("path",pathText.getText());
-        parameters.put("fileName",nameText.getText());
-        parameters.put("extension",extensionText.getText());
+    // These methods return the values in text fields in a String
+    public String getPath(){
+        return pathText.getText();
 
-        return parameters;
+    }
+    public String getName(){
+        return nameText.getText();
+
+    }
+    public String getExtension(){
+        return extensionText.getText();
+
     }
 }

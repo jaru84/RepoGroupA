@@ -14,7 +14,6 @@ package com.fundation.search.View;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
-import java.util.Map;
 /**
  * This panel keeps the fields panel in top and search button in the bottom.
  *
@@ -37,9 +36,20 @@ public class ParametersPanel extends JPanel {
         add(searchButton, BorderLayout.SOUTH);
 
     }
-    public Map<String,String> getParameters(){
-        return fieldsPanel.getTextFields();
+    // These methods return the values in text fields in a String
+    public String getPath(){
+        return fieldsPanel.getPath();
+
     }
+    public String getName(){
+        return fieldsPanel.getName();
+
+    }
+    public String getExtension(){
+        return fieldsPanel.getExtension();
+
+    }
+
     public JButton getSearchButton(){
         return searchButton;
     }

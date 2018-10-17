@@ -13,7 +13,6 @@
 package com.fundation.search.View;
 import javax.swing.JFrame;
 import java.awt.event.ActionListener;
-import java.util.Map;
 /**
  * This class defines the window to contain all the panels and GUI elements.
  *
@@ -53,9 +52,18 @@ public class SearchWindow extends JFrame{
         setVisible(true);
 
     }
-    // This method return the values in text fields in a Map using the name field as a key
-    public Map<String, String> getParameters(){
-        return contentPane.getParameters();
+    // These methods return the values in text fields in a String
+    public String getPath(){
+        return contentPane.getPath();
+
+    }
+    public String getName(){
+        return contentPane.getName();
+
+    }
+    public String getExtension(){
+        return contentPane.getExtension();
+
     }
     /*public JButton getSearchButton(){
         return contentPane.getSearchButton();
