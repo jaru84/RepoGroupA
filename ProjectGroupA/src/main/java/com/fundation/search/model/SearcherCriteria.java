@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class SearcherCriteria extends CustomFile {
 	public Map<Integer, String> mapOperator = new HashMap<Integer, String>();
-	public String size, operator;
+	public String size, operator, storageUnit;
 		
 	public SearcherCriteria() {
 		path= "";
@@ -29,6 +29,7 @@ public class SearcherCriteria extends CustomFile {
 		ext="";	
 		size="";
 		operator="";
+		storageUnit="";
 		mapOperator= new HashMap();
 		loadOperators();
 	}
