@@ -13,7 +13,12 @@ package com.fundation.search;
 import java.io.IOException;
 import com.fundation.search.controller.Controller;
 import com.fundation.search.controller.CustomSearchException;
-
+/**
+ * This class is the Main where the search application will be started calling to Controller.init.
+ *
+ * @author Jacqueline Rosales
+ * @version 1.0.
+ */
 public class Main {
 	public static void main (String args[]) throws IOException, CustomSearchException {
 		Controller controller= new Controller();
