@@ -11,9 +11,11 @@
  */
 
 package com.fundation.search.View;
+
 import javax.swing.JButton;
 import java.awt.Container;
 import java.awt.GridLayout;
+
 /**
  * This class contains the panels which displays the results and parameters,
  * in right side the parameters panel and the results panel in the left.
@@ -25,28 +27,32 @@ public class MainContainer extends Container {
     private ResultsPanel resultsPanel;
     private ParametersPanel parametersPanel;
 
-    public MainContainer(){
+    public MainContainer() {
         resultsPanel = new ResultsPanel();
         parametersPanel = new ParametersPanel();
 
-        setLayout(new GridLayout(1,2));
+        setLayout(new GridLayout(1, 2));
         add(parametersPanel);
         add(resultsPanel);
     }
+
     // These methods return the values in text fields in a String
-    public String getPath(){
+    public String getPath() {
         return parametersPanel.getPath();
 
     }
-    public String getName(){
+
+    public String getName() {
         return parametersPanel.getName();
 
     }
-    public String getExtension(){
+
+    public String getExtension() {
         return parametersPanel.getExtension();
 
     }
-    public JButton getSearchButton(){
+
+    public JButton getSearchButton() {
         return parametersPanel.getSearchButton();
     }
 }

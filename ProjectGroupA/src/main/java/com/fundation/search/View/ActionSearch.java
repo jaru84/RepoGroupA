@@ -11,8 +11,10 @@
  */
 
 package com.fundation.search.View;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 /**
  * This is a auxiliary listener test class to display the text that the user enters in the searching fields.
  * Controller should implement its own listener to get the text fields.
@@ -21,17 +23,18 @@ import java.awt.event.ActionListener;
  * @version 1.0.
  */
 
-public class ActionSearch implements ActionListener{
-        private SearchWindow w;
+public class ActionSearch implements ActionListener {
+    private SearchWindow w;
 
-        public ActionSearch(SearchWindow win){
-            w = win;
-        }
-        public void actionPerformed(ActionEvent e){
+    public ActionSearch(SearchWindow win) {
+        w = win;
+    }
 
-            System.out.println("Path: " + w.getPath());
-            System.out.println("Name: " + w.getName());
-            System.out.println("Extension: " + w.getExtension());
+    public void actionPerformed(ActionEvent e) {
 
-        }
+        System.out.println("Path: " + w.getPath());
+        System.out.println("Name: " + w.getName());
+        System.out.println("Extension: " + w.getExtension());
+
+    }
 }

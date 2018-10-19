@@ -11,10 +11,12 @@
  */
 
 package com.fundation.search.View;
+
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.GridLayout;
+
 /**
  * This panel contains the field names and text fields to enter the searching criteria.
  *
@@ -30,12 +32,12 @@ public class FieldsPanel extends JPanel {
     private JLabel extensionLabel;
     private final int SIZE_TEXT_BOX = 20;
 
-    public FieldsPanel(){
-        setLayout(new GridLayout(3,2));
+    public FieldsPanel() {
+        setLayout(new GridLayout(3, 2));
         init();
     }
 
-    public void init(){
+    public void init() {
         pathText = new JTextField();
         pathText.setColumns(SIZE_TEXT_BOX);
         nameText = new JTextField();
@@ -52,16 +54,19 @@ public class FieldsPanel extends JPanel {
         add(extensionLabel);
         add(extensionText);
     }
+
     // These methods return the values in text fields in a String
-    public String getPath(){
+    public String getPath() {
         return pathText.getText();
 
     }
-    public String getName(){
+
+    public String getName() {
         return nameText.getText();
 
     }
-    public String getExtension(){
+
+    public String getExtension() {
         return extensionText.getText();
 
     }

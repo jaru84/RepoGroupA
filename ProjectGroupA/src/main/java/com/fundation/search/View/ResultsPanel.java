@@ -11,8 +11,10 @@
  */
 
 package com.fundation.search.View;
+
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
+
 /**
  * This class displays the results of searching in a table.
  *
@@ -21,7 +23,7 @@ import java.awt.FlowLayout;
  */
 
 public class ResultsPanel extends JPanel {
-    public ResultsPanel(){
+    public ResultsPanel() {
         setLayout(new FlowLayout());
     }
 }

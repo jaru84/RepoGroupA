@@ -11,8 +11,10 @@
  */
 
 package com.fundation.search.View;
+
 import javax.swing.JFrame;
 import java.awt.event.ActionListener;
+
 /**
  * This class defines the window to contain all the panels and GUI elements.
  *
@@ -20,7 +22,7 @@ import java.awt.event.ActionListener;
  * @version 1.0.
  */
 
-public class SearchWindow extends JFrame{
+public class SearchWindow extends JFrame {
     //Parameters for frame:
     private static final int WIDTH = 300;
     private static final int HEIGHT = 200;
@@ -29,20 +31,22 @@ public class SearchWindow extends JFrame{
     //Main container to keep all the panels:
     private MainContainer contentPane;
 
-    public SearchWindow(){
+    public SearchWindow() {
         setting();
         init();
     }
+
     // This method set the parameters required for the frame
-    public void setting(){
+    public void setting() {
         setTitle("Search Files - Team A");
-        setSize(WIDTH,HEIGHT);
-        setLocation(X_ORIGIN,Y_ORIGIN);
+        setSize(WIDTH, HEIGHT);
+        setLocation(X_ORIGIN, Y_ORIGIN);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     }
+
     // This method initialize the main container and add it to frame
-    public void init(){
+    public void init() {
         //Instantiate GUI elements
         contentPane = new MainContainer();
 
@@ -52,24 +56,25 @@ public class SearchWindow extends JFrame{
         setVisible(true);
 
     }
+
     // These methods return the values in text fields in a String
-    public String getPath(){
+    public String getPath() {
         return contentPane.getPath();
 
     }
-    public String getName(){
+
+    public String getName() {
         return contentPane.getName();
 
     }
-    public String getExtension(){
+
+    public String getExtension() {
         return contentPane.getExtension();
 
     }
-    /*public JButton getSearchButton(){
-        return contentPane.getSearchButton();
-    }*/
+
     // This method set a listener to Search button
-    public void setSearchListener(ActionListener listener){
+    public void setSearchListener(ActionListener listener) {
         contentPane.getSearchButton().addActionListener(listener);
     }
 }

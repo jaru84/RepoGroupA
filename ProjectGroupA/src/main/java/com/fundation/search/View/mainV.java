@@ -21,7 +21,8 @@ package com.fundation.search.View;
 
 public class mainV {
     static SearchWindow win;
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         win = new SearchWindow();
         win.setSearchListener(new ActionSearch(win));
     }
