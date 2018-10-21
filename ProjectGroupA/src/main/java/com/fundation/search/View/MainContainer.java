@@ -71,7 +71,8 @@ public class MainContainer extends Container {
     public JButton getSearchButton() {
         return parametersPanel.getSearchButton();
     }
-    public void setResults(Vector dataVector){
+
+    public void setResults(Vector dataVector) {
         resultsPanel.setTableDate(dataVector);
 
     }

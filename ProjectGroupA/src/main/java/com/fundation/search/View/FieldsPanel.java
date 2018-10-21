@@ -64,8 +64,8 @@ public class FieldsPanel extends JPanel {
         extensionLabel = new JLabel("Extension: ");
         sizeLabel = new JLabel("Size: ");
         chooserButton = new JButton("...");
-        sizeOperator = new JComboBox(new Object[]{">","<","=="});
-        sizeScale = new JComboBox(new Object[]{"","kB","MB","GB"});
+        sizeOperator = new JComboBox(new Object[]{">", "<", "=="});
+        sizeScale = new JComboBox(new Object[]{"", "kB", "MB", "GB"});
         chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
@@ -76,17 +76,17 @@ public class FieldsPanel extends JPanel {
             }
         });
 
-        addComponent(pathLabel, 0,0, false);
-        addComponent(pathText, 1,0, true);
-        addComponent(nameLabel, 0,1, false);
-        addComponent(nameText, 1,1, true);
-        addComponent(extensionLabel, 0,2, false);
-        addComponent(extensionText, 1,2, true);
-        addComponent(sizeLabel, 0,3, false);
-        addComponent(sizeText, 1,3, true);
-        addComponent(sizeOperator, 2,3, false);
-        addComponent(sizeScale, 3,3, false);
-        addComponent(chooserButton, 2,0, false);
+        addComponent(pathLabel, 0, 0, false);
+        addComponent(pathText, 1, 0, true);
+        addComponent(nameLabel, 0, 1, false);
+        addComponent(nameText, 1, 1, true);
+        addComponent(extensionLabel, 0, 2, false);
+        addComponent(extensionText, 1, 2, true);
+        addComponent(sizeLabel, 0, 3, false);
+        addComponent(sizeText, 1, 3, true);
+        addComponent(sizeOperator, 2, 3, false);
+        addComponent(sizeScale, 3, 3, false);
+        addComponent(chooserButton, 2, 0, false);
 
     }
 
@@ -123,26 +123,26 @@ public class FieldsPanel extends JPanel {
 
     //This method add a component in the panel in the position specified by col and row
     //grow indicates if the component will be expanded if extra space is available
-    private void addComponent(Component component, int col, int row, boolean grow){
+    private void addComponent(Component component, int col, int row, boolean grow) {
         GridBagConstraints gridConstraint = new GridBagConstraints();
         gridConstraint.gridx = col;
         gridConstraint.gridy = row;
         gridConstraint.fill = GridBagConstraints.BOTH;
-        if (grow){
+        if (grow) {
             gridConstraint.weightx = 1.0;
             gridConstraint.weighty = 1.0;
-            }
+        }
         add(component, gridConstraint);
     }
-     public void getChosenFile(int status){
-        if (status == JFileChooser.APPROVE_OPTION){
+
+    public void getChosenFile(int status) {
+        if (status == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
             pathText.setText(file.toString());
-        }
-        else if (status == JFileChooser.CANCEL_OPTION){
+        } else if (status == JFileChooser.CANCEL_OPTION) {
             //pathText.setText(null);
 
         }
 
-     }
+    }
 }

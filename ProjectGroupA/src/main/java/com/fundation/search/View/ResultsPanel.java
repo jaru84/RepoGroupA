@@ -32,16 +32,19 @@ public class ResultsPanel extends JPanel {
     DefaultTableModel defaultTableModel;
     JScrollPane scrollPane;
     Vector columnHeaders;
+
     public ResultsPanel() {
         setting();
         init();
 
     }
-    public void setting(){
+
+    public void setting() {
         setLayout(new BorderLayout());
 
     }
-    public void init(){
+
+    public void init() {
         columnHeaders = new Vector();
         columnHeaders.addElement("Path");
         columnHeaders.addElement("Name");
@@ -49,9 +52,10 @@ public class ResultsPanel extends JPanel {
         columnHeaders.addElement("Size");
         defaultTableModel = new DefaultTableModel();
         defaultTableModel.setColumnIdentifiers(columnHeaders);
-        resultsTable =  new JTable(){
-            public boolean isCellEditable(int row,int column){
-                return false;}
+        resultsTable = new JTable() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
         };
         resultsTable.setModel(defaultTableModel);
         resultsTable.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
@@ -60,14 +64,16 @@ public class ResultsPanel extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
 
     }
+
     // This method receives a vector of vectors to be displayed in the Jtable.
     // Same column headers are used
     // Each row represents a file matching with search criteria
-    public void setTableDate(Vector dataVector){
+    public void setTableDate(Vector dataVector) {
         defaultTableModel.setDataVector(dataVector, columnHeaders);
     }
+
     //This method set to 0 the number of rows discarding all the rows if exist
-    public void clearTable(){
+    public void clearTable() {
         defaultTableModel.setRowCount(0);
     }
 }
