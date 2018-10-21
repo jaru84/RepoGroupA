@@ -14,6 +14,7 @@ package com.fundation.search.View;
 
 import javax.swing.JFrame;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 /**
  * This class defines the window to contain all the panels and GUI elements.
@@ -24,8 +25,8 @@ import java.awt.event.ActionListener;
 
 public class SearchWindow extends JFrame {
     //Parameters for frame:
-    private static final int WIDTH = 300;
-    private static final int HEIGHT = 200;
+    private static final int WIDTH = 700;
+    private static final int HEIGHT = 300;
     private static final int X_ORIGIN = 150;
     private static final int Y_ORIGIN = 250;
     //Main container to keep all the panels:
@@ -73,8 +74,27 @@ public class SearchWindow extends JFrame {
 
     }
 
+    public String getFileSize() {
+        return contentPane.getFileSize();
+
+    }
+
+    public String getSizeOperator() {
+        return contentPane.getSizeOperator();
+
+    }
+
+    public String getSizeScale() {
+        return contentPane.getSizeScale();
+
+    }
     // This method set a listener to Search button
     public void setSearchListener(ActionListener listener) {
         contentPane.getSearchButton().addActionListener(listener);
+    }
+    // This method display the results of searching in the left table
+    // It's expected a Vector of Vectors where each vector contains the parameters of file matching the search criteria
+    public void setSearchResults(Vector dataResults){
+        contentPane.setResults(dataResults);
     }
 }

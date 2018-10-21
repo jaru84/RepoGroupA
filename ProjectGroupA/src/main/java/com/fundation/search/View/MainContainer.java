@@ -15,6 +15,7 @@ package com.fundation.search.View;
 import javax.swing.JButton;
 import java.awt.Container;
 import java.awt.GridLayout;
+import java.util.Vector;
 
 /**
  * This class contains the panels which displays the results and parameters,
@@ -52,7 +53,26 @@ public class MainContainer extends Container {
 
     }
 
+    public String getFileSize() {
+        return parametersPanel.getFileSize();
+
+    }
+
+    public String getSizeOperator() {
+        return parametersPanel.getSizeOperator();
+
+    }
+
+    public String getSizeScale() {
+        return parametersPanel.getSizeScale();
+
+    }
+
     public JButton getSearchButton() {
         return parametersPanel.getSearchButton();
+    }
+    public void setResults(Vector dataVector){
+        resultsPanel.setTableDate(dataVector);
+
     }
 }

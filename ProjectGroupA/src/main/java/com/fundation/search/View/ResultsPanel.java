@@ -12,8 +12,13 @@
 
 package com.fundation.search.View;
 
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
 import javax.swing.JPanel;
-import java.awt.FlowLayout;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
+import java.util.Vector;
 
 /**
  * This class displays the results of searching in a table.
@@ -23,7 +28,46 @@ import java.awt.FlowLayout;
  */
 
 public class ResultsPanel extends JPanel {
+    JTable resultsTable;
+    DefaultTableModel defaultTableModel;
+    JScrollPane scrollPane;
+    Vector columnHeaders;
     public ResultsPanel() {
-        setLayout(new FlowLayout());
+        setting();
+        init();
+
+    }
+    public void setting(){
+        setLayout(new BorderLayout());
+
+    }
+    public void init(){
+        columnHeaders = new Vector();
+        columnHeaders.addElement("Path");
+        columnHeaders.addElement("Name");
+        columnHeaders.addElement("Extension");
+        columnHeaders.addElement("Size");
+        defaultTableModel = new DefaultTableModel();
+        defaultTableModel.setColumnIdentifiers(columnHeaders);
+        resultsTable =  new JTable(){
+            public boolean isCellEditable(int row,int column){
+                return false;}
+        };
+        resultsTable.setModel(defaultTableModel);
+        resultsTable.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+        resultsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        scrollPane = new JScrollPane(resultsTable);
+        add(scrollPane, BorderLayout.CENTER);
+
+    }
+    // This method receives a vector of vectors to be displayed in the Jtable.
+    // Same column headers are used
+    // Each row represents a file matching with search criteria
+    public void setTableDate(Vector dataVector){
+        defaultTableModel.setDataVector(dataVector, columnHeaders);
+    }
+    //This method set to 0 the number of rows discarding all the rows if exist
+    public void clearTable(){
+        defaultTableModel.setRowCount(0);
     }
 }

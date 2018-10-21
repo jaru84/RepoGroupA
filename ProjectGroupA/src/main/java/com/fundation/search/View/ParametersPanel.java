@@ -56,6 +56,21 @@ public class ParametersPanel extends JPanel {
 
     }
 
+    public String getFileSize() {
+        return fieldsPanel.getFileSize();
+
+    }
+
+    public String getSizeOperator() {
+        return fieldsPanel.getSizeOperator();
+
+    }
+
+    public String getSizeScale() {
+        return fieldsPanel.getSizeScale();
+
+    }
+
     public JButton getSearchButton() {
         return searchButton;
     }
