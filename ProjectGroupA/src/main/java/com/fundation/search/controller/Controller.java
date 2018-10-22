@@ -10,13 +10,12 @@
  *  with Jalasoft.
  *******************************************************************************/
 package com.fundation.search.controller;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import com.fundation.search.View.SearchWindow;
+import java.util.ArrayList;
+
 import com.fundation.search.model.Search;
 import com.fundation.search.model.SearcherCriteria;
+import com.fundation.search.view.SearchWindow;
 
 /**
  * This class is going to interact with the view and model class.
@@ -31,18 +30,20 @@ public class Controller {
       *	file is object of type SearcherFile class where the data related to one file will be stored and managed as object by model, controller and view packages.
       *	windowUI is object of type SearchWindow class where the UI is implemented.
       * searcher is object of type Search class where the process of searching is performed.*/
-	//private Search searcher;
+	private Search searcher;
 	private Validator val;
-	private SearcherCriteria file;
+	public SearcherCriteria file;
 	private SearchWindow windowUI;
+	private ArrayList<String> resultList;
 	
 	/** 
      *  constructor for Controller class where the objects declared above will be  initialized by its respective constructors.*/
 	public Controller(){
 		windowUI= new SearchWindow();
-		//searcher= new Search();
+		searcher= new Search();
 		val= new Validator();
 		file = new SearcherCriteria();
+		resultList = new ArrayList<String>();
 	}
 	
 	/**
@@ -56,7 +57,7 @@ public class Controller {
 	private void search() {
 		try {
 			file.path= windowUI.getPath();  
-			file.fileName= windowUI.getName(); 
+			file.fileName= windowUI.getFileName(); 
 			file.ext= windowUI.getExtension(); 
 			file.size=windowUI.getFileSize(); 
 			file.operator=windowUI.getSizeOperator(); 
@@ -72,10 +73,13 @@ public class Controller {
 	 * @throws IOException */
 	private void displayResults() throws IOException {
 		//here will be a for statement calling to model method in charge to save results.
-		System.out.println("Ingresando");
-		Search sF = new Search();
-		sF.searchFile(file.fileName, file.ext, file.path);
+		resultList=searcher.searchFile(file);
+		System.out.println(file.toString());
+		for (String items: resultList)
+		{
+			System.out.println(items);
+		}
 		
-		//System.out.println(file.path+" "+file.fileName+" "+file.ext);
+		
 	}
 }

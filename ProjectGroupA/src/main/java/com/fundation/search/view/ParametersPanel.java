@@ -10,7 +10,7 @@
  *  with Jalasoft.
  */
 
-package com.fundation.search.View;
+package com.fundation.search.view;
 
 import javax.swing.*;
 import java.awt.BorderLayout;

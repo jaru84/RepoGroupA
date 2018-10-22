@@ -12,6 +12,7 @@
 package com.fundation.search.controller;
 import java.io.File;
 import com.fundation.search.model.SearcherCriteria;
+
 /**
  * This class is in charge to make validations to the values for path, file name and extension.
  *
@@ -30,8 +31,8 @@ public class Validator {
 	/**
      *  method in charge to validate the path value inserted.*/
 	private void validatePath(SearcherCriteria file) throws CustomSearchException {
-		if(file.path.isEmpty())
-			file.path="*";
+		if(file.path.isEmpty()) 
+			throw new CustomSearchException("The path is a required field.");
 		else
 		{
 			File dir = new File(file.path);

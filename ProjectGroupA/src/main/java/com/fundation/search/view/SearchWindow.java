@@ -10,8 +10,7 @@
  *  with Jalasoft.
  */
 
-package com.fundation.search.View;
-
+package com.fundation.search.view;
 import javax.swing.JFrame;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -64,7 +63,7 @@ public class SearchWindow extends JFrame {
 
     }
 
-    public String getName() {
+    public String getFileName() {
         return contentPane.getName();
 
     }

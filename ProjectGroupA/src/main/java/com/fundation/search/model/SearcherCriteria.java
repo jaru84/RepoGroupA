@@ -10,8 +10,6 @@
  *  with Jalasoft.
  *******************************************************************************/
 package com.fundation.search.model;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class created to manage the search criteria object and its attributes.
@@ -20,7 +18,7 @@ import java.util.Map;
  * @version 1.0.
  */
 public class SearcherCriteria extends CustomFile {
-	public Map<Integer, String> mapOperator = new HashMap<Integer, String>();
+	
 	public String size, operator, storageUnit;
 		
 	public SearcherCriteria() {
@@ -30,17 +28,10 @@ public class SearcherCriteria extends CustomFile {
 		size="";
 		operator="";
 		storageUnit="";
-		mapOperator= new HashMap();
-		loadOperators();
+		
 	}
-	public void loadOperators() {
-		mapOperator.put(1, "==");
-		mapOperator.put(2, "<");
-		mapOperator.put(3, "<=");
-		mapOperator.put(4, ">");
-		mapOperator.put(5, ">=");
-	}
+	
 	public String toString() {
-		return super.toString()+"\nSize: "+size+"\nOperator: "+mapOperator.get(1);
+		return super.toString()+"\nSize: "+size+"\nOperator: ";
 	}
 }

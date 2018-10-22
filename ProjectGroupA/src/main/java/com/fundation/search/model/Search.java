@@ -25,7 +25,7 @@ import java.util.List;
  */
 
 public class Search {
-	private List<String> fileList;
+	private ArrayList<String> fileList;
 
 	/*
 	 * Constructor*/
@@ -38,7 +38,7 @@ public class Search {
 	 * Considering the path is already in a correct format*/
 	private String createCommand (String name, String ext, String path)  {
 		String res = "dir ";
-		
+		/*
 		if ( name.isEmpty() || name.equals("*")) {  //FLAG coordinate with Jacky
 			name = "*";
 		}
@@ -46,7 +46,7 @@ public class Search {
 		if ( ext.isEmpty() || ext.equals("*")) {	//FLAG coordinate with Jacky
 			ext = "*";
 		}
-
+		*/
 		if ( ! path.isEmpty() || path.equals("*") ) {
 			//path = path.replace("\\", "\\\\"); //FLAG check with Jacky, this might not be needed.
 			res = res + path + " " + name + "." + ext + " /b /a-d";
@@ -62,9 +62,9 @@ public class Search {
 	 * Method to run the command in DOS which will receive for this time 3 parameters path, name and extension
 	 * It will also treat the output. */
 	//public static void runDOS (String name, String est, String path) throws IOException {
-	public void searchFile(String name, String ext, String path) throws IOException{
-		String[] res = null;
-		String cmd = createCommand (name, ext, path);
+	public ArrayList<String> searchFile(SearcherCriteria file) throws IOException{
+		
+		String cmd = createCommand (file.fileName, file.ext, file.path);
 		
 		System.out.println(cmd);
 		
@@ -78,18 +78,18 @@ public class Search {
 							
 			//Filling the list with a single string, need to user ResultFile
 			while ( (inputLine = in.readLine() ) != null)  {
-				if ( ! path.isEmpty() ) {
-					inputLine = path + "\\" + inputLine;
+				if ( ! file.path.isEmpty() ) {
+					inputLine = file.path + "\\" + inputLine;
 				}
 				this.fileList.add(inputLine);
 				//System.out.println(inputLine);
 			}
 			in.close();
-						
+								
 		} catch ( Exception e ) {
 			e.printStackTrace();
 		}
-	
+		return fileList;
 	}
 
 }
