@@ -15,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import com.fundation.search.View.SearchWindow;
+import com.fundation.search.model.Search;
 import com.fundation.search.model.SearcherCriteria;
 
 /**
@@ -67,9 +68,14 @@ public class Controller {
 	}
 
 	/**
-     *  method used to call to the method in charge to get results for the search process, the method should be in model package.*/
-	private void displayResults() {
+     *  method used to call to the method in charge to get results for the search process, the method should be in model package.
+	 * @throws IOException */
+	private void displayResults() throws IOException {
 		//here will be a for statement calling to model method in charge to save results.
-		System.out.println(file.path+" "+file.fileName+" "+file.ext);
+		System.out.println("Ingresando");
+		Search sF = new Search();
+		sF.searchFile(file.fileName, file.ext, file.path);
+		
+		//System.out.println(file.path+" "+file.fileName+" "+file.ext);
 	}
 }
