@@ -12,8 +12,7 @@
 
 package com.fundation.search.View;
 
-import javax.swing.JPanel;
-import javax.swing.JButton;
+import javax.swing.*;
 import java.awt.BorderLayout;
 
 /**
@@ -26,6 +25,7 @@ import java.awt.BorderLayout;
 public class ParametersPanel extends JPanel {
     private FieldsPanel fieldsPanel;
     private JButton searchButton;
+    private JLabel errorMessage;
 
     public ParametersPanel() {
         setLayout(new BorderLayout());
@@ -35,8 +35,10 @@ public class ParametersPanel extends JPanel {
     public void init() {
         searchButton = new JButton("Search");
         fieldsPanel = new FieldsPanel();
+        errorMessage = new JLabel("");
         add(fieldsPanel, BorderLayout.NORTH);
         add(searchButton, BorderLayout.SOUTH);
+        add(errorMessage, BorderLayout.CENTER);
 
     }
 
@@ -73,5 +75,9 @@ public class ParametersPanel extends JPanel {
 
     public JButton getSearchButton() {
         return searchButton;
+    }
+
+    public JLabel getErrorLabel() {
+        return errorMessage;
     }
 }

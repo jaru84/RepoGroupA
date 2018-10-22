@@ -99,4 +99,14 @@ public class SearchWindow extends JFrame {
     public void setSearchResults(Vector dataResults) {
         contentPane.setResults(dataResults);
     }
+
+    public void setErrorMessage(String message) {
+        contentPane.setError(message);
+
+    }
+
+    public void cleanErrorMessage() {
+        contentPane.cleanError();
+
+    }
 }

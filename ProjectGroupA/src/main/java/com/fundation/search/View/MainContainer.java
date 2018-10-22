@@ -76,4 +76,12 @@ public class MainContainer extends Container {
         resultsPanel.setTableDate(dataVector);
 
     }
+
+    public void setError(String message) {
+        parametersPanel.getErrorLabel().setText(message);
+    }
+
+    public void cleanError() {
+        parametersPanel.getErrorLabel().setText("");
+    }
 }
