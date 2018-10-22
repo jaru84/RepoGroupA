@@ -64,7 +64,7 @@ public class FieldsPanel extends JPanel {
         extensionLabel = new JLabel("Extension: ");
         sizeLabel = new JLabel("Size: ");
         chooserButton = new JButton("...");
-        sizeOperator = new JComboBox(new Object[]{">", "<", "=="});
+        sizeOperator = new JComboBox(new Object[]{"==", ">", ">=", "<", "<="});
         sizeScale = new JComboBox(new Object[]{"", "kB", "MB", "GB"});
         chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
