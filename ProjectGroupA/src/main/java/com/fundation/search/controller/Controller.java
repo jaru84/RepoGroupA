@@ -10,9 +10,11 @@
  *  with Jalasoft.
  *******************************************************************************/
 package com.fundation.search.controller;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import com.fundation.search.View.SearchWindow;
 import com.fundation.search.model.SearcherCriteria;
 
 /**
@@ -28,7 +30,7 @@ public class Controller {
       *	file is object of type SearcherFile class where the data related to one file will be stored and managed as object by model, controller and view packages.
       *	windowUI is object of type SearchWindow class where the UI is implemented.
       * searcher is object of type Search class where the process of searching is performed.*/
-	private Search searcher;
+	//private Search searcher;
 	private Validator val;
 	private SearcherCriteria file;
 	private SearchWindow windowUI;
@@ -37,7 +39,7 @@ public class Controller {
      *  constructor for Controller class where the objects declared above will be  initialized by its respective constructors.*/
 	public Controller(){
 		windowUI= new SearchWindow();
-		searcher= new Search();
+		//searcher= new Search();
 		val= new Validator();
 		file = new SearcherCriteria();
 	}
@@ -45,28 +47,29 @@ public class Controller {
 	/**
      *  method to call the search method.*/
 	public void init() {
-		search();
+		windowUI.setSearchListener(e ->search());
 	}
 	/**
      *  method where the values to path, filename,extension,size and operator will be assigned to file object and all them will be validated,
      *  then will be sent to model to start with search process and then showed under UI. */
 	private void search() {
 		try {
-			file.path= windowUI.getPath();  //not sure if this will work I need to check once mergued on Dev
-			file.fileName= windowUI.getFileName(); //not sure if this will work I need to check once mergued on Dev
-			file.ext= windowUI.getExtension(); //not sure if this will work I need to check once mergued on Dev
-			file.size=windowUI.getSize(); //not sure if this will work I need to check once mergued on Dev
-			file.operator=windowUI.getOperator(); 
+			file.path= windowUI.getPath();  
+			file.fileName= windowUI.getName(); 
+			file.ext= windowUI.getExtension(); 
+			file.size=windowUI.getFileSize(); 
+			file.operator=windowUI.getSizeOperator(); 
 			val.validate(file);			
-			//searcher.search(file);
 			displayResults();
 		} catch (Exception ex) {	
 			System.out.println(ex.getMessage()); 
 		}
 	}
+
 	/**
      *  method used to call to the method in charge to get results for the search process, the method should be in model package.*/
 	private void displayResults() {
 		//here will be a for statement calling to model method in charge to save results.
+		System.out.println(file.path+" "+file.fileName+" "+file.ext);
 	}
 }
