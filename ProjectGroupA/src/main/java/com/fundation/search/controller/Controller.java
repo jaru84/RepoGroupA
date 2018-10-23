@@ -72,9 +72,8 @@ public class Controller {
      *  method used to call to the method in charge to get results for the search process, the method should be in model package.
 	 * @throws IOException */
 	private void displayResults() throws IOException {
-		//here will be a for statement calling to model method in charge to save results.
 		resultList=searcher.searchFile(file);
-		System.out.println(file.toString());
+		
 		for (String items: resultList)
 		{
 			System.out.println(items);

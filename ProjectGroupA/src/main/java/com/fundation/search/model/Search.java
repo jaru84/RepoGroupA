@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class will allow to search a file given a criteria.
@@ -25,12 +24,12 @@ import java.util.List;
  */
 
 public class Search {
-	private ArrayList<String> fileList;
+	private ArrayList<String> resultFiles;
 
 	/*
 	 * Constructor*/
 	public Search ()  {
-		fileList = new ArrayList<String>();
+		resultFiles = new ArrayList<String>();
 	}
 	
 	/*
@@ -38,22 +37,12 @@ public class Search {
 	 * Considering the path is already in a correct format*/
 	private String createCommand (String name, String ext, String path)  {
 		String res = "dir ";
-		/*
-		if ( name.isEmpty() || name.equals("*")) {  //FLAG coordinate with Jacky
-			name = "*";
-		}
 		
-		if ( ext.isEmpty() || ext.equals("*")) {	//FLAG coordinate with Jacky
-			ext = "*";
-		}
-		*/
 		if ( ! path.isEmpty() || path.equals("*") ) {
-			//path = path.replace("\\", "\\\\"); //FLAG check with Jacky, this might not be needed.
 			res = res + path + " " + name + "." + ext + " /b /a-d";
 		} else {
 			res = res + name + "." + ext + " /s /b /a-d";
 		}
-		
 		return res;
 	}
 		
@@ -65,8 +54,7 @@ public class Search {
 	public ArrayList<String> searchFile(SearcherCriteria file) throws IOException{
 		
 		String cmd = createCommand (file.fileName, file.ext, file.path);
-		
-		System.out.println(cmd);
+		//System.out.println(cmd);
 		
 		String[] command = {"cmd.exe","/c",cmd};
 		Process pDOS;
@@ -78,10 +66,10 @@ public class Search {
 							
 			//Filling the list with a single string, need to user ResultFile
 			while ( (inputLine = in.readLine() ) != null)  {
-				if ( ! file.path.isEmpty() ) {
+				if (inputLine.contains(file.fileName)) {  //(! file.path.isEmpty()) {
 					inputLine = file.path + "\\" + inputLine;
 				}
-				this.fileList.add(inputLine);
+				this.resultFiles.add(inputLine);
 				//System.out.println(inputLine);
 			}
 			in.close();
@@ -89,7 +77,7 @@ public class Search {
 		} catch ( Exception e ) {
 			e.printStackTrace();
 		}
-		return fileList;
+		return resultFiles;
 	}
 
 }
