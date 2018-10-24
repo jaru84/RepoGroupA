@@ -11,12 +11,12 @@
 package com.fundation.search.model;
 
 public abstract class CustomFile {
-	public String path;
-	public String fileName;
-	public String ext;
+	protected String path;
+	protected String fileName;
+	protected String ext;
 
-	
 	public String toString() {
-		return "You have inserted following values:\nPath: "+path+"\nFile Name: "+fileName+"\nExtension: "+ext;
+		return "You have inserted following values:\nPath: " + path + "\nFile Name: " + fileName + "\nExtension: "
+				+ ext;
 	}
 }

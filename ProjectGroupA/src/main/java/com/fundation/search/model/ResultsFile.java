@@ -10,15 +10,15 @@
  *******************************************************************************/
 package com.fundation.search.model;
 
-public class ResultsFile extends CustomFile{
-	public String owner;
-	public Integer size;
-	
+public class ResultsFile extends CustomFile {
+	private String owner;
+	private Integer size;
+
 	public ResultsFile() {
-		path= "";
-		fileName= "";
-		ext="";
-		size=0;
-		owner="";
+		path = "";
+		fileName = "";
+		ext = "";
+		size = 0;
+		owner = "";
 	}
 }

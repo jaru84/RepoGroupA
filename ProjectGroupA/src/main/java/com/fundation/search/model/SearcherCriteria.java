@@ -18,20 +18,111 @@ package com.fundation.search.model;
  * @version 1.0.
  */
 public class SearcherCriteria extends CustomFile {
-	
-	public String size, operator, storageUnit;
-		
+
+	private String size, operator, storageUnit;
+
+	/**
+	 * constructor for SearcherCriteria class where the values inserted to be find
+	 * will be stored as an object.
+	 */
 	public SearcherCriteria() {
-		path= "";
-		fileName= "";
-		ext="";	
-		size="";
-		operator="";
-		storageUnit="";
-		
+		path = "";
+		fileName = "";
+		ext = "";
+		size = "";
+		operator = "";
+		storageUnit = "";
+
 	}
-	
+
+	/**
+	 * method setter to path value.
+	 */
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	/**
+	 * method setter to File Name value.
+	 */
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	/**
+	 * method setter to extension value.
+	 */
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
+
+	/**
+	 * method setter to size value.
+	 */
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	/**
+	 * method setter to operator value.
+	 */
+	public void setOperator(String operator) {
+		this.operator = operator;
+	}
+
+	/**
+	 * method setter to storage unit value.
+	 */
+	public void setStorageUnit(String storageUnit) {
+		this.storageUnit = storageUnit;
+	}
+
+	/**
+	 * method getter to path value.
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * method getter to File Name value.
+	 */
+	public String getFileName() {
+		return fileName;
+	}
+
+	/**
+	 * method getter to extension value.
+	 */
+	public String getExt() {
+		return ext;
+	}
+
+	/**
+	 * method getter to size value.
+	 */
+	public String getSize() {
+		return size;
+	}
+
+	/**
+	 * method getter to operator value.
+	 */
+	public String getOperator() {
+		return operator;
+	}
+
+	/**
+	 * method getter to storage unit value.
+	 */
+	public String getStorageUnit() {
+		return storageUnit;
+	}
+
+	/**
+	 * method String to String to print values of object.
+	 */
 	public String toString() {
-		return super.toString()+"\nSize: "+size+"\nOperator: ";
+		return super.toString() + "\nSize: " + size + "\nOperator: " + "\nStorage Unit: " + storageUnit;
 	}
 }

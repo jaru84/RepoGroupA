@@ -1,5 +1,5 @@
-/*
- *  @(#)AssetFile.java Copyright (c) 2018 Jalasoft.
+/*******************************************************************************
+ * @(#)AssetFile.java Copyright (c) 2018 Jalasoft.
  *  2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  *  All rights reserved.
  *  <p>
@@ -8,12 +8,15 @@
  *  disclose such Confidential Information and shall use it only in
  *  accordance with the terms of the license agreement you entered into
  *  with Jalasoft.
- */
+ *******************************************************************************/
 
 package com.fundation.search.view;
 
-import javax.swing.*;
 import java.awt.BorderLayout;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * This panel keeps the fields panel in top and search button in the bottom.
@@ -23,61 +26,63 @@ import java.awt.BorderLayout;
  */
 
 public class ParametersPanel extends JPanel {
-    private FieldsPanel fieldsPanel;
-    private JButton searchButton;
-    private JLabel errorMessage;
+	private FieldsPanel fieldsPanel;
+	private JButton searchButton;
+	private JLabel errorMessage;
 
-    public ParametersPanel() {
-        setLayout(new BorderLayout());
-        init();
-    }
+	public ParametersPanel() {
+		setLayout(new BorderLayout());
+		init();
+	}
 
-    public void init() {
-        searchButton = new JButton("Search");
-        fieldsPanel = new FieldsPanel();
-        errorMessage = new JLabel("");
-        add(fieldsPanel, BorderLayout.NORTH);
-        add(searchButton, BorderLayout.SOUTH);
-        add(errorMessage, BorderLayout.CENTER);
+	public void init() {
+		searchButton = new JButton("Search");
+		fieldsPanel = new FieldsPanel();
+		errorMessage = new JLabel("");
+		add(fieldsPanel, BorderLayout.NORTH);
+		add(searchButton, BorderLayout.SOUTH);
+		add(errorMessage, BorderLayout.CENTER);
 
-    }
+	}
 
-    // These methods return the values in text fields in a String
-    public String getPath() {
-        return fieldsPanel.getPath();
+	/**
+	 * These methods return the values in text fields in a String.
+	 */
+	public String getPath() {
+		return fieldsPanel.getPath();
 
-    }
+	}
 
-    public String getName() {
-        return fieldsPanel.getName();
+	public String getName() {
+		return fieldsPanel.getName();
 
-    }
+	}
 
-    public String getExtension() {
-        return fieldsPanel.getExtension();
+	public String getExtension() {
+		return fieldsPanel.getExtension();
 
-    }
+	}
 
-    public String getFileSize() {
-        return fieldsPanel.getFileSize();
+	public String getFileSize() {
+		return fieldsPanel.getFileSize();
 
-    }
+	}
 
-    public String getSizeOperator() {
-        return fieldsPanel.getSizeOperator();
+	public String getSizeOperator() {
+		return fieldsPanel.getSizeOperator();
 
-    }
+	}
 
-    public String getSizeScale() {
-        return fieldsPanel.getSizeScale();
+	public String getSizeScale() {
+		return fieldsPanel.getSizeScale();
 
-    }
+	}
 
-    public JButton getSearchButton() {
-        return searchButton;
-    }
+	public JButton getSearchButton() {
+		return searchButton;
+	}
 
-    public JLabel getErrorLabel() {
-        return errorMessage;
-    }
+	public JLabel getErrorLabel() {
+		return errorMessage;
+	}
 }
