@@ -85,7 +85,6 @@ public class Controller {
 	 * @throws IOException
 	 */
 	private void displayResults() throws IOException {
-		resultList = new ArrayList<String>();
 		resultList = searcher.searchFile(file);
 		windowUI.clearResults();
 
@@ -94,6 +93,8 @@ public class Controller {
 			Object[] arrRes = { item, "", "", "" };
 			windowUI.setSearchResults(arrRes);
 		}
+
+		resultList.clear();
 
 	}
 }

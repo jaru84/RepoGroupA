@@ -43,9 +43,9 @@ public class Search {
 		String res = "dir ";
 
 		if (!path.endsWith("\\")) {
-			res = res + path + "\\" + name + "." + ext + " /s /b /a-d";
+			res = res + "\"" + path + "\\" + name + "." + ext + "\"" + " /s /b /a-d";
 		} else {
-			res = res + path + name + "." + ext + " /s /b /a-d";
+			res = res +  "\"" + path + name + "." + ext + "\"" + " /s /b /a-d";
 		}
 		return res;
 	}
