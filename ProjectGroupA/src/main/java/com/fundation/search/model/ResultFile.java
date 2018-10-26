@@ -10,15 +10,38 @@
  *******************************************************************************/
 package com.fundation.search.model;
 
-public class ResultsFile extends CustomFile {
+/**
+ * Class created to manage the result files object and its attributes.
+ *
+ * @author Martha
+ * @version 1.0.
+ */
+public class ResultFile extends CustomFile {
 	private String owner;
-	private Integer size;
 
-	public ResultsFile() {
-		path = "";
-		fileName = "";
-		ext = "";
-		size = 0;
-		owner = "";
+	/**
+	 * constructor for ResultFiles object
+	 */
+	public ResultFile() {
+		super();
+		owner= "";
+	}
+	
+	public ResultFile(String path, String fileName, String ext) {
+		super (path, fileName, ext);
+	}
+	
+	/**
+	 * method setter to owner value.
+	 */
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+	
+	/**
+	 * method getter to owner value.
+	 */
+	public String getOwner() {
+		return this.owner;
 	}
 }

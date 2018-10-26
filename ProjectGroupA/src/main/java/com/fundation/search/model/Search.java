@@ -25,20 +25,23 @@ import java.util.ArrayList;
  */
 public class Search {
 
-	private ArrayList<String> resultFiles;
+	private ArrayList<ResultFile> resultFiles;
+	private Process pDOS;	
+	private ConvertDirGot dirGot;
 
 	/**
 	 * constructor for Search class.
 	 */
 	public Search() {
-		resultFiles = new ArrayList<String>();
+		resultFiles = new ArrayList<ResultFile>();
+		dirGot = new ConvertDirGot();
 	}
 
 	/**
-	 * Method to run the command in DOS and treat the outputs. Considering the path
+	 * Method to create the command in DOS. Considering the path
 	 * is already in a correct format.
 	 */
-	private String createCommand(String name, String ext, String path) {
+	private String [] createCommand(String name, String ext, String path) {
 
 		String res = "dir ";
 
@@ -47,35 +50,36 @@ public class Search {
 		} else {
 			res = res +  "\"" + path + name + "." + ext + "\"" + " /s /b /a-d";
 		}
-		return res;
+		String[] command= { "cmd.exe", "/c", res};
+		System.out.println(res);
+		return command;
 	}
 
 	/**
 	 * Method to run the command in DOS which will receive for this time 3
 	 * parameters path, name and extension It will also treat the output.
 	 */
-	public ArrayList<String> searchFile(SearcherCriteria file) throws IOException {
-
-		String cmd = createCommand(file.getFileName(), file.getExt(), file.getPath());
-		String[] command = { "cmd.exe", "/c", cmd };
-
-		Process pDOS;
-		pDOS = Runtime.getRuntime().exec(command);
-
+	public ArrayList<ResultFile> searchFile(SearcherCriteria file) throws IOException {
+		
+		pDOS = Runtime.getRuntime().exec(createCommand(file.getFileName(), file.getExt(), file.getPath()));
+		
 		BufferedReader in = new BufferedReader(new InputStreamReader(pDOS.getInputStream()));
 		String inputLine = "";
 
-		/* Filling the list with a single string, need to user ResultFile */
 		while ((inputLine = in.readLine()) != null) {
-			if (inputLine.contains(file.getFileName())) {
-				inputLine = file.path + "\\" + inputLine;
+			if (filterResults(inputLine, file)) {
+				this.resultFiles.add(dirGot.convertDir(inputLine));	
 			}
-			this.resultFiles.add(inputLine);
-			// System.out.println(inputLine);
 		}
 		in.close();
-
 		return resultFiles;
 	}
-
+	
+	private boolean filterResults(String inputline, SearcherCriteria file) {
+		if ((file.getFileName() == "*") || (file.getExt() == "*")) {
+			return true;
+		} else if (inputline.contains(file.getFileName()) || inputline.contains(file.getExt())) {
+			return true;
+		} else return false;
+	}
 }

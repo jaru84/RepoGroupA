@@ -14,6 +14,7 @@ package com.fundation.search.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.fundation.search.model.ResultFile;
 import com.fundation.search.model.Search;
 import com.fundation.search.model.SearcherCriteria;
 import com.fundation.search.view.SearchWindow;
@@ -38,7 +39,7 @@ public class Controller {
 	private Validator val;
 	public SearcherCriteria file;
 	private SearchWindow windowUI;
-	private ArrayList<String> resultList;
+	private ArrayList <ResultFile> resultList;
 
 	/**
 	 * constructor for Controller class where the objects declared above will be
@@ -49,11 +50,11 @@ public class Controller {
 		searcher = new Search();
 		val = new Validator(windowUI);
 		file = new SearcherCriteria();
-		// resultList = new ArrayList<String>();
+		resultList = new ArrayList<ResultFile>();
 	}
 
 	/**
-	 * method to call the search method.
+	 * method used to call the action listener of button and perform the search process.
 	 */
 	public void init() {
 		windowUI.setSearchListener(e -> search());
@@ -71,6 +72,10 @@ public class Controller {
 			file.setExt(windowUI.getExtension());
 			file.setSize(windowUI.getFileSize());
 			file.setOperator(windowUI.getSizeOperator());
+			file.setSizeScale(windowUI.getSizeScale());
+			file.setIsDirectory(windowUI.getIsDirectory());
+			file.setIsHidden(windowUI.getIsHidden());
+			file.setIsReadOnly(windowUI.getIsReadOnly());
 			val.validate(file);
 			displayResults();
 		} catch (Exception ex) {
@@ -79,22 +84,20 @@ public class Controller {
 	}
 
 	/**
-	 * method used to call to the method in charge to get results for the search
-	 * process, the method should be in model package.
-	 * 
-	 * @throws IOException
+	 * method used to show the results on the table UI
 	 */
 	private void displayResults() throws IOException {
 		resultList = searcher.searchFile(file);
 		windowUI.clearResults();
-
-		for (String item : resultList) {
-			System.out.println(item);
-			Object[] arrRes = { item, "", "", "" };
-			windowUI.setSearchResults(arrRes);
+		if (resultList.isEmpty()) {
+			windowUI.setErrorMessage("No items match your search.");
+		} else {
+			for (ResultFile item : resultList) {
+				System.out.println(item);
+				Object[] arrRes = { item.getPath(), item.getFileName(), item.getExt(), item.getSize() };
+				windowUI.setSearchResults(arrRes);
+			}
+			resultList.clear();
 		}
-
-		resultList.clear();
-
 	}
 }
