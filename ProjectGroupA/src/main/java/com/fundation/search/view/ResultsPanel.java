@@ -28,56 +28,56 @@ import javax.swing.table.DefaultTableModel;
  */
 
 public class ResultsPanel extends JPanel {
-	JTable resultsTable;
-	DefaultTableModel defaultTableModel;
-	JScrollPane scrollPane;
-	Vector columnHeaders;
+    JTable resultsTable;
+    DefaultTableModel defaultTableModel;
+    JScrollPane scrollPane;
+    Vector columnHeaders;
 
-	public ResultsPanel() {
-		setting();
-		init();
+    public ResultsPanel() {
+        setting();
+        init();
 
-	}
+    }
 
-	public void setting() {
-		setLayout(new BorderLayout());
+    public void setting() {
+        setLayout(new BorderLayout());
 
-	}
+    }
 
-	public void init() {
-		columnHeaders = new Vector();
-		columnHeaders.addElement("Path");
-		columnHeaders.addElement("Name");
-		columnHeaders.addElement("Extension");
-		columnHeaders.addElement("Size");
-		defaultTableModel = new DefaultTableModel();
-		defaultTableModel.setColumnIdentifiers(columnHeaders);
-		resultsTable = new JTable() {
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-		resultsTable.setModel(defaultTableModel);
-		resultsTable.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
-		resultsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane = new JScrollPane(resultsTable);
-		add(scrollPane, BorderLayout.CENTER);
+    public void init() {
+        columnHeaders = new Vector();
+        columnHeaders.addElement("Path");
+        columnHeaders.addElement("Name");
+        columnHeaders.addElement("Extension");
+        columnHeaders.addElement("Size");
+        defaultTableModel = new DefaultTableModel();
+        defaultTableModel.setColumnIdentifiers(columnHeaders);
+        resultsTable = new JTable() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        resultsTable.setModel(defaultTableModel);
+        resultsTable.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+        resultsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        scrollPane = new JScrollPane(resultsTable);
+        add(scrollPane, BorderLayout.CENTER);
 
-	}
+    }
 
-	/**
-	 * This method receives a vector of vectors to be displayed in the Jtable. Same
-	 * column headers are used Each row represents a file matching with search
-	 * criteria.
-	 */
-	public void setTableDate(Object[] data) {
-		defaultTableModel.addRow(data);
-	}
+    /**
+     * This method receives a vector of vectors to be displayed in the Jtable. Same
+     * column headers are used Each row represents a file matching with search
+     * criteria.
+     */
+    public void setTableDate(Object[] data) {
+        defaultTableModel.addRow(data);
+    }
 
-	/**
-	 * This method set to 0 the number of rows discarding all the rows if exist
-	 */
-	public void clearTable() {
-		defaultTableModel.setRowCount(0);
-	}
+    /**
+     * This method set to 0 the number of rows discarding all the rows if exist
+     */
+    public void clearTable() {
+        defaultTableModel.setRowCount(0);
+    }
 }
