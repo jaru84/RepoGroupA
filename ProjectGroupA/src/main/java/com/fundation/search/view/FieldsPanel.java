@@ -18,12 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 /**
  * This panel contains the field names and text fields to enter the searching
@@ -45,6 +40,9 @@ public class FieldsPanel extends JPanel {
 	private JComboBox sizeOperator;
 	private JComboBox sizeScale;
 	private JFileChooser chooser;
+    private JCheckBox dirCheckbox;
+    private JCheckBox hiddenCheckbox;
+    private JCheckBox readonlyCheckbox;
 	private final int SIZE_TEXT_BOX = 20;
 
 	public FieldsPanel() {
@@ -66,6 +64,9 @@ public class FieldsPanel extends JPanel {
 		nameLabel = new JLabel("File Name: ");
 		extensionLabel = new JLabel("Extension: ");
 		sizeLabel = new JLabel("Size: ");
+        dirCheckbox = new JCheckBox("Directory");
+        hiddenCheckbox = new JCheckBox("Hidden");
+        readonlyCheckbox = new JCheckBox("Read-only");
 		chooserButton = new JButton("...");
 		sizeOperator = new JComboBox(new Object[] { "==", ">", ">=", "<", "<=" });
 		sizeScale = new JComboBox(new Object[] { "", "kB", "MB", "GB" });
@@ -90,6 +91,9 @@ public class FieldsPanel extends JPanel {
 		addComponent(sizeOperator, 2, 3, false);
 		addComponent(sizeScale, 3, 3, false);
 		addComponent(chooserButton, 2, 0, false);
+        addComponent(dirCheckbox, 0, 4, false);
+        addComponent(hiddenCheckbox, 0, 5, false);
+        addComponent(readonlyCheckbox, 0, 6, false);
 
 	}
 
@@ -125,6 +129,21 @@ public class FieldsPanel extends JPanel {
 		return sizeScale.getSelectedItem().toString();
 
 	}
+
+    public boolean getIsDirectory() {
+        return dirCheckbox.isSelected();
+
+    }
+
+    public boolean getIsHidden() {
+        return hiddenCheckbox.isSelected();
+
+    }
+
+    public boolean getIsReadOnly() {
+        return readonlyCheckbox.isSelected();
+
+    }
 
 	/**
 	 * This method add a component in the panel in the position specified by col and

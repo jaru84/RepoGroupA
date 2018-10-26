@@ -28,7 +28,6 @@ import javax.swing.JPanel;
 public class ParametersPanel extends JPanel {
 	private FieldsPanel fieldsPanel;
 	private JButton searchButton;
-	private JLabel errorMessage;
 
 	public ParametersPanel() {
 		setLayout(new BorderLayout());
@@ -38,10 +37,8 @@ public class ParametersPanel extends JPanel {
 	public void init() {
 		searchButton = new JButton("Search");
 		fieldsPanel = new FieldsPanel();
-		errorMessage = new JLabel("");
 		add(fieldsPanel, BorderLayout.NORTH);
 		add(searchButton, BorderLayout.SOUTH);
-		add(errorMessage, BorderLayout.CENTER);
 
 	}
 
@@ -78,11 +75,22 @@ public class ParametersPanel extends JPanel {
 
 	}
 
-	public JButton getSearchButton() {
-		return searchButton;
+	public boolean getIsDirectory() {
+		return fieldsPanel.getIsDirectory();
+
 	}
 
-	public JLabel getErrorLabel() {
-		return errorMessage;
+	public boolean getIsHidden() {
+		return fieldsPanel.getIsHidden();
+
+	}
+
+	public boolean getIsReadOnly() {
+		return fieldsPanel.getIsReadOnly();
+
+	}
+
+	public JButton getSearchButton() {
+		return searchButton;
 	}
 }
