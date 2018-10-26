@@ -12,7 +12,7 @@ package com.fundation.search.view;
 
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 /**
  * This class defines the window to contain all the panels and GUI elements.
@@ -92,21 +92,6 @@ public class SearchWindow extends JFrame {
 
 	}
 
-	public boolean getIsDirectory() {
-		return contentPane.getIsDirectory();
-
-	}
-
-	public boolean getIsHidden() {
-		return contentPane.getIsHidden();
-
-	}
-
-	public boolean getIsReadOnly() {
-		return contentPane.getIsReadOnly();
-
-	}
-
 	/**
 	 * This method set a listener to Search button
 	 */
@@ -124,9 +109,12 @@ public class SearchWindow extends JFrame {
 	}
 
 	public void setErrorMessage(String message) {
-		JOptionPane errorPane = new JOptionPane(message, JOptionPane.ERROR_MESSAGE);
-		JDialog dialog = errorPane.createDialog(null, "Error");
-		dialog.setVisible(true);
+		contentPane.setError(message);
+
+	}
+
+	public void cleanErrorMessage() {
+		contentPane.cleanError();
 
 	}
 

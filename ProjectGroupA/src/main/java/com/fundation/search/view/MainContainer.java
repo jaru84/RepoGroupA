@@ -69,21 +69,6 @@ public class MainContainer extends Container {
 
 	}
 
-	public boolean getIsDirectory() {
-		return parametersPanel.getIsDirectory();
-
-	}
-
-	public boolean getIsHidden() {
-		return parametersPanel.getIsHidden();
-
-	}
-
-	public boolean getIsReadOnly() {
-		return parametersPanel.getIsReadOnly();
-
-	}
-
 	public JButton getSearchButton() {
 		return parametersPanel.getSearchButton();
 	}
@@ -91,6 +76,14 @@ public class MainContainer extends Container {
 	public void setResults(Object[] data) {
 		resultsPanel.setTableDate(data);
 
+	}
+
+	public void setError(String message) {
+		parametersPanel.getErrorLabel().setText(message);
+	}
+
+	public void cleanError() {
+		parametersPanel.getErrorLabel().setText("");
 	}
 
 	public void clearTable() {

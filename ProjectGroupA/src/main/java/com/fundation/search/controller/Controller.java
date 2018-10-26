@@ -96,9 +96,5 @@ public class Controller {
 
 		resultList.clear();
 
-		System.out.println("dir: "+windowUI.getIsDirectory());
-		System.out.println("hidden: "+windowUI.getIsHidden());
-		System.out.println("readonly: "+windowUI.getIsReadOnly());
-
 	}
 }
