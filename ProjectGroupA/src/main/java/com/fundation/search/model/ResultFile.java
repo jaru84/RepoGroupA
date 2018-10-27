@@ -26,9 +26,22 @@ public class ResultFile extends CustomFile {
 		super();
 		owner= "";
 	}
+		
+	public ResultFile(String inputLine) {
+		super();
+		setFileValues(inputLine);
+	}
 	
-	public ResultFile(String path, String fileName, String ext) {
-		super (path, fileName, ext);
+	private void setFileValues(String inputLine) {
+		String[] pathValues = inputLine.split("\\\\");
+		String fullFileName = pathValues[pathValues.length - 1];
+		String[] fileNameValues = fullFileName.split("\\.");
+		fileName = fileNameValues[0]; 
+		ext = fileNameValues[1];
+		path = "";
+		for(int i = 0; i< pathValues.length - 1; i++) {
+			path += pathValues[i] + "\\";
+		}
 	}
 	
 	/**

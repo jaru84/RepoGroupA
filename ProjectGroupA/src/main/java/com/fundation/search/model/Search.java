@@ -27,14 +27,12 @@ public class Search {
 
 	private ArrayList<ResultFile> resultFiles;
 	private Process pDOS;	
-	private ConvertDirGot dirGot;
 
 	/**
 	 * constructor for Search class.
 	 */
 	public Search() {
 		resultFiles = new ArrayList<ResultFile>();
-		dirGot = new ConvertDirGot();
 	}
 
 	/**
@@ -51,7 +49,7 @@ public class Search {
 			res = res +  "\"" + path + name + "." + ext + "\"" + " /s /b /a-d";
 		}
 		String[] command= { "cmd.exe", "/c", res};
-		System.out.println(res);
+		//System.out.println(res);
 		return command;
 	}
 
@@ -65,10 +63,10 @@ public class Search {
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(pDOS.getInputStream()));
 		String inputLine = "";
-
+		
 		while ((inputLine = in.readLine()) != null) {
 			if (filterResults(inputLine, file)) {
-				this.resultFiles.add(dirGot.convertDir(inputLine));	
+				resultFiles.add(new ResultFile(inputLine));
 			}
 		}
 		in.close();
