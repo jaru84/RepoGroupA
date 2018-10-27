@@ -19,48 +19,19 @@ package com.fundation.search.model;
  */
 public class SearcherCriteria extends CustomFile {
 
-	private String size, operator, storageUnit;
+	private String operator;
+	private boolean isDirectory, isHidden, isReadOnly;
 
 	/**
 	 * constructor for SearcherCriteria class where the values inserted to be find
 	 * will be stored as an object.
 	 */
 	public SearcherCriteria() {
-		path = "";
-		fileName = "";
-		ext = "";
-		size = "";
+		super();
 		operator = "";
-		storageUnit = "";
-
-	}
-
-	/**
-	 * method setter to path value.
-	 */
-	public void setPath(String path) {
-		this.path = path;
-	}
-
-	/**
-	 * method setter to File Name value.
-	 */
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
-	/**
-	 * method setter to extension value.
-	 */
-	public void setExt(String ext) {
-		this.ext = ext;
-	}
-
-	/**
-	 * method setter to size value.
-	 */
-	public void setSize(String size) {
-		this.size = size;
+		isDirectory = false;
+		isHidden = false;
+		isReadOnly = false;
 	}
 
 	/**
@@ -71,38 +42,24 @@ public class SearcherCriteria extends CustomFile {
 	}
 
 	/**
-	 * method setter to storage unit value.
+	 * method setter to Directory box.
 	 */
-	public void setStorageUnit(String storageUnit) {
-		this.storageUnit = storageUnit;
+	public void setIsDirectory(boolean isDirectory) {
+		this.isDirectory = isDirectory;
 	}
-
+	
 	/**
-	 * method getter to path value.
+	 * method setter to Hidden box.
 	 */
-	public String getPath() {
-		return path;
+	public void setIsHidden(boolean isHidden) {
+		this.isHidden = isHidden;
 	}
-
+	
 	/**
-	 * method getter to File Name value.
+	 * method setter to Read Only box.
 	 */
-	public String getFileName() {
-		return fileName;
-	}
-
-	/**
-	 * method getter to extension value.
-	 */
-	public String getExt() {
-		return ext;
-	}
-
-	/**
-	 * method getter to size value.
-	 */
-	public String getSize() {
-		return size;
+	public void setIsReadOnly(boolean isReadOnly) {
+		this.isReadOnly = isReadOnly;
 	}
 
 	/**
@@ -111,18 +68,32 @@ public class SearcherCriteria extends CustomFile {
 	public String getOperator() {
 		return operator;
 	}
-
+	
 	/**
-	 * method getter to storage unit value.
+	 * method setter to Directory box.
 	 */
-	public String getStorageUnit() {
-		return storageUnit;
+	public boolean getIsDirectory() {
+		return this.isDirectory;
+	}
+	
+	/**
+	 * method setter to Hidden box.
+	 */
+	public boolean getIsHidden() {
+		return this.isHidden;
+	}
+	
+	/**
+	 * method setter to Read Only box.
+	 */
+	public boolean getIsReadOnly() {
+		return this.isReadOnly;
 	}
 
 	/**
-	 * method String to String to print values of object.
+	 * method toString to display attributes from Searcher Criteria object.
 	 */
-	public String toString() {
-		return super.toString() + "\nSize: " + size + "\nOperator: " + "\nStorage Unit: " + storageUnit;
+	public String toString () {
+		return super.toString() + "\nOperator: " + operator + "\nIs Directory: " + isDirectory + "\nIs Hidden: " + isHidden + "\nIs ReadOnly: " + isReadOnly;
 	}
 }
