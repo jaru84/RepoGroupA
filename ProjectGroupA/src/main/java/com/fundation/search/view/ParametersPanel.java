@@ -12,7 +12,7 @@
 
 package com.fundation.search.view;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -28,8 +28,12 @@ public class ParametersPanel extends JPanel {
     private JButton searchButton;
 
     public ParametersPanel() {
-        setLayout(new BorderLayout());
+        setting();
         init();
+    }
+
+    public void setting(){
+        setLayout(new BorderLayout());
     }
 
     public void init() {
