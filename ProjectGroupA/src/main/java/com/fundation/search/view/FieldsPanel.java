@@ -191,13 +191,19 @@ public class FieldsPanel extends JPanel {
     public void toggleTextFields(ItemEvent e){
         if (e.getStateChange() == ItemEvent.SELECTED){
             nameText.setEditable(false);
-            extensionText.setEditable(false);;
-            sizeText.setEditable(false);;
+            extensionText.setEditable(false);
+            sizeText.setEditable(false);
+            sizeOperator.setEnabled(false);
+            sizeScale.setEnabled(false);
+            readonlyCheckbox.setEnabled(false);
         }
         else{
             nameText.setEditable(true);
             extensionText.setEditable(true);
             sizeText.setEditable(true);
+            sizeOperator.setEnabled(true);
+            sizeScale.setEnabled(true);
+            readonlyCheckbox.setEnabled(true);
 
         }
     }
