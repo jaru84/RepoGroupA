@@ -13,7 +13,7 @@ package com.fundation.search.view;
 
 import java.awt.Container;
 import java.awt.GridLayout;
-import javax.swing.JButton;
+import javax.swing.*;
 
 /**
  * This class contains the panels which displays the results and parameters, in
@@ -30,7 +30,7 @@ public class MainContainer extends Container {
         resultsPanel = new ResultsPanel();
         parametersPanel = new ParametersPanel();
 
-        setLayout(new GridLayout(1, 2));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(parametersPanel);
         add(resultsPanel);
     }

@@ -97,9 +97,9 @@ public class FieldsPanel extends JPanel {
         addComponent(sizeOperator, 2, 3, false);
         addComponent(sizeScale, 3, 3, false);
         addComponent(chooserButton, 2, 0, false);
-        addComponent(dirCheckbox, 0, 4, false);
-        addComponent(hiddenCheckbox, 0, 5, false);
-        addComponent(readonlyCheckbox, 0, 6, false);
+        addComponent(dirCheckbox, 4, 0, true);
+        addComponent(hiddenCheckbox, 4, 1, true);
+        addComponent(readonlyCheckbox, 4, 2, true);
 
     }
 

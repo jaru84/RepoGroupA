@@ -13,12 +13,13 @@ package com.fundation.search.view;
 
 import java.awt.BorderLayout;
 import java.util.Vector;
-
+import javax.swing.JTable;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.swing.border.TitledBorder;
+import javax.swing.BorderFactory;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ListSelectionModel;
 
 /**
  * This class displays the results of searching in a table.
@@ -32,6 +33,7 @@ public class ResultsPanel extends JPanel {
     DefaultTableModel defaultTableModel;
     JScrollPane scrollPane;
     Vector columnHeaders;
+    TitledBorder borderPane;
 
     public ResultsPanel() {
         setting();
@@ -41,6 +43,10 @@ public class ResultsPanel extends JPanel {
 
     public void setting() {
         setLayout(new BorderLayout());
+        borderPane = BorderFactory.createTitledBorder("Search Results");
+        borderPane.setTitleJustification(TitledBorder.CENTER);
+        borderPane.setTitlePosition(TitledBorder.BELOW_TOP);
+        setBorder(borderPane);
 
     }
 
@@ -58,7 +64,7 @@ public class ResultsPanel extends JPanel {
             }
         };
         resultsTable.setModel(defaultTableModel);
-        resultsTable.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
+        resultsTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
         resultsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane = new JScrollPane(resultsTable);
         add(scrollPane, BorderLayout.CENTER);
