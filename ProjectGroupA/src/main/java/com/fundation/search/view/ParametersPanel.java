@@ -38,7 +38,6 @@ public class ParametersPanel extends JPanel {
 
     public void init() {
         searchButton = new JButton("Search");
-        searchButton.setPreferredSize(new Dimension(20,20));
         fieldsPanel = new FieldsPanel();
         add(fieldsPanel, BorderLayout.NORTH);
         add(searchButton, BorderLayout.SOUTH);

@@ -16,6 +16,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -71,6 +73,13 @@ public class FieldsPanel extends JPanel {
         extensionLabel = new JLabel("Extension: ");
         sizeLabel = new JLabel("Size: ");
         dirCheckbox = new JCheckBox("Directory");
+        ItemListener dirListener = new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                toggleTextFields(e);
+            }
+        };
+        dirCheckbox.addItemListener(dirListener);
         hiddenCheckbox = new JCheckBox("Hidden");
         readonlyCheckbox = new JCheckBox("Read-only");
         chooserButton = new JButton("...");
@@ -177,5 +186,19 @@ public class FieldsPanel extends JPanel {
             pathText.setText(file.toString());
         }
 
+    }
+
+    public void toggleTextFields(ItemEvent e){
+        if (e.getStateChange() == ItemEvent.SELECTED){
+            nameText.setEditable(false);
+            extensionText.setEditable(false);;
+            sizeText.setEditable(false);;
+        }
+        else{
+            nameText.setEditable(true);
+            extensionText.setEditable(true);
+            sizeText.setEditable(true);
+
+        }
     }
 }
