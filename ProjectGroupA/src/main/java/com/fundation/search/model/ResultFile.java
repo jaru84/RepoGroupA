@@ -26,21 +26,27 @@ public class ResultFile extends CustomFile {
 		super();
 		owner= "";
 	}
-		
-	public ResultFile(String inputLine) {
+	
+	public ResultFile(String inputLine, SearcherCriteria file) {
 		super();
-		setFileValues(inputLine);
+		setFileValues(inputLine, file);
 	}
 	
-	private void setFileValues(String inputLine) {
-		String[] pathValues = inputLine.split("\\\\");
-		String fullFileName = pathValues[pathValues.length - 1];
-		String[] fileNameValues = fullFileName.split("\\.");
-		fileName = fileNameValues[0]; 
-		ext = fileNameValues[1];
-		path = "";
-		for(int i = 0; i< pathValues.length - 1; i++) {
-			path += pathValues[i] + "\\";
+	private void setFileValues(String inputLine, SearcherCriteria file) {
+		if (file.getIsDirectory()) {
+			fileName = "";
+			ext = "";
+			path= inputLine;
+		} else {
+			String[] pathValues = inputLine.split("\\\\");
+			String fullFileName = pathValues[pathValues.length - 1];
+			String[] fileNameValues = fullFileName.split("\\.");
+			fileName = fileNameValues[0]; 
+			ext = fileNameValues[1];
+			path = "";
+			for(int i = 0; i< pathValues.length - 1; i++) {
+				path += pathValues[i] + "\\";
+			}
 		}
 	}
 	

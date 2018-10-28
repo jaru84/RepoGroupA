@@ -39,17 +39,25 @@ public class Search {
 	 * Method to create the command in DOS. Considering the path
 	 * is already in a correct format.
 	 */
-	private String [] createCommand(String name, String ext, String path) {
-
+	private String [] createCommand(SearcherCriteria file) {
+		String name = file.getFileName();
+		String ext = file.getExt();
+		String path = file.getPath();
+		String size = file.getSize();
+		String operator = file.getOperator();
+		String sizeScale = file.getSizeScale();
+		Boolean isDirectory = file.getIsDirectory();
+		
 		String res = "dir ";
-
-		if (!path.endsWith("\\")) {
+		if (isDirectory){
+			res = res +  "\"" + path + "\" /ad /b /s";
+		} else if (!path.endsWith("\\")) {
 			res = res + "\"" + path + "\\" + name + "." + ext + "\"" + " /s /b /a-d";
 		} else {
 			res = res +  "\"" + path + name + "." + ext + "\"" + " /s /b /a-d";
 		}
 		String[] command= { "cmd.exe", "/c", res};
-		//System.out.println(res);
+		System.out.println(res);
 		return command;
 	}
 
@@ -59,14 +67,14 @@ public class Search {
 	 */
 	public ArrayList<ResultFile> searchFile(SearcherCriteria file) throws IOException {
 		
-		pDOS = Runtime.getRuntime().exec(createCommand(file.getFileName(), file.getExt(), file.getPath()));
+		pDOS = Runtime.getRuntime().exec(createCommand(file));
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(pDOS.getInputStream()));
 		String inputLine = "";
 		
 		while ((inputLine = in.readLine()) != null) {
 			if (filterResults(inputLine, file)) {
-				resultFiles.add(new ResultFile(inputLine));
+				resultFiles.add(new ResultFile(inputLine, file));
 			}
 		}
 		in.close();
@@ -74,7 +82,9 @@ public class Search {
 	}
 	
 	private boolean filterResults(String inputline, SearcherCriteria file) {
-		if ((file.getFileName() == "*") || (file.getExt() == "*")) {
+		if (file.getIsDirectory()) {
+			return true;
+		} else if ((file.getFileName() == "*") || (file.getExt() == "*")) {
 			return true;
 		} else if (inputline.contains(file.getFileName()) || inputline.contains(file.getExt())) {
 			return true;

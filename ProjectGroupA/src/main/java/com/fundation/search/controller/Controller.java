@@ -93,7 +93,7 @@ public class Controller {
 			windowUI.setErrorMessage("No items match your search.");
 		} else {
 			for (ResultFile item : resultList) {
-				//System.out.println(item.getPath()+" "+item.getFileName()+ " "+item.getExt());
+				System.out.println(item.getPath()+" "+item.getFileName()+ " "+item.getExt());
 				Object[] arrRes = { item.getPath(), item.getFileName(), item.getExt(), item.getSize() };
 				windowUI.setSearchResults(arrRes);
 			}
