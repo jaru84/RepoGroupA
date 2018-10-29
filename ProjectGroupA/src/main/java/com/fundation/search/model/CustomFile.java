@@ -21,14 +21,19 @@ public abstract class CustomFile {
 	protected String fileName;
 	protected String ext;
 	protected String size;
-	protected String sizeScale;
+	protected boolean isDirectory;
+	protected boolean isHidden;
+	protected boolean isReadOnly;
 	
 	protected CustomFile() {
 		path = "";
 		fileName = "";
 		ext = "";
 		size = "";
-		sizeScale = "";
+		isDirectory = false;
+		isHidden = false;
+		isReadOnly = false;
+		
 	}
 	
 	protected CustomFile(String path, String fileName, String ext) {
@@ -66,10 +71,24 @@ public abstract class CustomFile {
 	}
 	
 	/**
-	 * method setter to size scale value.
+	 * method setter to Directory box.
 	 */
-	public void setSizeScale(String sizeScale) {
-		this.sizeScale = sizeScale;
+	public void setIsDirectory(boolean isDirectory) {
+		this.isDirectory = isDirectory;
+	}
+	
+	/**
+	 * method setter to Hidden box.
+	 */
+	public void setIsHidden(boolean isHidden) {
+		this.isHidden = isHidden;
+	}
+	
+	/**
+	 * method setter to Read Only box.
+	 */
+	public void setIsReadOnly(boolean isReadOnly) {
+		this.isReadOnly = isReadOnly;
 	}
 	
 	/**
@@ -99,19 +118,33 @@ public abstract class CustomFile {
 	public String getSize() {
 		return this.size;
 	}
-	
+
 	/**
-	 * method getter to size scale value.
+	 * method getter to Directory box.
 	 */
-	public String getSizeScale() {
-		return this.sizeScale;
+	public boolean getIsDirectory() {
+		return this.isDirectory;
 	}
 	
+	/**
+	 * method getter to Hidden box.
+	 */
+	public boolean getIsHidden() {
+		return this.isHidden;
+	}
+	
+	/**
+	 * method getter to Read Only box.
+	 */
+	public boolean getIsReadOnly() {
+		return this.isReadOnly;
+	}
+
 	/**
 	 * method ToString  to print data from CustomerFile object.
 	 */
 	public String toString() {
 		return "You have inserted following values:\nPath: " + path + "\nFile Name: " + fileName + "\nExtension: "
-				+ ext + "\nSize: " + size + "\nSize Scale: " + sizeScale;
+				+ ext + "\nSize: " + size;
 	}
 }
