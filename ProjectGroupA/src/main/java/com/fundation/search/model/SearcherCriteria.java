@@ -10,8 +10,6 @@
  *  with Jalasoft.
  *******************************************************************************/
 package com.fundation.search.model;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Class created to manage the search criteria object and its attributes.
@@ -20,27 +18,82 @@ import java.util.Map;
  * @version 1.0.
  */
 public class SearcherCriteria extends CustomFile {
-	public Map<Integer, String> mapOperator = new HashMap<Integer, String>();
-	public String size, operator, storageUnit;
-		
+
+	private String operator;
+	private boolean isDirectory, isHidden, isReadOnly;
+
+	/**
+	 * constructor for SearcherCriteria class where the values inserted to be find
+	 * will be stored as an object.
+	 */
 	public SearcherCriteria() {
-		path= "";
-		fileName= "";
-		ext="";	
-		size="";
-		operator="";
-		storageUnit="";
-		mapOperator= new HashMap();
-		loadOperators();
+		super();
+		operator = "";
+		isDirectory = false;
+		isHidden = false;
+		isReadOnly = false;
 	}
-	public void loadOperators() {
-		mapOperator.put(1, "==");
-		mapOperator.put(2, "<");
-		mapOperator.put(3, "<=");
-		mapOperator.put(4, ">");
-		mapOperator.put(5, ">=");
+
+	/**
+	 * method setter to operator value.
+	 */
+	public void setOperator(String operator) {
+		this.operator = operator;
 	}
-	public String toString() {
-		return super.toString()+"\nSize: "+size+"\nOperator: "+mapOperator.get(1);
+
+	/**
+	 * method setter to Directory box.
+	 */
+	public void setIsDirectory(boolean isDirectory) {
+		this.isDirectory = isDirectory;
+	}
+	
+	/**
+	 * method setter to Hidden box.
+	 */
+	public void setIsHidden(boolean isHidden) {
+		this.isHidden = isHidden;
+	}
+	
+	/**
+	 * method setter to Read Only box.
+	 */
+	public void setIsReadOnly(boolean isReadOnly) {
+		this.isReadOnly = isReadOnly;
+	}
+
+	/**
+	 * method getter to operator value.
+	 */
+	public String getOperator() {
+		return operator;
+	}
+	
+	/**
+	 * method setter to Directory box.
+	 */
+	public boolean getIsDirectory() {
+		return this.isDirectory;
+	}
+	
+	/**
+	 * method setter to Hidden box.
+	 */
+	public boolean getIsHidden() {
+		return this.isHidden;
+	}
+	
+	/**
+	 * method setter to Read Only box.
+	 */
+	public boolean getIsReadOnly() {
+		return this.isReadOnly;
+	}
+
+	/**
+	 * method toString to display attributes from Searcher Criteria object.
+	 */
+	public String toString () {
+		return super.toString() + "\nOperator: " + operator + "\nIs Directory: " + isDirectory + "\nIs Hidden: " + isHidden + "\nIs ReadOnly: " + isReadOnly;
 	}
 }

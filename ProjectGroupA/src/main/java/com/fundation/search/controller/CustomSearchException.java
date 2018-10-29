@@ -10,16 +10,19 @@
  *  with Jalasoft.
  *******************************************************************************/
 package com.fundation.search.controller;
+
 /**
  * Class created to manage our custom exceptions.
  *
  * @author Jacqueline Rosales
  * @version 1.0.
  */
-public class CustomSearchException extends Exception { 
+public class CustomSearchException extends Exception {
+
 	/**
-     *  method to send our custom message to super class.*/
+	 * method to send our custom message to super class.
+	 */
 	public CustomSearchException(String errorMessage) {
-        super(errorMessage);
-    }
+		super(errorMessage);
+	}
 }
