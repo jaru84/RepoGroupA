@@ -12,6 +12,7 @@
 package com.fundation.search.model;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class Search {
 	private Process pDOS;	
 
 	/**
-	 * constructor for Search class.
+	 * Constructor for Search class.
 	 */
 	public Search() {
 		resultFiles = new ArrayList<ResultFile>();
@@ -43,18 +44,31 @@ public class Search {
 		String name = file.getFileName();
 		String ext = file.getExt();
 		String path = file.getPath();
-		String size = file.getSize();
-		String operator = file.getOperator();
-		String sizeScale = file.getSizeScale();
-		Boolean isDirectory = file.getIsDirectory();
-		
+				
 		String res = "dir ";
-		if (isDirectory){
-			res = res +  "\"" + path + "\" /ad /b /s";
-		} else if (!path.endsWith("\\")) {
-			res = res + "\"" + path + "\\" + name + "." + ext + "\"" + " /s /b /a-d";
+		
+		//If it is a directory, the readOnly parameter is not valid.
+		if ( file.getIsDirectory() ){
+			if (!file.getIsHidden()) {
+				res = res +  "\"" + path + "\" /s /b /ad";
+			} else {
+				res = res +  "\"" + path + "\" /s /b /adh";
+			}
+			
 		} else {
-			res = res +  "\"" + path + name + "." + ext + "\"" + " /s /b /a-d";
+			String parameter = "/a";
+			if (file.getIsHidden()) {
+				parameter = parameter + "h";
+			}
+			if (file.getIsReadOnly()) {
+				parameter = parameter + "r";
+			}
+			parameter = parameter + "-d";
+			if (!path.endsWith("\\")) {
+				res = res + "\"" + path + "\\" + name + "." + ext + "\"" + " /s /b "+ parameter;
+			} else {
+				res = res +  "\"" + path + name + "." + ext + "\"" + " /s /b " + parameter;
+			}
 		}
 		String[] command= { "cmd.exe", "/c", res};
 		System.out.println(res);
@@ -62,8 +76,7 @@ public class Search {
 	}
 
 	/**
-	 * Method to run the command in DOS which will receive for this time 3
-	 * parameters path, name and extension It will also treat the output.
+	 * Method to run the command in DOS and treat the output with the criteria.
 	 */
 	public ArrayList<ResultFile> searchFile(SearcherCriteria file) throws IOException {
 		
@@ -72,9 +85,19 @@ public class Search {
 		BufferedReader in = new BufferedReader(new InputStreamReader(pDOS.getInputStream()));
 		String inputLine = "";
 		
+		if (!file.getSize().equals("0")) {
+			file.sizeToBytes();
+		}
+				
 		while ((inputLine = in.readLine()) != null) {
 			if (filterResults(inputLine, file)) {
-				resultFiles.add(new ResultFile(inputLine, file));
+				if (!file.getSize().equals("0")) {
+					if (matchSizeCriteria(inputLine, file)) {
+						resultFiles.add(new ResultFile(inputLine, file));
+					}
+				} else {
+					resultFiles.add(new ResultFile(inputLine, file));
+				}
 			}
 		}
 		in.close();
@@ -90,4 +113,47 @@ public class Search {
 			return true;
 		} else return false;
 	}
+	
+	/**
+	 * Method which compares the size specified in the criteria and the files found.
+	 */
+	private boolean matchSizeCriteria (String inputline, SearcherCriteria criteria) {
+		boolean res = false;
+		if (! criteria.getSize().equals("0")) {
+			long cSize = Long.parseLong(criteria.getSize());
+			
+			File tFile = new File (inputline);
+			long tFileSize = tFile.length();
+			
+			switch (criteria.getOperator()) {
+			case "==":
+				if (tFileSize == cSize) {
+					res = true;
+				}
+				break;
+			case ">":
+				if (tFileSize > cSize) {
+					res = true;
+				}
+				break;
+			case ">=":
+				if (tFileSize >= cSize) {
+					res = true;
+				}
+				break;
+			case "<":
+				if (tFileSize < cSize) {
+					res = true;
+				}
+				break;
+			case "<=":
+				if (tFileSize <= cSize) {
+					res = true;
+				}
+				break;
+			}			
+		}
+		return res;
+	}
+		
 }
