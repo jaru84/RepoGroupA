@@ -68,6 +68,16 @@ public class MainContainer extends Container {
 
     }
 
+    public String getOwner() {
+        return parametersPanel.getOwner();
+
+    }
+
+    public String getContent() {
+        return parametersPanel.getContent();
+
+    }
+
     public boolean getIsDirectory() {
         return parametersPanel.getIsDirectory();
 

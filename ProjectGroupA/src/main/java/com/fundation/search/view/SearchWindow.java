@@ -26,8 +26,8 @@ public class SearchWindow extends JFrame {
     /**
      * Parameters for frame:
      */
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = 300;
+    private static final int WIDTH = 900;
+    private static final int HEIGHT = 350;
     private static final int X_ORIGIN = 150;
     private static final int Y_ORIGIN = 250;
 
@@ -97,6 +97,16 @@ public class SearchWindow extends JFrame {
 
     public String getSizeScale() {
         return contentPane.getSizeScale();
+
+    }
+
+    public String getFileOwner() {
+        return contentPane.getOwner();
+
+    }
+
+    public String getContent() {
+        return contentPane.getContent();
 
     }
 

@@ -77,6 +77,16 @@ public class ParametersPanel extends JPanel {
 
     }
 
+    public String getOwner() {
+        return fieldsPanel.getOwner();
+
+    }
+
+    public String getContent() {
+        return fieldsPanel.getContent();
+
+    }
+
     public boolean getIsDirectory() {
         return fieldsPanel.getIsDirectory();
 

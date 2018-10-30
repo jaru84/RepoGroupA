@@ -19,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
+import java.util.Date;
+import java.util.Properties;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -26,7 +28,9 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
-
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 /**
  * This panel contains the field names and text fields to enter the searching
@@ -40,10 +44,15 @@ public class FieldsPanel extends JPanel {
     private JTextField nameText;
     private JTextField extensionText;
     private JTextField sizeText;
+    private JTextField ownerText;
+    private JTextField contentText;
     private JLabel pathLabel;
     private JLabel nameLabel;
     private JLabel extensionLabel;
     private JLabel sizeLabel;
+    private JLabel ownerLabel;
+    private JLabel contentLabel;
+    private JLabel datePickerLabel;
     private JButton chooserButton;
     private JComboBox sizeOperator;
     private JComboBox sizeScale;
@@ -51,6 +60,10 @@ public class FieldsPanel extends JPanel {
     private JCheckBox dirCheckbox;
     private JCheckBox hiddenCheckbox;
     private JCheckBox readonlyCheckbox;
+    private UtilDateModel datePickerModel;
+    private JDatePanelImpl datePickerPanel;
+    private JDatePickerImpl datePicker;
+    private Properties pickerProperties;
     private final int SIZE_TEXT_BOX = 20;
 
     public FieldsPanel() {
@@ -68,10 +81,17 @@ public class FieldsPanel extends JPanel {
         extensionText.setColumns(SIZE_TEXT_BOX);
         sizeText = new JTextField();
         sizeText.setColumns(SIZE_TEXT_BOX);
+        ownerText = new JTextField();
+        ownerText.setColumns(SIZE_TEXT_BOX);
+        contentText = new JTextField();
+        contentText.setColumns(SIZE_TEXT_BOX);
         pathLabel = new JLabel("Path: ");
         nameLabel = new JLabel("File Name: ");
         extensionLabel = new JLabel("Extension: ");
         sizeLabel = new JLabel("Size: ");
+        ownerLabel = new JLabel("Owner: ");
+        contentLabel = new JLabel("Content: ");
+        datePickerLabel = new JLabel("Creation Date: ");
         dirCheckbox = new JCheckBox("Directory");
         ItemListener dirListener = new ItemListener() {
             @Override
@@ -87,6 +107,13 @@ public class FieldsPanel extends JPanel {
         sizeScale = new JComboBox(new Object[]{"", "kB", "MB", "GB"});
         chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        datePickerModel = new UtilDateModel();
+        pickerProperties = new Properties();
+        pickerProperties.put("text.today", "Today");
+        pickerProperties.put("text.month", "Month");
+        pickerProperties.put("text.year", "Year");
+        datePickerPanel = new JDatePanelImpl(datePickerModel, pickerProperties);
+        datePicker = new JDatePickerImpl(datePickerPanel, new DateLabelFormatter());
 
         chooserButton.addActionListener(new ActionListener() {
             @Override
@@ -105,10 +132,16 @@ public class FieldsPanel extends JPanel {
         addComponent(sizeText, 1, 3, true);
         addComponent(sizeOperator, 2, 3, false);
         addComponent(sizeScale, 3, 3, false);
+        addComponent(ownerLabel, 0, 4, false);
+        addComponent(ownerText, 1, 4, true);
+        addComponent(contentLabel, 0, 5, false);
+        addComponent(contentText, 1, 5, true);
         addComponent(chooserButton, 2, 0, false);
         addComponent(dirCheckbox, 4, 0, true);
         addComponent(hiddenCheckbox, 4, 1, true);
         addComponent(readonlyCheckbox, 4, 2, true);
+        addComponent(datePickerLabel, 0, 6, false);
+        addComponent(datePicker, 1, 6, false);
 
     }
 
@@ -145,6 +178,16 @@ public class FieldsPanel extends JPanel {
 
     }
 
+    public String getOwner() {
+        return ownerText.getText();
+
+    }
+
+    public String getContent() {
+        return contentText.getText();
+
+    }
+
     public boolean getIsDirectory() {
         return dirCheckbox.isSelected();
 
@@ -157,6 +200,11 @@ public class FieldsPanel extends JPanel {
 
     public boolean getIsReadOnly() {
         return readonlyCheckbox.isSelected();
+
+    }
+
+    public Date getCreationDate() {
+        return (Date)datePicker.getModel().getValue();
 
     }
 
@@ -195,6 +243,7 @@ public class FieldsPanel extends JPanel {
             sizeText.setEditable(false);
             sizeOperator.setEnabled(false);
             sizeScale.setEnabled(false);
+            contentText.setEditable(false);
             readonlyCheckbox.setEnabled(false);
         }
         else{
@@ -204,6 +253,7 @@ public class FieldsPanel extends JPanel {
             sizeOperator.setEnabled(true);
             sizeScale.setEnabled(true);
             readonlyCheckbox.setEnabled(true);
+            contentText.setEditable(true);
 
         }
     }
