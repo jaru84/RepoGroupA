@@ -20,76 +20,114 @@ package com.fundation.search.model;
 public class SearcherCriteria extends CustomFile {
 
 	private String operator;
-	private boolean isDirectory, isHidden, isReadOnly;
+	private String sizeScale;
+	private boolean isDirectory;
+	private boolean isHidden;
+	private boolean isReadOnly;
 
 	/**
-	 * constructor for SearcherCriteria class where the values inserted to be find
+	 * Constructor for SearcherCriteria class where the values inserted to be find
 	 * will be stored as an object.
 	 */
 	public SearcherCriteria() {
 		super();
 		operator = "";
+		sizeScale = "";
 		isDirectory = false;
 		isHidden = false;
 		isReadOnly = false;
 	}
 
 	/**
-	 * method setter to operator value.
+	 * Method setter to operator value.
 	 */
 	public void setOperator(String operator) {
 		this.operator = operator;
 	}
 
 	/**
-	 * method setter to Directory box.
+	 * Method setter to size scale value.
 	 */
-	public void setIsDirectory(boolean isDirectory) {
-		this.isDirectory = isDirectory;
+	public void setSizeScale(String sizeScale) {
+		this.sizeScale = sizeScale;
 	}
 	
 	/**
-	 * method setter to Hidden box.
-	 */
-	public void setIsHidden(boolean isHidden) {
-		this.isHidden = isHidden;
-	}
-	
-	/**
-	 * method setter to Read Only box.
-	 */
-	public void setIsReadOnly(boolean isReadOnly) {
-		this.isReadOnly = isReadOnly;
-	}
-
-	/**
-	 * method getter to operator value.
+	 * Method getter to operator value.
 	 */
 	public String getOperator() {
 		return operator;
 	}
 	
 	/**
-	 * method setter to Directory box.
+	 * Method setter to Directory box.
+	 */
+	public void setIsDirectory(boolean isDirectory) {
+		this.isDirectory = isDirectory;
+	}
+	
+	/**
+	 * Method setter to Hidden box.
+	 */
+	public void setIsHidden(boolean isHidden) {
+		this.isHidden = isHidden;
+	}
+	
+	/**
+	 * Method setter to Read Only box.
+	 */
+	public void setIsReadOnly(boolean isReadOnly) {
+		this.isReadOnly = isReadOnly;
+	}
+	
+	/**
+	 * method getter to size scale value.
+	 */
+	public String getSizeScale() {
+		return this.sizeScale;
+	}
+	
+	/**
+	 * Method getter to Directory box.
 	 */
 	public boolean getIsDirectory() {
 		return this.isDirectory;
 	}
 	
 	/**
-	 * method setter to Hidden box.
+	 * Method getter to Hidden box.
 	 */
 	public boolean getIsHidden() {
 		return this.isHidden;
 	}
 	
 	/**
-	 * method setter to Read Only box.
+	 * Method getter to Read Only box.
 	 */
 	public boolean getIsReadOnly() {
 		return this.isReadOnly;
 	}
-
+	
+	/**
+	 * Method which help to convert the criteria size to bytes.
+	 * Assumption, the default value is zero.
+	 */
+	public void sizeToBytes () {
+		long tempSize = Long.parseLong(this.size);
+		if (this.sizeScale.toUpperCase().equals("KB")) {
+			tempSize = tempSize * 1024;
+		} else {
+			if (this.sizeScale.toUpperCase().equals("MB")) {
+				tempSize = tempSize * 1024 * 1024;
+			} else {
+				if (this.sizeScale.toUpperCase().equals("GB")) {
+					tempSize = tempSize * 1024 * 1024 * 1024;
+				}
+			}
+		}
+		this.size = Long.toString(tempSize);
+	}
+	
 	/**
 	 * method toString to display attributes from Searcher Criteria object.
 	 */

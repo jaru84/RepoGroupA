@@ -21,16 +21,20 @@ public abstract class CustomFile {
 	protected String fileName;
 	protected String ext;
 	protected String size;
-	protected String sizeScale;
 	
+	/**
+	 * Default constructor for CustomFile.
+	 */	
 	protected CustomFile() {
 		path = "";
 		fileName = "";
 		ext = "";
 		size = "";
-		sizeScale = "";
 	}
 	
+	/**
+	 * Constructor with parameters for CustomFile.
+	 */	
 	protected CustomFile(String path, String fileName, String ext) {
 		this.path = path;
 		this.fileName = fileName;
@@ -38,80 +42,67 @@ public abstract class CustomFile {
 	}
 	
 	/**
-	 * method setter to path value.
+	 * Method setter to path value.
 	 */
 	public void setPath(String path) {
 		this.path = path;
 	}
 
 	/**
-	 * method setter to File Name value.
+	 * Method setter to File Name value.
 	 */
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
 
 	/**
-	 * method setter to extension value.
+	 * Method setter to extension value.
 	 */
 	public void setExt(String ext) {
 		this.ext = ext;
 	}
 		
 	/**
-	 * method setter to size value.
+	 * Method setter to size value.
 	 */
 	public void setSize(String size) {
 		this.size = size;
 	}
+
 	
 	/**
-	 * method setter to size scale value.
-	 */
-	public void setSizeScale(String sizeScale) {
-		this.sizeScale = sizeScale;
-	}
-	
-	/**
-	 * method getter to path value.
+	 * Method getter to path value.
 	 */
 	public String getPath() {
 		return this.path;
 	}
 
 	/**
-	 * method getter to File Name value.
+	 * Method getter to File Name value.
 	 */
 	public String getFileName() {
 		return this.fileName;
 	}
 
 	/**
-	 * method getter to extension value.
+	 * Method getter to extension value.
 	 */
 	public String getExt() {
 		return this.ext;
 	}
 	
 	/**
-	 * method getter to size value.
+	 * Method getter for size.
 	 */
 	public String getSize() {
 		return this.size;
 	}
-	
+
 	/**
-	 * method getter to size scale value.
-	 */
-	public String getSizeScale() {
-		return this.sizeScale;
-	}
-	
-	/**
-	 * method ToString  to print data from CustomerFile object.
+	 * Method ToString  to print data from CustomerFile object.
 	 */
 	public String toString() {
 		return "You have inserted following values:\nPath: " + path + "\nFile Name: " + fileName + "\nExtension: "
-				+ ext + "\nSize: " + size + "\nSize Scale: " + sizeScale;
+				+ ext + "\nSize: " + size;
 	}
 }
