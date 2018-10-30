@@ -25,9 +25,12 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class Search {
-
+	
+	/** resultList is an ArrayList of type ResultFile, it will be used to save the findings results sent by Search class. */
 	private ArrayList<ResultFile> resultFiles;
-	private Process pDOS;	
+	
+	/** pDos is an variable of type Process used to run the command created. */
+	private Process pDOS;
 
 	/**
 	 * Constructor for Search class.
@@ -37,24 +40,25 @@ public class Search {
 	}
 
 	/**
-	 * Method to create the command in DOS. Considering the path
-	 * is already in a correct format.
+	 * Method to create the command in DOS. Considering the path is already in a correct format.
+	 * @param file (required) of SearcherCriteria type, must have content, it has all values inserted by the user for the search process.
+	 * @return command it will return a String [] with the command created.
 	 */
-	private String [] createCommand(SearcherCriteria file) {
+	private String[] createCommand(SearcherCriteria file) {
 		String name = file.getFileName();
 		String ext = file.getExt();
 		String path = file.getPath();
-				
+
 		String res = "dir ";
-		
-		//If it is a directory, the readOnly parameter is not valid.
-		if ( file.getIsDirectory() ){
+
+		/** If it is a directory, the readOnly parameter is not valid. */
+		if (file.getIsDirectory()) {
 			if (!file.getIsHidden()) {
-				res = res +  "\"" + path + "\" /s /b /ad";
+				res = res + "\"" + path + "\" /s /b /ad";
 			} else {
-				res = res +  "\"" + path + "\" /s /b /adh";
+				res = res + "\"" + path + "\" /s /b /adh";
 			}
-			
+
 		} else {
 			String parameter = "/a";
 			if (file.getIsHidden()) {
@@ -65,30 +69,33 @@ public class Search {
 			}
 			parameter = parameter + "-d";
 			if (!path.endsWith("\\")) {
-				res = res + "\"" + path + "\\" + name + "." + ext + "\"" + " /s /b "+ parameter;
+				res = res + "\"" + path + "\\" + name + "." + ext + "\"" + " /s /b " + parameter;
 			} else {
-				res = res +  "\"" + path + name + "." + ext + "\"" + " /s /b " + parameter;
+				res = res + "\"" + path + name + "." + ext + "\"" + " /s /b " + parameter;
 			}
 		}
-		String[] command= { "cmd.exe", "/c", res};
+		String[] command = { "cmd.exe", "/c", res };
 		System.out.println(res);
 		return command;
 	}
 
 	/**
 	 * Method to run the command in DOS and treat the output with the criteria.
+	 * @param file (required) of SearcherCriteria type, must have content, it has all values inserted by the user for the search process.
+	 * @throws IOException if something fails during BufferedReader process.
+	 * @return resultFiles it will return a ArrayList <CustomFile> with the results for the search process.	 * 
 	 */
 	public ArrayList<ResultFile> searchFile(SearcherCriteria file) throws IOException {
-		
+
 		pDOS = Runtime.getRuntime().exec(createCommand(file));
-		
+
 		BufferedReader in = new BufferedReader(new InputStreamReader(pDOS.getInputStream()));
 		String inputLine = "";
-		
+
 		if (!file.getSize().equals("0")) {
 			file.sizeToBytes();
 		}
-				
+
 		while ((inputLine = in.readLine()) != null) {
 			if (filterResults(inputLine, file)) {
 				if (!file.getSize().equals("0")) {
@@ -103,7 +110,13 @@ public class Search {
 		in.close();
 		return resultFiles;
 	}
-	
+
+	/**
+	 * Method to filter results gets by searchFile process and filter by file name, extension and directory.
+	 * @param file (required) of SearcherCriteria type, must have content, it has all values inserted by the user for the search process.
+	 * @param inputline (required). String type, it has one line of value got by search process.
+	 * @return a boolean. true if search will be by directory or we want leave empty the fields file name and extension. 
+	 */
 	private boolean filterResults(String inputline, SearcherCriteria file) {
 		if (file.getIsDirectory()) {
 			return true;
@@ -111,20 +124,24 @@ public class Search {
 			return true;
 		} else if (inputline.contains(file.getFileName()) || inputline.contains(file.getExt())) {
 			return true;
-		} else return false;
+		} else
+			return false;
 	}
-	
+
 	/**
 	 * Method which compares the size specified in the criteria and the files found.
+	 * @param inputline (required) String type, it has one line of value got by search process.
+	 * @param criteria (required) SearcherCriteria type, must have content, it has all values inserted by the user to the match process.
+	 * @return a boolean true value if the size criteria inserted match with the size in the file found.  
 	 */
-	private boolean matchSizeCriteria (String inputline, SearcherCriteria criteria) {
+	private boolean matchSizeCriteria(String inputline, SearcherCriteria criteria) {
 		boolean res = false;
-		if (! criteria.getSize().equals("0")) {
+		if (!criteria.getSize().equals("0")) {
 			long cSize = Long.parseLong(criteria.getSize());
-			
-			File tFile = new File (inputline);
+
+			File tFile = new File(inputline);
 			long tFileSize = tFile.length();
-			
+
 			switch (criteria.getOperator()) {
 			case "==":
 				if (tFileSize == cSize) {
@@ -151,9 +168,9 @@ public class Search {
 					res = true;
 				}
 				break;
-			}			
+			}
 		}
 		return res;
 	}
-		
+
 }

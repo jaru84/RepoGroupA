@@ -10,18 +10,26 @@
  *  with Jalasoft.
  *******************************************************************************/
 package com.fundation.search;
+
 import java.io.IOException;
 import com.fundation.search.controller.Controller;
 import com.fundation.search.controller.CustomSearchException;
+
 /**
- * This class is the Main where the search application will be started calling to Controller.init.
+ * This class is the Main where the search application will be started calling
+ * to Controller.init.
  *
  * @author Jacqueline Rosales
  * @version 1.0.
  */
 public class Main {
-	public static void main (String args[]) throws IOException, CustomSearchException {
-		Controller controller= new Controller();
-		controller.init();	
+	/**
+	 * @param args The command line arguments.
+	 * @throws IOException if an error occurs.
+	 * @throws CustomSearchException is an error occurs.
+	 */
+	public static void main(String args[]) throws IOException, CustomSearchException {
+		Controller controller = new Controller();
+		controller.init();
 	}
 }

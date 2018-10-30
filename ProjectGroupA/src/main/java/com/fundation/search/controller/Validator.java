@@ -17,8 +17,8 @@ import com.fundation.search.model.SearcherCriteria;
 import com.fundation.search.view.SearchWindow;
 
 /**
- * This class is in charge to do validations to the values for path, file name
- * and extension.
+ * Validator class is in charge to do validations for the values inserted in the fields in the UI.
+ * i.e. validate that path is required field or validate that owner is in the correct format.
  *
  * @author Jacqueline Rosales
  * @version 1.0.
@@ -29,7 +29,8 @@ public class Validator {
 	private SearchWindow window;
 
 	/**
-	 * constructor.
+	 * Constructor for the Validator class.
+	 * @param window required to show during the error messages captured in validation.
 	 */
 	public Validator(SearchWindow window) {
 		this.window = window;
@@ -37,6 +38,8 @@ public class Validator {
 
 	/**
 	 * method in charge to send the criteria object to be validated.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the validation fails for some attribute.
 	 */
 	public void validate(SearcherCriteria file) throws CustomSearchException {
 		validatePath(file);
@@ -47,6 +50,8 @@ public class Validator {
 
 	/**
 	 * method in charge to validate the path value inserted.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the path is empty, it does not exist or it is not a valid directory.
 	 */
 	private void validatePath(SearcherCriteria file) throws CustomSearchException {
 		if (file.getPath().isEmpty()) {
@@ -67,12 +72,14 @@ public class Validator {
 
 	/**
 	 * method in charge to validate the file name value inserted.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the fileName is greater than 100 or has special symbols not allowed.
 	 */
 	private void validateFileName(SearcherCriteria file) throws CustomSearchException {
 		if (file.getFileName().isEmpty()) {
 			file.setFileName("*");
 		} else {
-			if (file.getFileName().length() > 50) {
+			if (file.getFileName().length() > 100) {
 				window.setErrorMessage("Your file name inserted exceeds the limit of letters allowed 50");
 				throw new CustomSearchException("Your file name inserted exceeds the limit of letters allowed 50");
 			} else if (checkSymbols(file.getFileName())) {
@@ -84,6 +91,8 @@ public class Validator {
 
 	/**
 	 * method in charge to validate the extension value inserted.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the extension has special symbols not allowed.
 	 */
 	private void validateExtension(SearcherCriteria file) throws CustomSearchException {
 		if (file.getExt().isEmpty()) {
@@ -99,8 +108,8 @@ public class Validator {
 	}
 
 	/**
-	 * method in charge to validate special chars not allowed in file name and
-	 * extension fields.
+	 * method in charge to validate special chars not allowed in file name and extension fields.
+	 * @param wordCheck (required) string word that will be revised.
 	 */
 	private boolean checkSymbols(String wordCheck) {
 		boolean flag = false;
@@ -117,6 +126,8 @@ public class Validator {
 
 	/**
 	 * method in charge to validate the size value inserted.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the size is a negative number or is not an integer value.
 	 */
 	private void validateSize(SearcherCriteria file) throws CustomSearchException {
 		if ((file.getSize() == null) || (file.getSize().isEmpty())) {
@@ -136,6 +147,7 @@ public class Validator {
 
 	/**
 	 * method in charge to validate that size only allows integer numbers.
+	 * @param sizeFile (required) value to be checked.
 	 */
 	private boolean onlyNumbers(String sizeFile) {
 		if (sizeFile.matches("^[0-9]*$")) {
