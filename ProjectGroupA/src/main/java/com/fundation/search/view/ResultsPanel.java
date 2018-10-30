@@ -56,6 +56,10 @@ public class ResultsPanel extends JPanel {
         columnHeaders.addElement("Name");
         columnHeaders.addElement("Extension");
         columnHeaders.addElement("Size");
+        columnHeaders.addElement("Owner");
+        columnHeaders.addElement("Creation Date");
+        columnHeaders.addElement("Last Modified Date");
+        columnHeaders.addElement("Accessed Date");
         defaultTableModel = new DefaultTableModel();
         defaultTableModel.setColumnIdentifiers(columnHeaders);
         resultsTable = new JTable() {

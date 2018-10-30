@@ -12,9 +12,13 @@
 
 package com.fundation.search.view;
 
-import java.awt.*;
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
+import javax.swing.*;
 
 /**
  * This panel keeps the fields panel in top and search button in the bottom.
@@ -26,6 +30,8 @@ import javax.swing.JPanel;
 public class ParametersPanel extends JPanel {
     private FieldsPanel fieldsPanel;
     private JButton searchButton;
+    private JButton clearButton;
+    private JPanel buttonsPanel;
 
     public ParametersPanel() {
         setting();
@@ -38,9 +44,26 @@ public class ParametersPanel extends JPanel {
 
     public void init() {
         searchButton = new JButton("Search");
+        clearButton = new JButton("Clear");
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fieldsPanel.clearFields();
+            }
+        });
+        buttonsPanel = new JPanel();
+
+        BoxLayout box = new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS);
+        buttonsPanel.setLayout(box);
+        searchButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        clearButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        searchButton.setMaximumSize(new Dimension(400,30));
+        clearButton.setMaximumSize(new Dimension(400,30));
+        buttonsPanel.add(searchButton);
+        buttonsPanel.add(clearButton);
         fieldsPanel = new FieldsPanel();
-        add(fieldsPanel, BorderLayout.NORTH);
-        add(searchButton, BorderLayout.SOUTH);
+        add(fieldsPanel, BorderLayout.CENTER);
+        add( buttonsPanel, BorderLayout.EAST);
 
     }
 
@@ -77,6 +100,16 @@ public class ParametersPanel extends JPanel {
 
     }
 
+    public String getOwner() {
+        return fieldsPanel.getOwner();
+
+    }
+
+    public String getContent() {
+        return fieldsPanel.getContent();
+
+    }
+
     public boolean getIsDirectory() {
         return fieldsPanel.getIsDirectory();
 
@@ -95,4 +128,22 @@ public class ParametersPanel extends JPanel {
     public JButton getSearchButton() {
         return searchButton;
     }
+
+
+
+    public Date[] getCreationDates() {
+        return fieldsPanel.getCreationDates();
+
+    }
+
+    public Date[] getModifiedDates() {
+        return fieldsPanel.getModifiedDates();
+
+    }
+
+    public Date[] getAccessedDates() {
+        return fieldsPanel.getAccessedDates();
+
+    }
+
 }

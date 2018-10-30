@@ -11,8 +11,10 @@
 package com.fundation.search.view;
 
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
+import java.util.Date;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JDialog;
 
 /**
@@ -26,10 +28,11 @@ public class SearchWindow extends JFrame {
     /**
      * Parameters for frame:
      */
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = 300;
+    private static final int WIDTH = 900;
+    private static final int HEIGHT = 400;
     private static final int X_ORIGIN = 150;
     private static final int Y_ORIGIN = 250;
+    private ImageIcon searchIcon;
 
     /**
      * Main container to keep all the panels:
@@ -49,6 +52,8 @@ public class SearchWindow extends JFrame {
         setSize(WIDTH, HEIGHT);
         setLocation(X_ORIGIN, Y_ORIGIN);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        searchIcon = new ImageIcon("src/main/resources/searchIcon.png");
+        setIconImage(searchIcon.getImage());
 
     }
 
@@ -100,6 +105,16 @@ public class SearchWindow extends JFrame {
 
     }
 
+    public String getFileOwner() {
+        return contentPane.getOwner();
+
+    }
+
+    public String getContent() {
+        return contentPane.getContent();
+
+    }
+
     public boolean getIsDirectory() {
         return contentPane.getIsDirectory();
 
@@ -147,5 +162,21 @@ public class SearchWindow extends JFrame {
      */
     public void clearResults() {
         contentPane.clearTable();
+    }
+
+
+    public Date[] getCreationDates() {
+        return contentPane.getCreationDates();
+
+    }
+
+    public Date[] getModifiedDates() {
+        return contentPane.getModifiedDates();
+
+    }
+
+    public Date[] getAccessedDates() {
+        return contentPane.getAccessedDates();
+
     }
 }
