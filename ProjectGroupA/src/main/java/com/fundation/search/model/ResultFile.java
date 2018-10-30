@@ -61,9 +61,6 @@ public class ResultFile extends CustomFile {
 			}
 			
 		}
-		isDirectory = criteria.getIsDirectory();
-		isHidden = criteria.getIsHidden();
-		isReadOnly = criteria.getIsReadOnly();	
 	}
 	
 	/**

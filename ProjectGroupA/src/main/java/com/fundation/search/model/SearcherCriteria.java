@@ -20,7 +20,10 @@ package com.fundation.search.model;
 public class SearcherCriteria extends CustomFile {
 
 	private String operator;
-	protected String sizeScale;
+	private String sizeScale;
+	private boolean isDirectory;
+	private boolean isHidden;
+	private boolean isReadOnly;
 
 	/**
 	 * Constructor for SearcherCriteria class where the values inserted to be find
@@ -30,6 +33,9 @@ public class SearcherCriteria extends CustomFile {
 		super();
 		operator = "";
 		sizeScale = "";
+		isDirectory = false;
+		isHidden = false;
+		isReadOnly = false;
 	}
 
 	/**
@@ -52,12 +58,54 @@ public class SearcherCriteria extends CustomFile {
 	public String getOperator() {
 		return operator;
 	}
-
+	
+	/**
+	 * Method setter to Directory box.
+	 */
+	public void setIsDirectory(boolean isDirectory) {
+		this.isDirectory = isDirectory;
+	}
+	
+	/**
+	 * Method setter to Hidden box.
+	 */
+	public void setIsHidden(boolean isHidden) {
+		this.isHidden = isHidden;
+	}
+	
+	/**
+	 * Method setter to Read Only box.
+	 */
+	public void setIsReadOnly(boolean isReadOnly) {
+		this.isReadOnly = isReadOnly;
+	}
+	
 	/**
 	 * method getter to size scale value.
 	 */
 	public String getSizeScale() {
 		return this.sizeScale;
+	}
+	
+	/**
+	 * Method getter to Directory box.
+	 */
+	public boolean getIsDirectory() {
+		return this.isDirectory;
+	}
+	
+	/**
+	 * Method getter to Hidden box.
+	 */
+	public boolean getIsHidden() {
+		return this.isHidden;
+	}
+	
+	/**
+	 * Method getter to Read Only box.
+	 */
+	public boolean getIsReadOnly() {
+		return this.isReadOnly;
 	}
 	
 	/**

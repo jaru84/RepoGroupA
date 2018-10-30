@@ -49,17 +49,20 @@ public class Search {
 		
 		//If it is a directory, the readOnly parameter is not valid.
 		if ( file.getIsDirectory() ){
-			if ( !file.getIsHidden() ) 
+			if (!file.getIsHidden()) {
 				res = res +  "\"" + path + "\" /s /b /ad";
-			else
+			} else {
 				res = res +  "\"" + path + "\" /s /b /adh";
+			}
 			
 		} else {
 			String parameter = "/a";
-			if (file.getIsHidden())
+			if (file.getIsHidden()) {
 				parameter = parameter + "h";
-			if (file.getIsReadOnly())
+			}
+			if (file.getIsReadOnly()) {
 				parameter = parameter + "r";
+			}
 			parameter = parameter + "-d";
 			if (!path.endsWith("\\")) {
 				res = res + "\"" + path + "\\" + name + "." + ext + "\"" + " /s /b "+ parameter;
@@ -82,9 +85,10 @@ public class Search {
 		BufferedReader in = new BufferedReader(new InputStreamReader(pDOS.getInputStream()));
 		String inputLine = "";
 		
-		if (!file.getSize().equals("0"))
+		if (!file.getSize().equals("0")) {
 			file.sizeToBytes();
-		
+		}
+				
 		while ((inputLine = in.readLine()) != null) {
 			if (filterResults(inputLine, file)) {
 				if (!file.getSize().equals("0")) {
@@ -122,21 +126,31 @@ public class Search {
 			long tFileSize = tFile.length();
 			
 			switch (criteria.getOperator()) {
-				case "=="	: 	if (tFileSize == cSize)
-									res = true;
-								break;
-				case ">" 	: 	if (tFileSize > cSize)
-									res = true;
-								break;
-				case ">=" 	: 	if (tFileSize >= cSize)
-									res = true;
-								break;
-				case "<" 	: 	if (tFileSize < cSize)
-									res = true;
-								break;
-				case "<="	: 	if (tFileSize <= cSize)
-									res = true;
-								break;
+			case "==":
+				if (tFileSize == cSize) {
+					res = true;
+				}
+				break;
+			case ">":
+				if (tFileSize > cSize) {
+					res = true;
+				}
+				break;
+			case ">=":
+				if (tFileSize >= cSize) {
+					res = true;
+				}
+				break;
+			case "<":
+				if (tFileSize < cSize) {
+					res = true;
+				}
+				break;
+			case "<=":
+				if (tFileSize <= cSize) {
+					res = true;
+				}
+				break;
 			}			
 		}
 		return res;

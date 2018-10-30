@@ -21,21 +21,20 @@ public abstract class CustomFile {
 	protected String fileName;
 	protected String ext;
 	protected String size;
-	protected boolean isDirectory;
-	protected boolean isHidden;
-	protected boolean isReadOnly;
 	
+	/**
+	 * Default constructor for CustomFile.
+	 */	
 	protected CustomFile() {
 		path = "";
 		fileName = "";
 		ext = "";
 		size = "";
-		isDirectory = false;
-		isHidden = false;
-		isReadOnly = false;
-		
 	}
 	
+	/**
+	 * Constructor with parameters for CustomFile.
+	 */	
 	protected CustomFile(String path, String fileName, String ext) {
 		this.path = path;
 		this.fileName = fileName;
@@ -43,105 +42,64 @@ public abstract class CustomFile {
 	}
 	
 	/**
-	 * method setter to path value.
+	 * Method setter to path value.
 	 */
 	public void setPath(String path) {
 		this.path = path;
 	}
 
 	/**
-	 * method setter to File Name value.
+	 * Method setter to File Name value.
 	 */
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
 
 	/**
-	 * method setter to extension value.
+	 * Method setter to extension value.
 	 */
 	public void setExt(String ext) {
 		this.ext = ext;
 	}
 		
 	/**
-	 * method setter to size value.
+	 * Method setter to size value.
 	 */
 	public void setSize(String size) {
 		this.size = size;
 	}
+
 	
 	/**
-	 * method setter to Directory box.
-	 */
-	public void setIsDirectory(boolean isDirectory) {
-		this.isDirectory = isDirectory;
-	}
-	
-	/**
-	 * method setter to Hidden box.
-	 */
-	public void setIsHidden(boolean isHidden) {
-		this.isHidden = isHidden;
-	}
-	
-	/**
-	 * method setter to Read Only box.
-	 */
-	public void setIsReadOnly(boolean isReadOnly) {
-		this.isReadOnly = isReadOnly;
-	}
-	
-	/**
-	 * method getter to path value.
+	 * Method getter to path value.
 	 */
 	public String getPath() {
 		return this.path;
 	}
 
 	/**
-	 * method getter to File Name value.
+	 * Method getter to File Name value.
 	 */
 	public String getFileName() {
 		return this.fileName;
 	}
 
 	/**
-	 * method getter to extension value.
+	 * Method getter to extension value.
 	 */
 	public String getExt() {
 		return this.ext;
 	}
 	
 	/**
-	 * method getter to size value.
+	 * Method getter for size.
 	 */
 	public String getSize() {
 		return this.size;
 	}
 
 	/**
-	 * method getter to Directory box.
-	 */
-	public boolean getIsDirectory() {
-		return this.isDirectory;
-	}
-	
-	/**
-	 * method getter to Hidden box.
-	 */
-	public boolean getIsHidden() {
-		return this.isHidden;
-	}
-	
-	/**
-	 * method getter to Read Only box.
-	 */
-	public boolean getIsReadOnly() {
-		return this.isReadOnly;
-	}
-
-	/**
-	 * method ToString  to print data from CustomerFile object.
+	 * Method ToString  to print data from CustomerFile object.
 	 */
 	public String toString() {
 		return "You have inserted following values:\nPath: " + path + "\nFile Name: " + fileName + "\nExtension: "
