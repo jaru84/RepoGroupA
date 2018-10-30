@@ -12,7 +12,9 @@
 
 package com.fundation.search.view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
@@ -59,8 +61,6 @@ public class ParametersPanel extends JPanel {
         clearButton.setMaximumSize(new Dimension(400,30));
         buttonsPanel.add(searchButton);
         buttonsPanel.add(clearButton);
-        //addButton(searchButton,0,0,true);
-        //addButton(clearButton,0,1, true);
         fieldsPanel = new FieldsPanel();
         add(fieldsPanel, BorderLayout.CENTER);
         add( buttonsPanel, BorderLayout.EAST);
@@ -144,24 +144,6 @@ public class ParametersPanel extends JPanel {
     public Date[] getAccessedDates() {
         return fieldsPanel.getAccessedDates();
 
-    }
-
-    /**
-     * This method add a component in the panel in the position specified by col and
-     * row grow indicates if the component will be expanded if extra space is
-     * available.
-     */
-    private void addButton(Component component, int col, int row, boolean grow) {
-        GridBagConstraints gridConstraint = new GridBagConstraints();
-        gridConstraint.gridx = col;
-        gridConstraint.gridy = row;
-        gridConstraint.fill = GridBagConstraints.HORIZONTAL;
-        gridConstraint.anchor = GridBagConstraints.NORTH;
-        if (grow) {
-            gridConstraint.weightx = 1.0;
-            gridConstraint.weighty = 1.0;
-        }
-        buttonsPanel.add(component, gridConstraint);
     }
 
 }

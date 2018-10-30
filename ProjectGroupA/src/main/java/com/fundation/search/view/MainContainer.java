@@ -12,7 +12,6 @@
 package com.fundation.search.view;
 
 import java.awt.Container;
-import java.awt.GridLayout;
 import java.util.Date;
 import javax.swing.*;
 

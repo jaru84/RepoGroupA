@@ -12,8 +12,9 @@ package com.fundation.search.view;
 
 import java.awt.event.ActionListener;
 import java.util.Date;
-import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JDialog;
 
 /**
@@ -31,6 +32,7 @@ public class SearchWindow extends JFrame {
     private static final int HEIGHT = 400;
     private static final int X_ORIGIN = 150;
     private static final int Y_ORIGIN = 250;
+    private ImageIcon searchIcon;
 
     /**
      * Main container to keep all the panels:
@@ -50,6 +52,8 @@ public class SearchWindow extends JFrame {
         setSize(WIDTH, HEIGHT);
         setLocation(X_ORIGIN, Y_ORIGIN);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        searchIcon = new ImageIcon("src/main/resources/searchIcon.png");
+        setIconImage(searchIcon.getImage());
 
     }
 
