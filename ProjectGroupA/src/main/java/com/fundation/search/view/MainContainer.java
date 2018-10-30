@@ -13,6 +13,7 @@ package com.fundation.search.view;
 
 import java.awt.Container;
 import java.awt.GridLayout;
+import java.util.Date;
 import javax.swing.*;
 
 /**
@@ -104,5 +105,20 @@ public class MainContainer extends Container {
 
     public void clearTable() {
         resultsPanel.clearTable();
+    }
+
+    public Date[] getCreationDates() {
+        return parametersPanel.getCreationDates();
+
+    }
+
+    public Date[] getModifiedDates() {
+        return parametersPanel.getModifiedDates();
+
+    }
+
+    public Date[] getAccessedDates() {
+        return parametersPanel.getAccessedDates();
+
     }
 }

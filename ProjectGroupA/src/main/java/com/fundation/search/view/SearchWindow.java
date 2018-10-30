@@ -11,6 +11,7 @@
 package com.fundation.search.view;
 
 import java.awt.event.ActionListener;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import javax.swing.JDialog;
@@ -27,7 +28,7 @@ public class SearchWindow extends JFrame {
      * Parameters for frame:
      */
     private static final int WIDTH = 900;
-    private static final int HEIGHT = 350;
+    private static final int HEIGHT = 400;
     private static final int X_ORIGIN = 150;
     private static final int Y_ORIGIN = 250;
 
@@ -157,5 +158,21 @@ public class SearchWindow extends JFrame {
      */
     public void clearResults() {
         contentPane.clearTable();
+    }
+
+
+    public Date[] getCreationDates() {
+        return contentPane.getCreationDates();
+
+    }
+
+    public Date[] getModifiedDates() {
+        return contentPane.getModifiedDates();
+
+    }
+
+    public Date[] getAccessedDates() {
+        return contentPane.getAccessedDates();
+
     }
 }
