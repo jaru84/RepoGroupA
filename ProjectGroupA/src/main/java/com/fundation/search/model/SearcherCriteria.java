@@ -11,6 +11,8 @@
  *******************************************************************************/
 package com.fundation.search.model;
 
+import java.util.Date;
+
 /**
  * Class created to manage the search criteria object and its attributes.
  *
@@ -36,7 +38,13 @@ public class SearcherCriteria extends CustomFile {
 	
 	/** owner variable of String type used to save the value set by the user.*/
 	private String owner;
-
+	
+	/** startDate variable of Date type used to save the value selected by user from start date calendar.*/
+	private Date startDate;
+	
+	/** endDate variable of Date type used to save the value selected by user from start date calendar.*/
+	private Date endDate;
+	
 	/**
 	 * Constructor for SearcherCriteria class where the values inserted to be find
 	 * will be stored as an object.
@@ -106,6 +114,23 @@ public class SearcherCriteria extends CustomFile {
 	public void setOwner(String owner) {
 		this.owner = owner;
 	} 
+	
+	/**
+	 * Method setter to start date value.
+	 * @param startDate It is used to save the value selected by the user from calendar-start date.
+	 */
+	public void setStartDate(Date startDate){
+		this.startDate = startDate;
+	}
+	
+	/**
+	 * Method setter to end date value.
+	 * @param endDate It is used to save the value selected by the user from calendar-end date.
+	 */
+	public void setEndDate(Date endDate){
+		this.endDate = endDate;
+	}
+	
 	/**
 	 * method getter to size scale value.
 	 * @return the value of sizeScale as String.
@@ -145,7 +170,23 @@ public class SearcherCriteria extends CustomFile {
 	public String getOwner() {
 		return this.owner;
 	}
-
+	
+	/**
+	 * Method getter to start date value.
+	 * @return the value of start date
+	 */
+	public Date getStartDate() {
+		return this.startDate;
+	}
+	
+	/**
+	 * Method getter to end date value.
+	 * @return the value of end date value.
+	 */
+	public Date getEndDate() {
+		return this.endDate;
+	}
+	
 	/**
 	 * Method which help to convert the criteria size to bytes. Assumption, the
 	 * default value is zero.

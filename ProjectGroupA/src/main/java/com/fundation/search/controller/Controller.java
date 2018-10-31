@@ -80,6 +80,9 @@ public class Controller {
 			file.setIsDirectory(windowUI.getIsDirectory());
 			file.setIsHidden(windowUI.getIsHidden());
 			file.setIsReadOnly(windowUI.getIsReadOnly());
+			file.setStartDate(windowUI.getStartDate());
+			file.setEndDate(windowUI.getEndDate());
+			
 			val.validate(file);
 			displayResults();
 		} catch (Exception ex) {

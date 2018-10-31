@@ -12,6 +12,7 @@
 package com.fundation.search.controller;
 
 import java.io.File;
+import java.util.Date;
 
 import com.fundation.search.model.SearcherCriteria;
 import com.fundation.search.view.SearchWindow;
@@ -47,6 +48,7 @@ public class Validator {
 		validateExtension(file);
 		validateSize(file);
 		validateOwner(file);
+		validateDates(file);
 	}
 	
 	/**
@@ -55,7 +57,7 @@ public class Validator {
 	 * @throws CustomSearchException if the owner does not have the correct format.
 	 */
 	private void validateOwner(SearcherCriteria file) throws CustomSearchException {
-		if (! file.getOwner().contains("\\")) {
+		if ((! file.getOwner().contains("\\")) && (!file.getOwner().isEmpty())) {
 			window.setErrorMessage("Please introduce an account value in following format: domain\\user.");
 			throw new CustomSearchException("Please introduce an account value in following format: domain\\user.");
 		} 
@@ -157,7 +159,25 @@ public class Validator {
 			}
 		}
 	}
-
+	
+	/**
+	 * Method in charge to validate the start and end dates selected by the user.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the start date is after than end date or current date.
+	 */
+	private void validateDates(SearcherCriteria file) throws CustomSearchException {
+		Date startDate = file.getStartDate();
+		Date endDate = file.getEndDate();
+		Date currDate = new Date();
+		
+		if (startDate.after(endDate)) {
+			window.setErrorMessage("The Start Date selected could not be after End Date.");
+			throw new CustomSearchException("The Start Date selected could not be after End Date.");
+		} else if (startDate.after(currDate)) {
+			window.setErrorMessage("The Start Date selected could not be after Current Date.");
+			throw new CustomSearchException("The Start Date selected could not be after Current Date.");
+		}
+	}
 	/**
 	 * method in charge to validate that size only allows integer numbers.
 	 * @param sizeFile (required) value to be checked.
