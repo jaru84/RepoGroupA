@@ -76,6 +76,7 @@ public class Controller {
 			file.setSize(windowUI.getFileSize());
 			file.setOperator(windowUI.getSizeOperator());
 			file.setSizeScale(windowUI.getSizeScale());
+			file.setOwner(windowUI.getFileOwner());
 			file.setIsDirectory(windowUI.getIsDirectory());
 			file.setIsHidden(windowUI.getIsHidden());
 			file.setIsReadOnly(windowUI.getIsReadOnly());
@@ -99,7 +100,7 @@ public class Controller {
 		} else {
 			for (ResultFile item : resultList) {
 				System.out.println(item.getPath() + " " + item.getFileName() + " " + item.getExt());
-				Object[] arrRes = { item.getPath(), item.getFileName(), item.getExt(), item.getSize() };
+				Object[] arrRes = { item.getPath(), item.getFileName(), item.getExt(), item.getSize(), item.getOwner() };
 				windowUI.setSearchResults(arrRes);
 			}
 			resultList.clear();

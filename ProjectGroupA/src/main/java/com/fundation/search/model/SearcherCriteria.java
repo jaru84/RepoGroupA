@@ -33,6 +33,9 @@ public class SearcherCriteria extends CustomFile {
 	
 	/** isHidden variable of boolean type used to save the value set by the user. */
 	private boolean isReadOnly;
+	
+	/** owner variable of String type used to save the value set by the user.*/
+	private String owner;
 
 	/**
 	 * Constructor for SearcherCriteria class where the values inserted to be find
@@ -45,6 +48,7 @@ public class SearcherCriteria extends CustomFile {
 		isDirectory = false;
 		isHidden = false;
 		isReadOnly = false;
+		owner = "";
 	}
 
 	/**
@@ -94,7 +98,14 @@ public class SearcherCriteria extends CustomFile {
 	public void setIsReadOnly(boolean isReadOnly) {
 		this.isReadOnly = isReadOnly;
 	}
-
+	
+	/**
+	 * Method setter to owner value.
+	 * @param owner It is used to save the value inserted by the user on owner field.
+	 */
+	public void setOwner(String owner) {
+		this.owner = owner;
+	} 
 	/**
 	 * method getter to size scale value.
 	 * @return the value of sizeScale as String.
@@ -125,6 +136,14 @@ public class SearcherCriteria extends CustomFile {
 	 */
 	public boolean getIsReadOnly() {
 		return this.isReadOnly;
+	}
+	
+	/**
+	 * Method getter to owner value.
+	 * @return the value of owner as String
+	 */
+	public String getOwner() {
+		return this.owner;
 	}
 
 	/**

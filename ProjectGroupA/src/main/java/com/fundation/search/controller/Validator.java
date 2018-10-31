@@ -46,10 +46,23 @@ public class Validator {
 		validateFileName(file);
 		validateExtension(file);
 		validateSize(file);
+		validateOwner(file);
 	}
-
+	
 	/**
-	 * method in charge to validate the path value inserted.
+	 * Method in charge to validate the owner value inserted by user.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the owner does not have the correct format.
+	 */
+	private void validateOwner(SearcherCriteria file) throws CustomSearchException {
+		if (! file.getOwner().contains("\\")) {
+			window.setErrorMessage("Please introduce an account value in following format: domain\\user.");
+			throw new CustomSearchException("Please introduce an account value in following format: domain\\user.");
+		} 
+	}
+	
+	/**
+	 * Method in charge to validate the path value inserted.
 	 * @param file object must have content, it is used to validate its different attributes.
 	 * @throws CustomSearchException if the path is empty, it does not exist or it is not a valid directory.
 	 */
@@ -83,8 +96,8 @@ public class Validator {
 				window.setErrorMessage("Your file name inserted exceeds the limit of letters allowed 50");
 				throw new CustomSearchException("Your file name inserted exceeds the limit of letters allowed 50");
 			} else if (checkSymbols(file.getFileName())) {
-				window.setErrorMessage("Your file name can't contain any of following characters: \\/:*?\"<>");
-				throw new CustomSearchException("Your file name can't contain any of following characters: \\/:*?\"<>");
+				window.setErrorMessage("Your file name can't contain any of following characters: \\/:?\"<>");
+				throw new CustomSearchException("Your file name can't contain any of following characters: \\/:?\"<>");
 			}
 		}
 	}
@@ -100,9 +113,9 @@ public class Validator {
 		} else {
 			if (checkSymbols(file.getExt())) {
 				window.setErrorMessage(
-						"Your extension can't contain any of following characters: \\\\\\\\/:*?\\\\\\\"<>.");
+						"Your extension can't contain any of following characters: \\\\\\\\/:?\\\\\\\"<>.");
 				throw new CustomSearchException(
-						"Your extension can't contain any of following characters: \\\\/:*?\\\"<>.");
+						"Your extension can't contain any of following characters: \\\\/:?\\\"<>.");
 			}
 		}
 	}
@@ -116,7 +129,7 @@ public class Validator {
 		String[] chars = new String[wordCheck.length()];
 		for (int i = 0; i < wordCheck.length(); i++) {
 			chars[i] = Character.toString(wordCheck.charAt(i));
-			if (chars[i].matches("^[;:*?\"<>\\\\/|]+$")) {
+			if (chars[i].matches("^[;:?\"<>\\\\/|]+$")) {
 				flag = true;
 				break;
 			}
@@ -156,4 +169,5 @@ public class Validator {
 			return false;
 		}
 	}
+
 }

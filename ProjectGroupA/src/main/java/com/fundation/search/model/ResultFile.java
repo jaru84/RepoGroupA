@@ -58,8 +58,12 @@ public class ResultFile extends CustomFile {
 			String fullFileName = pathValues[pathValues.length - 1];
 			String[] fileNameValues = fullFileName.split("\\.");
 			if ( fileNameValues.length > 2){
-				fileName = fileNameValues[0] + "." + fileNameValues[1]; 
-				ext = fileNameValues[2];
+				for (int i = 0; i < fileNameValues.length-1; i++)
+				{
+					fileName += fileNameValues[i] + ".";
+				}
+				fileName = fileName.substring(0, fileName.length()-1);
+				ext = fileNameValues[fileNameValues.length-1];
 			} else {
 				fileName = fileNameValues[0];
 				if (fileNameValues.length > 1) {
