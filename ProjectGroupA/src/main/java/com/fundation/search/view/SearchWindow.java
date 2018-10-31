@@ -186,7 +186,8 @@ public class SearchWindow extends JFrame {
 	public void setSearchListener(ActionListener listener) {
 		contentPane.getSearchButton().addActionListener(listener);
 	}
-
+	
+	
 	/**
 	 * This method display the results of searching in the left table.
 	 * @param dataResults (required) Vector of Vectors where each vector contains the parameters of file matching the search criteria. 

@@ -104,6 +104,7 @@ public class MainContainer extends Container {
 		return parametersPanel.getOwner();
 
 	}
+	
 	/**
 	 * This method return the value in Content text field in a String.
 	 * @return Content value as String.
@@ -130,6 +131,7 @@ public class MainContainer extends Container {
 		return parametersPanel.getIsHidden();
 
 	}
+	
 	/**
 	 * This method return the value in Read Only check box as boolean value.
 	 * @return True if check box was checked and False if not.
@@ -138,6 +140,7 @@ public class MainContainer extends Container {
 		return parametersPanel.getIsReadOnly();
 
 	}
+	
 	/**
 	 * 
 	 * @return

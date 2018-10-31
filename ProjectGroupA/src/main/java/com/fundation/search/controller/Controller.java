@@ -60,6 +60,7 @@ public class Controller {
 	 */
 	public void init() {
 		windowUI.setSearchListener(e -> search());
+		
 	}
 
 	/**
@@ -92,6 +93,7 @@ public class Controller {
 	private void displayResults() throws IOException {
 		resultList = searcher.searchFile(file);
 		windowUI.clearResults();
+		
 		if (resultList.isEmpty()) {
 			windowUI.setErrorMessage("No items match your search.");
 		} else {

@@ -185,7 +185,7 @@ public class ParametersPanel extends JPanel {
 	}
 	
 	/**
-	 * 
+	 * Method used for...
 	 * @return
 	 */
 	public JButton getSearchButton() {
@@ -193,7 +193,7 @@ public class ParametersPanel extends JPanel {
 	}
 	
 	/**
-	 * 
+	 * Method used for...
 	 * @return
 	 */
 	public Date[] getCreationDates() {
@@ -202,7 +202,7 @@ public class ParametersPanel extends JPanel {
 	}
 	
 	/**
-	 * 
+	 * Method used for...
 	 * @return
 	 */
 	public Date[] getModifiedDates() {
@@ -211,7 +211,7 @@ public class ParametersPanel extends JPanel {
 	}
 	
 	/**
-	 * 
+	 * Method used for...
 	 * @return
 	 */
 	public Date[] getAccessedDates() {

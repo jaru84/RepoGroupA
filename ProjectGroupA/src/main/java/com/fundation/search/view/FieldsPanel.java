@@ -51,47 +51,131 @@ public class FieldsPanel extends JPanel {
 	
 	/** pathText variable of JTextField type. */
 	private JTextField extensionText;
+	
+	/** sizeText variable of JTextField type. */
 	private JTextField sizeText;
+	
+	/** ownerText variable of JTextField type. */
 	private JTextField ownerText;
+	
+	/** contentText variable of JTextField type. */
 	private JTextField contentText;
+	
+	/** pathLabel variable of JLabel type. */
 	private JLabel pathLabel;
+	
+	/** nameLabel variable of JLabel type. */
 	private JLabel nameLabel;
+	
+	/** extensionLabel variable of JLabel type. */
 	private JLabel extensionLabel;
+	
+	/** sizeLabel variable of JLabel type. */
 	private JLabel sizeLabel;
+	
+	/** ownerLabel variable of JLabel type. */
 	private JLabel ownerLabel;
+	
+	/** contentLabel variable of JLabel type. */
 	private JLabel contentLabel;
+	
+	/** creationDateLabel variable of JLabel type. */
 	private JLabel creationDateLabel;
+	
+	/** modifiedDateLabel variable of JLabel type. */
 	private JLabel modifiedDateLabel;
+	
+	/** accessedDateLabel variable of JLabel type. */
 	private JLabel accessedDateLabel;
+	
+	/** chooserButton variable of JButton type. */
 	private JButton chooserButton;
+	
+	/** sizeOperator variable of JComboBox type. */
 	private JComboBox sizeOperator;
+	
+	/** sizeScale variable of JComboBox type. */
 	private JComboBox sizeScale;
+	
+	/** chooser variable of JFileChooser type. */
 	private JFileChooser chooser;
+	
+	/** dirCheckbox variable of JCheckBox type. */
 	private JCheckBox dirCheckbox;
+	
+	/** hiddenCheckbox variable of JCheckBox type. */
 	private JCheckBox hiddenCheckbox;
+	
+	/** readonlyCheckbox variable of JCheckBox type. */
 	private JCheckBox readonlyCheckbox;
+	
+	/** creationStartModel variable of UtilDateModel type. */
 	private UtilDateModel creationStartModel;
+	
+	/** creationStartPanel variable of JDatePanelImpl type. */
 	private JDatePanelImpl creationStartPanel;
+	
+	/** creationStartPicker variable of JDatePickerImpl type. */
 	private JDatePickerImpl creationStartPicker;
+	
+	/** creationEndModel variable of UtilDateModel type. */
 	private UtilDateModel creationEndModel;
+	
+	/** creationEndPanel variable of JDatePanelImpl type. */
 	private JDatePanelImpl creationEndPanel;
+	
+	/** creationEndPicker variable of JDatePickerImpl type. */
 	private JDatePickerImpl creationEndPicker;
+	
+	/** creationDatesPane variable of JPanel type. */
 	private JPanel creationDatesPane;
+	
+	/** modifiedStartModel variable of UtilDateModel type. */
 	private UtilDateModel modifiedStartModel;
+	
+	/** modifiedStartPanel variable of JDatePanelImpl type. */
 	private JDatePanelImpl modifiedStartPanel;
+	
+	/** modifiedStartPicker variable of JDatePickerImpl type. */
 	private JDatePickerImpl modifiedStartPicker;
+	
+	/** modifiedEndModel variable of UtilDateModel type. */
 	private UtilDateModel modifiedEndModel;
+	
+	/** modifiedEndPanel variable of JDatePanelImpl type. */
 	private JDatePanelImpl modifiedEndPanel;
+	
+	/** modifiedEndPicker variable of JDatePickerImpl type. */
 	private JDatePickerImpl modifiedEndPicker;
+	
+	/** modifiedDatesPane variable of JPanel type. */
 	private JPanel modifiedDatesPane;
+	
+	/** accessedStartModel variable of UtilDateModel type. */
 	private UtilDateModel accessedStartModel;
+	
+	/** accessedStartPanel variable of JDatePanelImpl type. */
 	private JDatePanelImpl accessedStartPanel;
+	
+	/** accessedStartPicker variable of JDatePickerImpl type. */
 	private JDatePickerImpl accessedStartPicker;
+	
+	/** accessedEndModel variable of UtilDateModel type. */
 	private UtilDateModel accessedEndModel;
+	
+	/** accessedEndPanel variable of JDatePanelImpl type. */
 	private JDatePanelImpl accessedEndPanel;
+	
+	/** accessedEndPicker variable of JDatePickerImpl type. */
 	private JDatePickerImpl accessedEndPicker;
+	
+	/** accessedDatesPane variable of JPanel type. */
 	private JPanel accessedDatesPane;
+	
+	/** pickerProperties variable of Properties type. */
 	private Properties pickerProperties;
+	
+	/** SIZE_TEXT_BOX variable ctte of int type. */
 	private final int SIZE_TEXT_BOX = 20;
 
 	/**
@@ -256,8 +340,8 @@ public class FieldsPanel extends JPanel {
 	 * @param component used for....
 	 * @param col  used for....
 	 * @param row used for....
-	 * @param grow
-	 * @param width
+	 * @param grow used for....
+	 * @param width used for...
 	 */
 	private void addComponent(Component component, int col, int row, boolean grow, int width) {
 		GridBagConstraints gridConstraint = new GridBagConstraints();
@@ -275,7 +359,7 @@ public class FieldsPanel extends JPanel {
 	/**
 	 * This method fill the Path field with the selected path in the dialog file
 	 * chooser, It's called from the chooser button's action listener
-	 * @param status
+	 * @param status used for.....
 	 */
 	public void getChosenFile(int status) {
 		if (status == JFileChooser.APPROVE_OPTION) {
@@ -286,8 +370,8 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * 
-	 * @param e
+	 * This method is for...
+	 * @param e used for...
 	 */
 	public void toggleTextFields(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -318,7 +402,8 @@ public class FieldsPanel extends JPanel {
 		pickerProperties.put("text.today", "Today");
 		pickerProperties.put("text.month", "Month");
 		pickerProperties.put("text.year", "Year");
-		// Initilizate start/end date for creation date
+		
+		/* Initilizate start/end date for creation date */
 		creationStartModel = new UtilDateModel();
 		creationStartPanel = new JDatePanelImpl(creationStartModel, pickerProperties);
 		creationStartPicker = new JDatePickerImpl(creationStartPanel, new DateLabelFormatter());
@@ -328,7 +413,8 @@ public class FieldsPanel extends JPanel {
 		creationDatesPane = new JPanel(new GridLayout(1, 2));
 		creationDatesPane.add(creationStartPicker);
 		creationDatesPane.add(creationEndPicker);
-		// Initilizate start/end date for modified date
+		
+		/* Initilizate start/end date for modified date */
 		modifiedStartModel = new UtilDateModel();
 		modifiedStartPanel = new JDatePanelImpl(modifiedStartModel, pickerProperties);
 		modifiedStartPicker = new JDatePickerImpl(modifiedStartPanel, new DateLabelFormatter());
@@ -338,7 +424,8 @@ public class FieldsPanel extends JPanel {
 		modifiedDatesPane = new JPanel(new GridLayout(1, 2));
 		modifiedDatesPane.add(modifiedStartPicker);
 		modifiedDatesPane.add(modifiedEndPicker);
-		// Initilizate start/end date for accessed date
+		
+		/* Initilizate start/end date for accessed date */
 		accessedStartModel = new UtilDateModel();
 		accessedStartPanel = new JDatePanelImpl(accessedStartModel, pickerProperties);
 		accessedStartPicker = new JDatePickerImpl(accessedStartPanel, new DateLabelFormatter());
@@ -351,7 +438,7 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * 
+	 * Method used for...
 	 */
 	public void initTextFields() {
 		pathText = new JTextField();
@@ -370,7 +457,7 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * 
+	 * Method used for ....
 	 */
 	public void initLabels() {
 		pathLabel = new JLabel("Path: ");
@@ -385,7 +472,7 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * 
+	 * Method used for....
 	 */
 	public void initCheckboxes() {
 		dirCheckbox = new JCheckBox("Directory");
@@ -401,7 +488,7 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * 
+	 * Method used for...
 	 */
 	public void initVarious() {
 		chooserButton = new JButton("...");
@@ -418,7 +505,7 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * 
+	 * Method used for...
 	 */
 	public void addElements() {
 		addComponent(pathLabel, 0, 0, false, 1);
@@ -448,7 +535,7 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * 
+	 * Method used for...
 	 */
 	public void clearFields() {
 
