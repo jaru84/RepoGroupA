@@ -10,10 +10,13 @@
  *******************************************************************************/
 package com.fundation.search.model;
 
+import java.io.File;
+
 /**
  * Class created to manage the result files object and its attributes.
+ * It inherits from CustomFile class.
  *
- * @author Martha
+ * @author Jacqueline
  * @version 1.0.
  */
 public class ResultFile extends CustomFile {
@@ -24,43 +27,90 @@ public class ResultFile extends CustomFile {
 	 */
 	public ResultFile() {
 		super();
-		owner= "";
+		owner = "";
 	}
-	
+
+	/**
+	 * Constructor for ResultFiles with parameters.
+	 * @param inputline (required) file got from search process used to create the object of ResultFile type.
+	 * @param file (required)  SearcherCriteria type, used to create the object of ResultFile type.
+	 */
 	public ResultFile(String inputLine, SearcherCriteria file) {
 		super();
 		setFileValues(inputLine, file);
 	}
-	
-	private void setFileValues(String inputLine, SearcherCriteria file) {
-		if (file.getIsDirectory()) {
+
+	/**
+	 * Method used by the constructor with parameters required to fill the data of the Result file to show in the table later.
+	 * @param inputline (required) file got from search process used to create the object of ResultFile type.
+	 * @param file (required)  SearcherCriteria type, used to create the object of ResultFile type.
+	 */
+	private void setFileValues(String inputLine, SearcherCriteria criteria) {
+
+		if (criteria.getIsDirectory()) {
 			fileName = "";
 			ext = "";
-			path= inputLine;
+			path = inputLine;
 		} else {
+			setSizeKB(inputLine);
+
 			String[] pathValues = inputLine.split("\\\\");
 			String fullFileName = pathValues[pathValues.length - 1];
 			String[] fileNameValues = fullFileName.split("\\.");
-			fileName = fileNameValues[0]; 
-			ext = fileNameValues[1];
+			if ( fileNameValues.length > 2){
+				for (int i = 0; i < fileNameValues.length-1; i++)
+				{
+					fileName += fileNameValues[i] + ".";
+				}
+				fileName = fileName.substring(0, fileName.length()-1);
+				ext = fileNameValues[fileNameValues.length-1];
+			} else {
+				fileName = fileNameValues[0];
+				if (fileNameValues.length > 1) {
+					ext = fileNameValues[1];
+				} else {
+					ext = "";
+				}
+				
+			}
 			path = "";
-			for(int i = 0; i< pathValues.length - 1; i++) {
+
+			for (int i = 0; i < pathValues.length - 1; i++) {
 				path += pathValues[i] + "\\";
 			}
 		}
 	}
-	
+
 	/**
-	 * method setter to owner value.
+	 * Method setter to owner value.
+	 * @param owner It is used to set an value to owner attribute.
 	 */
 	public void setOwner(String owner) {
 		this.owner = owner;
 	}
-	
+
 	/**
 	 * method getter to owner value.
+	 * @return the value of owner as String.
 	 */
 	public String getOwner() {
 		return this.owner;
 	}
+
+	/**
+	 * Method to update the size of the file found into KB to follow Windows
+	 * standard.
+	 * @param inputline (required) file got from search process used to get its size value.
+	 */
+	public void setSizeKB(String inputLine) {
+		File tempFile = new File(inputLine);
+		long tempFileSize = tempFile.length();
+
+		// Need to check a better way to round the size, tried with Math.round,
+		// BinaryDecimal...
+		// none of them provided the results needed gathered manually.
+		String s = String.valueOf(tempFileSize / 1024) + " " + "KB";
+		this.setSize(s);
+	}
+
 }

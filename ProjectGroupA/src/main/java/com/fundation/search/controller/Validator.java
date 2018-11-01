@@ -12,13 +12,14 @@
 package com.fundation.search.controller;
 
 import java.io.File;
+import java.util.Date;
 
 import com.fundation.search.model.SearcherCriteria;
 import com.fundation.search.view.SearchWindow;
 
 /**
- * This class is in charge to do validations to the values for path, file name
- * and extension.
+ * Validator class is in charge to do validations for the values inserted in the fields in the UI.
+ * i.e. validate that path is required field or validate that owner is in the correct format.
  *
  * @author Jacqueline Rosales
  * @version 1.0.
@@ -29,7 +30,8 @@ public class Validator {
 	private SearchWindow window;
 
 	/**
-	 * constructor.
+	 * Constructor for the Validator class.
+	 * @param window required to show during the error messages captured in validation.
 	 */
 	public Validator(SearchWindow window) {
 		this.window = window;
@@ -37,16 +39,34 @@ public class Validator {
 
 	/**
 	 * method in charge to send the criteria object to be validated.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the validation fails for some attribute.
 	 */
 	public void validate(SearcherCriteria file) throws CustomSearchException {
 		validatePath(file);
 		validateFileName(file);
 		validateExtension(file);
 		validateSize(file);
+		validateOwner(file);
+		validateDates(file);
 	}
-
+	
 	/**
-	 * method in charge to validate the path value inserted.
+	 * Method in charge to validate the owner value inserted by user.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the owner does not have the correct format.
+	 */
+	private void validateOwner(SearcherCriteria file) throws CustomSearchException {
+		if ((! file.getOwner().contains("\\")) && (!file.getOwner().isEmpty())) {
+			window.setErrorMessage("Please introduce an account value in following format: domain\\user.");
+			throw new CustomSearchException("Please introduce an account value in following format: domain\\user.");
+		} 
+	}
+	
+	/**
+	 * Method in charge to validate the path value inserted.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the path is empty, it does not exist or it is not a valid directory.
 	 */
 	private void validatePath(SearcherCriteria file) throws CustomSearchException {
 		if (file.getPath().isEmpty()) {
@@ -67,23 +87,27 @@ public class Validator {
 
 	/**
 	 * method in charge to validate the file name value inserted.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the fileName is greater than 100 or has special symbols not allowed.
 	 */
 	private void validateFileName(SearcherCriteria file) throws CustomSearchException {
 		if (file.getFileName().isEmpty()) {
 			file.setFileName("*");
 		} else {
-			if (file.getFileName().length() > 50) {
+			if (file.getFileName().length() > 100) {
 				window.setErrorMessage("Your file name inserted exceeds the limit of letters allowed 50");
 				throw new CustomSearchException("Your file name inserted exceeds the limit of letters allowed 50");
 			} else if (checkSymbols(file.getFileName())) {
-				window.setErrorMessage("Your file name can't contain any of following characters: \\/:*?\"<>");
-				throw new CustomSearchException("Your file name can't contain any of following characters: \\/:*?\"<>");
+				window.setErrorMessage("Your file name can't contain any of following characters: \\/:?\"<>");
+				throw new CustomSearchException("Your file name can't contain any of following characters: \\/:?\"<>");
 			}
 		}
 	}
 
 	/**
 	 * method in charge to validate the extension value inserted.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the extension has special symbols not allowed.
 	 */
 	private void validateExtension(SearcherCriteria file) throws CustomSearchException {
 		if (file.getExt().isEmpty()) {
@@ -91,23 +115,23 @@ public class Validator {
 		} else {
 			if (checkSymbols(file.getExt())) {
 				window.setErrorMessage(
-						"Your extension can't contain any of following characters: \\\\\\\\/:*?\\\\\\\"<>.");
+						"Your extension can't contain any of following characters: \\\\\\\\/:?\\\\\\\"<>.");
 				throw new CustomSearchException(
-						"Your extension can't contain any of following characters: \\\\/:*?\\\"<>.");
+						"Your extension can't contain any of following characters: \\\\/:?\\\"<>.");
 			}
 		}
 	}
 
 	/**
-	 * method in charge to validate special chars not allowed in file name and
-	 * extension fields.
+	 * method in charge to validate special chars not allowed in file name and extension fields.
+	 * @param wordCheck (required) string word that will be revised.
 	 */
 	private boolean checkSymbols(String wordCheck) {
 		boolean flag = false;
 		String[] chars = new String[wordCheck.length()];
 		for (int i = 0; i < wordCheck.length(); i++) {
 			chars[i] = Character.toString(wordCheck.charAt(i));
-			if (chars[i].matches("^[;:*?\"<>\\\\/|]+$")) {
+			if (chars[i].matches("^[;:?\"<>\\\\/|]+$")) {
 				flag = true;
 				break;
 			}
@@ -117,6 +141,8 @@ public class Validator {
 
 	/**
 	 * method in charge to validate the size value inserted.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the size is a negative number or is not an integer value.
 	 */
 	private void validateSize(SearcherCriteria file) throws CustomSearchException {
 		if ((file.getSize() == null) || (file.getSize().isEmpty())) {
@@ -133,9 +159,28 @@ public class Validator {
 			}
 		}
 	}
-
+	
+	/**
+	 * Method in charge to validate the start and end dates selected by the user.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the start date is after than end date or current date.
+	 */
+	private void validateDates(SearcherCriteria file) throws CustomSearchException {
+		Date startDate = file.getStartDate();
+		Date endDate = file.getEndDate();
+		Date currDate = new Date();
+		
+		if (startDate.after(endDate)) {
+			window.setErrorMessage("The Start Date selected could not be after End Date.");
+			throw new CustomSearchException("The Start Date selected could not be after End Date.");
+		} else if (startDate.after(currDate)) {
+			window.setErrorMessage("The Start Date selected could not be after Current Date.");
+			throw new CustomSearchException("The Start Date selected could not be after Current Date.");
+		}
+	}
 	/**
 	 * method in charge to validate that size only allows integer numbers.
+	 * @param sizeFile (required) value to be checked.
 	 */
 	private boolean onlyNumbers(String sizeFile) {
 		if (sizeFile.matches("^[0-9]*$")) {
@@ -144,4 +189,5 @@ public class Validator {
 			return false;
 		}
 	}
+
 }

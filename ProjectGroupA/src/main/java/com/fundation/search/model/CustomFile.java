@@ -17,101 +17,111 @@ package com.fundation.search.model;
  * @version 1.0.
  */
 public abstract class CustomFile {
-	protected String path;
-	protected String fileName;
-	protected String ext;
-	protected String size;
-	protected String sizeScale;
 	
+	/** path variable of String type used to save the value set by the user. */
+	protected String path;
+	
+	/** fileName variable of String type used to save the value set by the user. */
+	protected String fileName;
+	
+	/** ext variable of String type used to save the value set by the user. */
+	protected String ext;
+	
+	/** size variable of String type used to save the value set by the user. */
+	protected String size;
+
+	/**
+	 * Default constructor for CustomFile.
+	 */
 	protected CustomFile() {
 		path = "";
 		fileName = "";
 		ext = "";
 		size = "";
-		sizeScale = "";
 	}
-	
+
+	/**
+	 * Constructor with parameters for CustomFile.
+	 * @param path (required) String value necessary to create the object with an path value assigned
+	 * @param fileName (required) String value necessary to create the object with an fileName value assigned.
+	 * @ext fileName (required) String value necessary to create the object with an ext value assigned.
+	 */
 	protected CustomFile(String path, String fileName, String ext) {
 		this.path = path;
 		this.fileName = fileName;
 		this.ext = ext;
 	}
-	
+
 	/**
-	 * method setter to path value.
+	 * Method setter to path value.
+	 * @param path It is used to set a String value to path attribute.
 	 */
 	public void setPath(String path) {
 		this.path = path;
 	}
 
 	/**
-	 * method setter to File Name value.
+	 * Method setter to File Name value.
+	 * @param fileName It is used to set a String value to fileName attribute.
 	 */
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
 
 	/**
-	 * method setter to extension value.
+	 * Method setter to extension value.
+	 * @param ext It is used to set a String value to ext attribute.
 	 */
 	public void setExt(String ext) {
 		this.ext = ext;
 	}
-		
+
 	/**
-	 * method setter to size value.
+	 * Method setter to size value.
+	 * @param size It is used to set a String value to size attribute.
 	 */
 	public void setSize(String size) {
 		this.size = size;
 	}
-	
+
 	/**
-	 * method setter to size scale value.
-	 */
-	public void setSizeScale(String sizeScale) {
-		this.sizeScale = sizeScale;
-	}
-	
-	/**
-	 * method getter to path value.
+	 * Method getter to path value.
+	 * @return the value of path as String.
 	 */
 	public String getPath() {
 		return this.path;
 	}
 
 	/**
-	 * method getter to File Name value.
+	 * Method getter to File Name value.
+	 * @return the value of fileName as String.
 	 */
 	public String getFileName() {
 		return this.fileName;
 	}
 
 	/**
-	 * method getter to extension value.
+	 * Method getter to extension value.
+	 * @return the value of ext as String.
 	 */
 	public String getExt() {
 		return this.ext;
 	}
-	
+
 	/**
-	 * method getter to size value.
+	 * Method getter for size.
+	 * @return the value of size as String.
 	 */
 	public String getSize() {
 		return this.size;
 	}
-	
+
 	/**
-	 * method getter to size scale value.
-	 */
-	public String getSizeScale() {
-		return this.sizeScale;
-	}
-	
-	/**
-	 * method ToString  to print data from CustomerFile object.
+	 * Method ToString to print data from CustomerFile object.
+	 * @return All attributes that have the class SearcherCriteria as String. 
 	 */
 	public String toString() {
-		return "You have inserted following values:\nPath: " + path + "\nFile Name: " + fileName + "\nExtension: "
-				+ ext + "\nSize: " + size + "\nSize Scale: " + sizeScale;
+		return "You have inserted following values:\nPath: " + path + "\nFile Name: " + fileName + "\nExtension: " + ext
+				+ "\nSize: " + size;
 	}
 }

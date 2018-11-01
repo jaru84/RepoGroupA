@@ -13,14 +13,16 @@ package com.fundation.search.controller;
 
 /**
  * Class created to manage our custom exceptions.
+ * It class inherits from Exception class.
  *
  * @author Jacqueline Rosales
  * @version 1.0.
  */
 public class CustomSearchException extends Exception {
-
+		
 	/**
 	 * method to send our custom message to super class.
+	 * @param errorMessage (required) String type, error message necessary to send to parent Exception. 
 	 */
 	public CustomSearchException(String errorMessage) {
 		super(errorMessage);

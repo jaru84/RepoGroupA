@@ -26,20 +26,21 @@ import com.fundation.search.view.SearchWindow;
  * @version 1.0.
  */
 public class Controller {
-	/**
-	 * searcher is a object of type Searcher class, Searcher class must be
-	 * implemented in model package. val is a object of type Validator class. file
-	 * is object of type SearcherFile class where the data related to one file will
-	 * be stored and managed as object by model, controller and view packages.
-	 * windowUI is object of type SearchWindow class where the UI is implemented.
-	 * searcher is object of type Search class where the process of searching is
-	 * performed.
-	 */
+	
+	/** searcher is a object of type Searcher class, it will be used to call the searchFile method. */
 	private Search searcher;
+	
+	/** val is a object of type Validator class. */
 	private Validator val;
+	
+	/** file is an object of type SearcherCriteria, it will be used to save the inputs inserted by the user. */
 	public SearcherCriteria file;
+	
+	/** windowUI is an object of type SearchWindow, it will be used to interact with the View package and load the UI. */
 	private SearchWindow windowUI;
-	private ArrayList <ResultFile> resultList;
+	
+	/** resultList is an ArrayList of type CustomFile, it will be used to save the findings results sent by Search class. */
+	private ArrayList<ResultFile> resultList;
 
 	/**
 	 * constructor for Controller class where the objects declared above will be
@@ -54,16 +55,18 @@ public class Controller {
 	}
 
 	/**
-	 * method used to call the action listener of button and perform the search process.
+	 * method used to call the action listener of button and perform the search
+	 * process.
 	 */
 	public void init() {
 		windowUI.setSearchListener(e -> search());
+		
 	}
 
 	/**
-	 * method where the values to path, filename,extension,size and operator will be
-	 * assigned to file object and all them will be validated, then will be sent to
-	 * model to start with search process and then showed under UI.
+	 * method where all values inserted by the user in the UI like path, filename, extension, size, etc. 
+	 * will be assigned to file object and all them will be validated, then will be sent to
+	 * search process and then showed under UI.
 	 */
 	private void search() {
 		try {
@@ -73,9 +76,13 @@ public class Controller {
 			file.setSize(windowUI.getFileSize());
 			file.setOperator(windowUI.getSizeOperator());
 			file.setSizeScale(windowUI.getSizeScale());
+			file.setOwner(windowUI.getFileOwner());
 			file.setIsDirectory(windowUI.getIsDirectory());
 			file.setIsHidden(windowUI.getIsHidden());
 			file.setIsReadOnly(windowUI.getIsReadOnly());
+			file.setStartDate(windowUI.getStartDate());
+			file.setEndDate(windowUI.getEndDate());
+			
 			val.validate(file);
 			displayResults();
 		} catch (Exception ex) {
@@ -84,17 +91,19 @@ public class Controller {
 	}
 
 	/**
-	 * method used to show the results on the table UI
+	 * method used to show the results in the UI table.
+	 * @throws IOException if something fails during the process of show results.
 	 */
 	private void displayResults() throws IOException {
 		resultList = searcher.searchFile(file);
 		windowUI.clearResults();
+		
 		if (resultList.isEmpty()) {
 			windowUI.setErrorMessage("No items match your search.");
 		} else {
 			for (ResultFile item : resultList) {
-				System.out.println(item.getPath()+" "+item.getFileName()+ " "+item.getExt());
-				Object[] arrRes = { item.getPath(), item.getFileName(), item.getExt(), item.getSize() };
+				System.out.println(item.getPath() + " " + item.getFileName() + " " + item.getExt());
+				Object[] arrRes = { item.getPath(), item.getFileName(), item.getExt(), item.getSize(), item.getOwner() };
 				windowUI.setSearchResults(arrRes);
 			}
 			resultList.clear();
