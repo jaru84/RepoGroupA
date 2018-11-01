@@ -20,6 +20,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.BorderFactory;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.TableColumn;
 
 /**
  * This class displays the results of searching in a table.
@@ -29,11 +30,13 @@ import javax.swing.ListSelectionModel;
  */
 
 public class ResultsPanel extends JPanel {
-    JTable resultsTable;
-    DefaultTableModel defaultTableModel;
-    JScrollPane scrollPane;
-    Vector columnHeaders;
-    TitledBorder borderPane;
+    private JTable resultsTable;
+    private DefaultTableModel defaultTableModel;
+    private JScrollPane scrollPane;
+    private Vector columnHeaders;
+    private TitledBorder borderPane;
+    private TableColumn hiddenColumn;
+    private TableColumn readonlyColumn;
 
     public ResultsPanel() {
         setting();
@@ -60,18 +63,29 @@ public class ResultsPanel extends JPanel {
         columnHeaders.addElement("Creation Date");
         columnHeaders.addElement("Last Modified Date");
         columnHeaders.addElement("Accessed Date");
+        columnHeaders.addElement("Hidden");
+        columnHeaders.addElement("Read-only");
         defaultTableModel = new DefaultTableModel();
         defaultTableModel.setColumnIdentifiers(columnHeaders);
         resultsTable = new JTable() {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
+            public boolean getScrollableTracksViewportWidth()
+            {
+                return getPreferredSize().width < getParent().getWidth();
+            }
         };
         resultsTable.setModel(defaultTableModel);
-        resultsTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        resultsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         resultsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         scrollPane = new JScrollPane(resultsTable);
         add(scrollPane, BorderLayout.CENTER);
+
+        initTableColumns();
+
+        Object[] row = {"path","name","ext","size","owner","crea date", "modified date","accessed date", true,true};
+        defaultTableModel.addRow(row);
 
     }
 
@@ -89,5 +103,23 @@ public class ResultsPanel extends JPanel {
      */
     public void clearTable() {
         defaultTableModel.setRowCount(0);
+    }
+
+    public void initTableColumns(){
+        hiddenColumn = resultsTable.getColumnModel().getColumn(8);
+        readonlyColumn = resultsTable.getColumnModel().getColumn(9);
+        hiddenColumn.setCellRenderer(resultsTable.getDefaultRenderer(Boolean.class));
+        readonlyColumn.setCellRenderer(resultsTable.getDefaultRenderer(Boolean.class));
+        resultsTable.getColumnModel().getColumn(0).setMinWidth(170);
+        resultsTable.getColumnModel().getColumn(1).setMinWidth(100);
+        resultsTable.getColumnModel().getColumn(2).setMinWidth(80);
+        resultsTable.getColumnModel().getColumn(3).setMinWidth(100);
+        resultsTable.getColumnModel().getColumn(4).setMinWidth(100);
+        resultsTable.getColumnModel().getColumn(5).setMinWidth(120);
+        resultsTable.getColumnModel().getColumn(6).setMinWidth(120);
+        resultsTable.getColumnModel().getColumn(7).setMinWidth(120);
+        resultsTable.getColumnModel().getColumn(8).setMinWidth(70);
+        resultsTable.getColumnModel().getColumn(9).setMinWidth(70);
+
     }
 }

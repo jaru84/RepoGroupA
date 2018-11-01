@@ -13,7 +13,8 @@ package com.fundation.search.view;
 
 import java.awt.Container;
 import java.util.Date;
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 
 /**
  * This class contains the panels which displays the results and parameters, in
@@ -106,18 +107,18 @@ public class MainContainer extends Container {
         resultsPanel.clearTable();
     }
 
-    public Date[] getCreationDates() {
-        return parametersPanel.getCreationDates();
+    public Date getStartDate() {
+        return parametersPanel.getStartDate();
 
     }
 
-    public Date[] getModifiedDates() {
-        return parametersPanel.getModifiedDates();
+    public Date getEndDate() {
+        return parametersPanel.getEndDate();
 
     }
 
-    public Date[] getAccessedDates() {
-        return parametersPanel.getAccessedDates();
+    public String getDateType() {
+        return parametersPanel.getDateType();
 
     }
 }

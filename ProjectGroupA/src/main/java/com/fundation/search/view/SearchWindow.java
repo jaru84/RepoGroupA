@@ -165,18 +165,18 @@ public class SearchWindow extends JFrame {
     }
 
 
-    public Date[] getCreationDates() {
-        return contentPane.getCreationDates();
+    public Date getStartDate() {
+        return contentPane.getStartDate();
+
+    }
+    public Date getEndDate() {
+        return contentPane.getEndDate();
 
     }
 
-    public Date[] getModifiedDates() {
-        return contentPane.getModifiedDates();
+    public String getDateType() {
+        return contentPane.getDateType();
 
     }
 
-    public Date[] getAccessedDates() {
-        return contentPane.getAccessedDates();
-
-    }
 }

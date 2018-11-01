@@ -11,10 +11,9 @@
  *******************************************************************************/
 package com.fundation.search.view;
 
-import java.awt.GridBagConstraints;
-import java.awt.Component;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.Component;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -53,37 +52,23 @@ public class FieldsPanel extends JPanel {
     private JLabel sizeLabel;
     private JLabel ownerLabel;
     private JLabel contentLabel;
-    private JLabel creationDateLabel;
-    private JLabel modifiedDateLabel;
-    private JLabel accessedDateLabel;
+    private JLabel startDateLabel;
+    private JLabel endDateLabel;
     private JButton chooserButton;
     private JComboBox sizeOperator;
     private JComboBox sizeScale;
+    private JComboBox dateType;
     private JFileChooser chooser;
     private JCheckBox dirCheckbox;
     private JCheckBox hiddenCheckbox;
     private JCheckBox readonlyCheckbox;
-    private UtilDateModel creationStartModel;
-    private JDatePanelImpl creationStartPanel;
-    private JDatePickerImpl creationStartPicker;
-    private UtilDateModel creationEndModel;
-    private JDatePanelImpl creationEndPanel;
-    private JDatePickerImpl creationEndPicker;
-    private JPanel creationDatesPane;
-    private UtilDateModel modifiedStartModel;
-    private JDatePanelImpl modifiedStartPanel;
-    private JDatePickerImpl modifiedStartPicker;
-    private UtilDateModel modifiedEndModel;
-    private JDatePanelImpl modifiedEndPanel;
-    private JDatePickerImpl modifiedEndPicker;
-    private JPanel modifiedDatesPane;
-    private UtilDateModel accessedStartModel;
-    private JDatePanelImpl accessedStartPanel;
-    private JDatePickerImpl accessedStartPicker;
-    private UtilDateModel accessedEndModel;
-    private JDatePanelImpl accessedEndPanel;
-    private JDatePickerImpl accessedEndPicker;
-    private JPanel accessedDatesPane;
+    private UtilDateModel startDateModel;
+    private JDatePanelImpl startDatePanel;
+    private JDatePickerImpl startDatePicker;
+    private UtilDateModel endDateModel;
+    private JDatePanelImpl endDatePanel;
+    private JDatePickerImpl endDatePicker;
+    private JPanel datesPanel;
     private Properties pickerProperties;
     private final int SIZE_TEXT_BOX = 20;
 
@@ -93,9 +78,9 @@ public class FieldsPanel extends JPanel {
     }
 
     public void init() {
-        initDates();
         initTextFields();
         initLabels();
+        initDates();
         initCheckboxes();
         initVarious();
         addElements();
@@ -159,29 +144,21 @@ public class FieldsPanel extends JPanel {
 
     }
 
-    public Date[] getCreationDates() {
-        Date[] creationDates = new Date[2];
-        creationDates[0] = (Date)creationStartPicker.getModel().getValue();
-        creationDates[1] = (Date)creationEndPicker.getModel().getValue();
-        return creationDates;
+    public Date getStartDate() {
+        return (Date)startDatePicker.getModel().getValue();
 
     }
 
-    public Date[] getModifiedDates() {
-        Date[] modifiedDates = new Date[2];
-        modifiedDates[0] = (Date)modifiedStartPicker.getModel().getValue();
-        modifiedDates[1] = (Date)modifiedEndPicker.getModel().getValue();
-        return modifiedDates;
+    public Date getEndDate() {
+        return (Date)endDatePicker.getModel().getValue();
 
     }
 
-    public Date[] getAccessedDates() {
-        Date[] accessedDates = new Date[2];
-        accessedDates[0] = (Date)accessedStartPicker.getModel().getValue();
-        accessedDates[1] = (Date)accessedEndPicker.getModel().getValue();
-        return accessedDates;
+    public String getDateType() {
+        return dateType.getSelectedItem().toString();
 
     }
+
 
     /**
      * This method add a component in the panel in the position specified by col and
@@ -239,36 +216,18 @@ public class FieldsPanel extends JPanel {
         pickerProperties.put("text.today", "Today");
         pickerProperties.put("text.month", "Month");
         pickerProperties.put("text.year", "Year");
-        // Initilizate start/end date for creation date
-        creationStartModel = new UtilDateModel();
-        creationStartPanel = new JDatePanelImpl(creationStartModel, pickerProperties);
-        creationStartPicker = new JDatePickerImpl(creationStartPanel, new DateLabelFormatter());
-        creationEndModel = new UtilDateModel();
-        creationEndPanel = new JDatePanelImpl(creationEndModel, pickerProperties);
-        creationEndPicker = new JDatePickerImpl(creationEndPanel, new DateLabelFormatter());
-        creationDatesPane = new JPanel(new GridLayout(1,2));
-        creationDatesPane.add(creationStartPicker);
-        creationDatesPane.add(creationEndPicker);
-        // Initilizate start/end date for modified date
-        modifiedStartModel = new UtilDateModel();
-        modifiedStartPanel = new JDatePanelImpl(modifiedStartModel, pickerProperties);
-        modifiedStartPicker = new JDatePickerImpl(modifiedStartPanel, new DateLabelFormatter());
-        modifiedEndModel = new UtilDateModel();
-        modifiedEndPanel = new JDatePanelImpl(modifiedEndModel, pickerProperties);
-        modifiedEndPicker = new JDatePickerImpl(modifiedEndPanel, new DateLabelFormatter());
-        modifiedDatesPane = new JPanel(new GridLayout(1,2));
-        modifiedDatesPane.add(modifiedStartPicker);
-        modifiedDatesPane.add(modifiedEndPicker);
-        // Initilizate start/end date for accessed date
-        accessedStartModel = new UtilDateModel();
-        accessedStartPanel = new JDatePanelImpl(accessedStartModel, pickerProperties);
-        accessedStartPicker = new JDatePickerImpl(accessedStartPanel, new DateLabelFormatter());
-        accessedEndModel = new UtilDateModel();
-        accessedEndPanel = new JDatePanelImpl(accessedEndModel, pickerProperties);
-        accessedEndPicker = new JDatePickerImpl(accessedEndPanel, new DateLabelFormatter());
-        accessedDatesPane = new JPanel(new GridLayout(1,2));
-        accessedDatesPane.add(accessedStartPicker);
-        accessedDatesPane.add(accessedEndPicker);
+        // Initialize start/end dates pickers
+        startDateModel = new UtilDateModel();
+        startDatePanel = new JDatePanelImpl(startDateModel, pickerProperties);
+        startDatePicker = new JDatePickerImpl(startDatePanel, new DateLabelFormatter());
+        endDateModel = new UtilDateModel();
+        endDatePanel = new JDatePanelImpl(endDateModel, pickerProperties);
+        endDatePicker = new JDatePickerImpl(endDatePanel, new DateLabelFormatter());
+        datesPanel = new JPanel();
+        datesPanel.add(startDateLabel);
+        datesPanel.add(startDatePicker);
+        datesPanel.add(endDateLabel);
+        datesPanel.add(endDatePicker);
     }
 
     public void initTextFields(){
@@ -294,9 +253,8 @@ public class FieldsPanel extends JPanel {
         sizeLabel = new JLabel("Size: ");
         ownerLabel = new JLabel("Owner: ");
         contentLabel = new JLabel("Content: ");
-        creationDateLabel = new JLabel("Creation Date: ");
-        modifiedDateLabel = new JLabel("Modified Date: ");
-        accessedDateLabel = new JLabel("Accessed Date: ");
+        startDateLabel = new JLabel("Between: ");
+        endDateLabel = new JLabel("and: ");
     }
 
     public void initCheckboxes(){
@@ -315,7 +273,8 @@ public class FieldsPanel extends JPanel {
     public void initVarious(){
         chooserButton = new JButton("...");
         sizeOperator = new JComboBox(new Object[]{"==", ">", ">=", "<", "<="});
-        sizeScale = new JComboBox(new Object[]{"", "kB", "MB", "GB"});
+        sizeScale = new JComboBox(new Object[]{"bytes", "kB", "MB", "GB"});
+        dateType = new JComboBox(new Object[]{"Creation Date", "Modified Date", "Accessed Date"});
         chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooserButton.addActionListener(new ActionListener() {
@@ -328,29 +287,25 @@ public class FieldsPanel extends JPanel {
 
     public void addElements(){
         addComponent(pathLabel, 0, 0, false,1);
-        addComponent(pathText, 1, 0, true,1);
         addComponent(nameLabel, 0, 1, false,1);
-        addComponent(nameText, 1, 1, true,1);
         addComponent(extensionLabel, 0, 2, false,1);
-        addComponent(extensionText, 1, 2, true,1);
         addComponent(sizeLabel, 0, 3, false,1);
+        addComponent(ownerLabel, 0, 4, false,1);
+        addComponent(contentLabel, 0, 5, false,1);
+        addComponent(pathText, 1, 0, true,2);
+        addComponent(nameText, 1, 1, true,3);
+        addComponent(extensionText, 1, 2, true,3);
         addComponent(sizeText, 1, 3, true,1);
+        addComponent(ownerText, 1, 4, true,3);
+        addComponent(contentText, 1, 5, true,3);
         addComponent(sizeOperator, 2, 3, false,1);
         addComponent(sizeScale, 3, 3, false,1);
-        addComponent(ownerLabel, 0, 4, false,1);
-        addComponent(ownerText, 1, 4, true,1);
-        addComponent(contentLabel, 0, 5, false,1);
-        addComponent(contentText, 1, 5, true,1);
-        addComponent(chooserButton, 2, 0, false,1);
-        addComponent(dirCheckbox, 2, 6, false,2);
-        addComponent(hiddenCheckbox, 2, 7, false,2);
-        addComponent(readonlyCheckbox, 2, 8, false,2);
-        addComponent(creationDateLabel, 0, 6, false,1);
-        addComponent(modifiedDateLabel, 0, 7, false,1);
-        addComponent(accessedDateLabel, 0, 8, false,1);
-        addComponent(creationDatesPane, 1, 6, false,1);
-        addComponent(modifiedDatesPane, 1, 7, false,1);
-        addComponent(accessedDatesPane, 1, 8, false,1);
+        addComponent(chooserButton, 3, 0, false,1);
+        addComponent(dirCheckbox, 4, 0, false,1);
+        addComponent(hiddenCheckbox, 4, 1, false,1);
+        addComponent(readonlyCheckbox, 4, 2, false,1);
+        addComponent(dateType, 0, 6, false,1);
+        addComponent(datesPanel, 1, 6, false,1);
     }
 
     public void clearFields(){
@@ -366,11 +321,7 @@ public class FieldsPanel extends JPanel {
         dirCheckbox.setSelected(false);
         hiddenCheckbox.setSelected(false);
         readonlyCheckbox.setSelected(false);
-        creationStartModel.setValue(null);
-        creationEndModel.setValue(null);
-        modifiedStartModel.setValue(null);
-        modifiedEndModel.setValue(null);
-        accessedStartModel.setValue(null);
-        accessedEndModel.setValue(null);
+        startDateModel.setValue(null);
+        endDateModel.setValue(null);
     }
 }
