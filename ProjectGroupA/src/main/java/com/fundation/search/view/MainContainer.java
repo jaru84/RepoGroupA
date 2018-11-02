@@ -141,17 +141,13 @@ public class MainContainer extends Container {
 		return parametersPanel.getIsReadOnly();
 
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
+
 	public JButton getSearchButton() {
 		return parametersPanel.getSearchButton();
 	}
 
 	/**
-	 * 
+	 * This method sends a row of results to be set in the table results
 	 * @param data
 	 */
 	public void setResults(Object[] data) {
@@ -160,7 +156,7 @@ public class MainContainer extends Container {
 	}
 	
 	/**
-	 * 
+	 * This method clear the content of results table
 	 */
 	public void clearTable() {
 		resultsPanel.clearTable();
@@ -168,28 +164,17 @@ public class MainContainer extends Container {
 	
     public Date getStartDate() {
         return parametersPanel.getStartDate();
-	/**
-	 * 
-	 * @return
-	 */
 
 	}
 	
     public Date getEndDate() {
         return parametersPanel.getEndDate();
-	/**
-	 * 
-	 * @return
-	 */
+
 
 	}
 	
     public String getDateType() {
         return parametersPanel.getDateType();
-	/**
-	 * 
-	 * @return
-	 */
 
 	}
 }

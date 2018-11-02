@@ -105,18 +105,22 @@ public class FieldsPanel extends JPanel {
 	
 	/** readonlyCheckbox variable of JCheckBox type. */
 	private JCheckBox readonlyCheckbox;
+	/** startDateModel variable of UtilDateModel to handle Date picker. */
     private UtilDateModel startDateModel;
+	/** startDatePanel variable of JDatePanelImpl to contain Date picker. */
     private JDatePanelImpl startDatePanel;
+	/** startDatePicker variable of JDatePickerImpl to implement the Start Date picker. */
     private JDatePickerImpl startDatePicker;
+	/** endDateModel variable of UtilDateModel to handle Date picker. */
     private UtilDateModel endDateModel;
+	/** endDatePanel variable of JDatePanelImpl to contain Date picker. */
     private JDatePanelImpl endDatePanel;
+	/** endDatePicker variable of JDatePickerImpl to implement the End Date picker. */
     private JDatePickerImpl endDatePicker;
+	/** datesPanel variable of JPanel to contain the start/end date pickers. */
     private JPanel datesPanel;
-	/** creationStartPicker variable of JDatePickerImpl type. */
-	
-	/** pickerProperties variable of Properties type. */
+	/** pickerProperties variable of Properties type to configure start/end Date pickers. */
 	private Properties pickerProperties;
-	
 	/** SIZE_TEXT_BOX variable ctte of int type. */
 	private final int SIZE_TEXT_BOX = 20;
 
@@ -129,7 +133,7 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * Method used for............
+	 * Method used to initialize the GUI elements
 	 */
 	public void init() {
 		initTextFields();
@@ -241,41 +245,29 @@ public class FieldsPanel extends JPanel {
 	
     public Date getStartDate() {
         return (Date)startDatePicker.getModel().getValue();
-	/**
-	 * 
-	 * @return
-	 */
 
 	}
 
     public Date getEndDate() {
         return (Date)endDatePicker.getModel().getValue();
-	/**
-	 * 
-	 * @return
-	 */
 
 	}
 	
     public String getDateType() {
         return dateType.getSelectedItem().toString();
-	/**
-	 * 
-	 * @return
-	 */
 
 	}
 
 
 	/**
 	 * This method add a component in the panel in the position specified by col and
-	 * row grow indicates if the component will be expanded if extra space is
+	 * row, grow indicates if the component will be expanded if extra space is
 	 * available.
-	 * @param component used for....
-	 * @param col  used for....
-	 * @param row used for....
-	 * @param grow used for....
-	 * @param width used for...
+	 * @param component is the component to be added in the panel
+	 * @param col  the column position to set the component
+	 * @param row the row position to set the component
+	 * @param grow if true the element will be expanded to use the additional space
+	 * @param width the number of rows that the element will occupy
 	 */
 	private void addComponent(Component component, int col, int row, boolean grow, int width) {
 		GridBagConstraints gridConstraint = new GridBagConstraints();
@@ -291,9 +283,9 @@ public class FieldsPanel extends JPanel {
 	}
 
 	/**
-	 * This method fill the Path field with the selected path in the dialog file
+	 * This method fill the Path text field with the selected path in the dialog file
 	 * chooser, It's called from the chooser button's action listener
-	 * @param status used for.....
+	 * @param status if APPROVE_OPTION then Open button was pressed otherwise Cancel was pressed
 	 */
 	public void getChosenFile(int status) {
 		if (status == JFileChooser.APPROVE_OPTION) {
@@ -304,8 +296,8 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * This method is for...
-	 * @param e used for...
+	 * This method to disable/enable proper text fields when Directory checkbox is selected
+	 * @param e used to get the change of state in Directory checkbox
 	 */
 	public void toggleTextFields(ItemEvent e) {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
@@ -329,7 +321,7 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * 
+	 * This method initialize the necessary elements to instantiate the start/end date pickers
 	 */
 	public void initDates() {
 		pickerProperties = new Properties();
@@ -348,12 +340,10 @@ public class FieldsPanel extends JPanel {
         datesPanel.add(startDatePicker);
         datesPanel.add(endDateLabel);
         datesPanel.add(endDatePicker);
-		/* Initilizate start/end date for modified date */
-		/* Initilizate start/end date for accessed date */
 	}
 	
 	/**
-	 * Method used for...
+	 * Method initialize the text fields
 	 */
 	public void initTextFields() {
 		pathText = new JTextField();
@@ -372,7 +362,7 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * Method used for ....
+	 * Method initialize the labels
 	 */
 	public void initLabels() {
 		pathLabel = new JLabel("Path: ");
@@ -386,7 +376,7 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * Method used for....
+	 * Method initialize the checkboxes
 	 */
 	public void initCheckboxes() {
 		dirCheckbox = new JCheckBox("Directory");
@@ -402,7 +392,7 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * Method used for...
+	 * Method initialize additional GUI elements
 	 */
 	public void initVarious() {
 		chooserButton = new JButton("...");
@@ -420,7 +410,7 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * Method used for...
+	 * Method add all the elements in the panel
 	 */
 	public void addElements() {
 		addComponent(pathLabel, 0, 0, false, 1);
@@ -446,7 +436,7 @@ public class FieldsPanel extends JPanel {
 	}
 	
 	/**
-	 * Method used for...
+	 * Method clear all the content in the parameters fields
 	 */
 	public void clearFields() {
 

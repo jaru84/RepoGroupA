@@ -31,20 +31,21 @@ import javax.swing.table.TableColumn;
 
 public class ResultsPanel extends JPanel {
 	
-	/** resultsTable variable of JTable used for....*/
-	JTable resultsTable;
+	/** resultsTable variable of JTable used to display the results of searching in a table*/
+	private JTable resultsTable;
 	
-	/** defaultTableModel variable of DefaultTableModel type used for....*/
-	DefaultTableModel defaultTableModel;
+	/** defaultTableModel variable of DefaultTableModel type used for handling JTable*/
+	private DefaultTableModel defaultTableModel;
+	/** hiddenColumn/readonlyColumn variable of TableColumn type used for setting checkbox type in column*/
     private TableColumn hiddenColumn;
     private TableColumn readonlyColumn;
-	/** scrollPane variable of JScrollPane type used for....*/
+	/** scrollPane variable of JScrollPane type used for adding horizontal/vertical scrollbar to the table*/
 	JScrollPane scrollPane;
 	
-	/** columnHeaders variable of Vector type used for....*/
+	/** columnHeaders variable of Vector type used for adding column headers to the table*/
 	Vector columnHeaders;
 	
-	/** defaultTableModel variable of DefaultTableModel used for....*/
+	/** borderPane variable of TitledBorder used for adding border and title to table*/
 	TitledBorder borderPane;
 
 	/**
@@ -57,7 +58,7 @@ public class ResultsPanel extends JPanel {
 	}
 	
 	/**
-	 * Method used to.......
+	 * Method used to configure layout of panel and borders
 	 */
 	public void setting() {
 		setLayout(new BorderLayout());
@@ -69,7 +70,7 @@ public class ResultsPanel extends JPanel {
 	}
 	
 	/**
-	 * Method used to.......
+	 * Method used to initialize the elements related to table
 	 */
 	public void init() {
 		columnHeaders = new Vector();
@@ -99,31 +100,29 @@ public class ResultsPanel extends JPanel {
 		resultsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane = new JScrollPane(resultsTable);
 		add(scrollPane, BorderLayout.CENTER);
-
         initTableColumns();
-
-        Object[] row = {"path","name","ext","size","owner","crea date", "modified date","accessed date", true,true};
-        defaultTableModel.addRow(row);
-
 	}
 
 	/**
-	 * This method receives a vector of vectors to be displayed in the Jtable. Same
-	 * column headers are used Each row represents a file matching with search
-	 * criteria.
-	 * @param data receives a vector of vectors to be displayed in the Jtable
+	 * This method receives a Object array to be displayed in a row of the Jtable. This row
+	 * represents a file matching with searching criteria entered by the user.
+	 * @param data receives an Object array with Path, Name, Extension, Size, Owner,
+	 *             Creation Date, Last Modified Date, Accessed Date, Hidden, Read-only
 	 */
 	public void setTableDate(Object[] data) {
 		defaultTableModel.addRow(data);
 	}
 
 	/**
-	 * This method set to 0 the number of rows discarding all the rows if exist
+	 * This method set to 0 the number of rows cleaning all the rows if exist
 	 */
 	public void clearTable() {
 		defaultTableModel.setRowCount(0);
     }
-
+	/**
+	 * This method configure the hidden and readonly columns to be checkboxes
+	 * also set the minimum size for every column
+	 */
     public void initTableColumns(){
         hiddenColumn = resultsTable.getColumnModel().getColumn(8);
         readonlyColumn = resultsTable.getColumnModel().getColumn(9);

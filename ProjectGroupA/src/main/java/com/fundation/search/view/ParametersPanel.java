@@ -53,14 +53,14 @@ public class ParametersPanel extends JPanel {
 	}
 	
 	/**
-	 * Method used to.......
+	 * Method used to set layout manager
 	 */
 	public void setting() {
 		setLayout(new BorderLayout());
 	}
 	
 	/**
-	 * method used to.......
+	 * method used to instantiate the GUI elements and add them to panel
 	 */
 	public void init() {
 		searchButton = new JButton("Search");
