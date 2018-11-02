@@ -189,8 +189,8 @@ public class SearchWindow extends JFrame {
 	
 	
 	/**
-	 * This method display the results of searching in the left table.
-	 * @param dataResults (required) Vector of Vectors where each vector contains the parameters of file matching the search criteria. 
+	 * This method display the results of searching in the results table.
+	 * @param dataResults (required) Objects array where each element contains the parameters of file matching the search criteria.
 	 */
 	public void setSearchResults(Object[] dataResults) {
 		contentPane.setResults(dataResults);
@@ -207,37 +207,29 @@ public class SearchWindow extends JFrame {
 
 	}
 
-	/**
-	 * This method display clear the results table
-	 */
-	public void clearResults() {
-		contentPane.clearTable();
-	}
-	
-	/**
-	 * This method displays the Creation Date.
-	 * @return 
-	 */
-	public Date[] getCreationDates() {
-		return contentPane.getCreationDates();
+    /**
+     * This method clear the results table
+     */
+    public void clearResults() {
+        contentPane.clearTable();
+    }
+
+
+    public Date getStartDate() {
+        return contentPane.getStartDate();
 
 	}
-	
-	/**
-	 * This method displays the Modified Date.
-	 * @return
-	 */
-	public Date[] getModifiedDates() {
-		return contentPane.getModifiedDates();
+    public Date getEndDate() {
+        return contentPane.getEndDate();
 
 	}
-	
 	/**
-	 * This method displays the Accessed Date.
-	 * @return
+	 * This method return the value in Combobox of dates.
+	 * @return String with a value of "Creation Date", "Modified Date", "Accessed Date".
 	 */
-	public Date[] getAccessedDates() {
-		return contentPane.getAccessedDates();
+    public String getDateType() {
+        return contentPane.getDateType();
 
 	}
+
 }

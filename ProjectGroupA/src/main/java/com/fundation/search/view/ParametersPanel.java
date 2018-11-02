@@ -18,7 +18,9 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.BoxLayout;
 
 /**
  * This panel keeps the fields panel in top and search button in the bottom.
@@ -51,14 +53,14 @@ public class ParametersPanel extends JPanel {
 	}
 	
 	/**
-	 * Method used to.......
+	 * Method used to set layout manager
 	 */
 	public void setting() {
 		setLayout(new BorderLayout());
 	}
 	
 	/**
-	 * method used to.......
+	 * method used to instantiate the GUI elements and add them to panel
 	 */
 	public void init() {
 		searchButton = new JButton("Search");
@@ -196,27 +198,28 @@ public class ParametersPanel extends JPanel {
 	 * Method used for...
 	 * @return
 	 */
-	public Date[] getCreationDates() {
-		return fieldsPanel.getCreationDates();
+    public Date getStartDate() {
+        return fieldsPanel.getStartDate();
 
 	}
 	
+    public Date getEndDate() {
+        return fieldsPanel.getEndDate();
 	/**
 	 * Method used for...
 	 * @return
 	 */
-	public Date[] getModifiedDates() {
-		return fieldsPanel.getModifiedDates();
 
 	}
 	
+    public String getDateType() {
+        return fieldsPanel.getDateType();
 	/**
 	 * Method used for...
 	 * @return
 	 */
-	public Date[] getAccessedDates() {
-		return fieldsPanel.getAccessedDates();
 
 	}
+
 
 }

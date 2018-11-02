@@ -13,7 +13,8 @@ package com.fundation.search.view;
 
 import java.awt.Container;
 import java.util.Date;
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 
 /**
  * This class contains the panels which displays the results and parameters, in
@@ -140,17 +141,13 @@ public class MainContainer extends Container {
 		return parametersPanel.getIsReadOnly();
 
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
+
 	public JButton getSearchButton() {
 		return parametersPanel.getSearchButton();
 	}
 
 	/**
-	 * 
+	 * This method sends a row of results to be set in the table results
 	 * @param data
 	 */
 	public void setResults(Object[] data) {
@@ -159,36 +156,25 @@ public class MainContainer extends Container {
 	}
 	
 	/**
-	 * 
+	 * This method clear the content of results table
 	 */
 	public void clearTable() {
 		resultsPanel.clearTable();
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public Date[] getCreationDates() {
-		return parametersPanel.getCreationDates();
+    public Date getStartDate() {
+        return parametersPanel.getStartDate();
 
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public Date[] getModifiedDates() {
-		return parametersPanel.getModifiedDates();
+    public Date getEndDate() {
+        return parametersPanel.getEndDate();
+
 
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public Date[] getAccessedDates() {
-		return parametersPanel.getAccessedDates();
+    public String getDateType() {
+        return parametersPanel.getDateType();
 
 	}
 }
