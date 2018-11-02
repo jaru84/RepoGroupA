@@ -19,106 +19,177 @@ import javax.swing.JButton;
 /**
  * This class contains the panels which displays the results and parameters, in
  * right side the parameters panel and the results panel in the left.
- *
+ * It inherits from Container class.
+ * 
  * @author Jose Colina
  * @version 1.0.
  */
 public class MainContainer extends Container {
-    private ResultsPanel resultsPanel;
-    private ParametersPanel parametersPanel;
+	
+	/** resultsPanel variable of ResultsPanel type used to..... */
+	private ResultsPanel resultsPanel;
+	
+	/** parametersPanel of ParametersPanel type used to ........*/
+	private ParametersPanel parametersPanel;
 
-    public MainContainer() {
-        resultsPanel = new ResultsPanel();
-        parametersPanel = new ParametersPanel();
+	/**
+	 * Constructor by default, where resultsPanel and parametersPanel are initialized.
+	 */
+	public MainContainer() {
+		resultsPanel = new ResultsPanel();
+		parametersPanel = new ParametersPanel();
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(parametersPanel);
-        add(resultsPanel);
-    }
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(parametersPanel);
+		add(resultsPanel);
+	}
 
-    /**
-     * These methods return the values in text fields in a String
-     */
-    public String getPath() {
-        return parametersPanel.getPath();
+	/**
+	 * This method return the value in Path text field in a String.
+	 * @return Path value as String.
+	 */
+	public String getPath() {
+		return parametersPanel.getPath();
 
-    }
+	}
+	
+	/**
+	 * This method return the value in File Owner text field in a String.
+	 * @return File Name value as String.
+	 */
+	public String getName() {
+		return parametersPanel.getName();
 
-    public String getName() {
-        return parametersPanel.getName();
+	}
+	
+	/**
+	 * This method return the value in Extension text field in a String.
+	 * @return extension value as String.
+	 */
+	public String getExtension() {
+		return parametersPanel.getExtension();
 
-    }
+	}
 
-    public String getExtension() {
-        return parametersPanel.getExtension();
+	/**
+	 * This method return the value in File Size text field in a String.
+	 * @return File Size value as String.
+	 */
+	public String getFileSize() {
+		return parametersPanel.getFileSize();
 
-    }
+	}
 
-    public String getFileSize() {
-        return parametersPanel.getFileSize();
+	/**
+	 * This method return the value in Size Operator text field in a String.
+	 * @return Size Operator value as String.
+	 */
+	public String getSizeOperator() {
+		return parametersPanel.getSizeOperator();
 
-    }
+	}
+	/**
+	 * This method return the value in Size Scale text field in a String.
+	 * @return Size Scale value as String.
+	 */
+	public String getSizeScale() {
+		return parametersPanel.getSizeScale();
 
-    public String getSizeOperator() {
-        return parametersPanel.getSizeOperator();
+	}
+	
+	/**
+	 * This method return the value in File Owner text field in a String.
+	 * @return Owner value as String.
+	 */
+	public String getOwner() {
+		return parametersPanel.getOwner();
 
-    }
+	}
+	
+	/**
+	 * This method return the value in Content text field in a String.
+	 * @return Content value as String.
+	 */
+	public String getContent() {
+		return parametersPanel.getContent();
 
-    public String getSizeScale() {
-        return parametersPanel.getSizeScale();
+	}
 
-    }
+	/**
+	 * This method return the value in Directory check box as boolean value.
+	 * @return True if check box was checked and False if not.
+	 */
+	public boolean getIsDirectory() {
+		return parametersPanel.getIsDirectory();
 
-    public String getOwner() {
-        return parametersPanel.getOwner();
+	}
+	
+	/**
+	 * This method return the value in Hidden check box as boolean value.
+	 * @return True if check box was checked and False if not.
+	 */
+	public boolean getIsHidden() {
+		return parametersPanel.getIsHidden();
 
-    }
+	}
+	
+	/**
+	 * This method return the value in Read Only check box as boolean value.
+	 * @return True if check box was checked and False if not.
+	 */
+	public boolean getIsReadOnly() {
+		return parametersPanel.getIsReadOnly();
 
-    public String getContent() {
-        return parametersPanel.getContent();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public JButton getSearchButton() {
+		return parametersPanel.getSearchButton();
+	}
 
-    }
+	/**
+	 * 
+	 * @param data
+	 */
+	public void setResults(Object[] data) {
+		resultsPanel.setTableDate(data);
 
-    public boolean getIsDirectory() {
-        return parametersPanel.getIsDirectory();
-
-    }
-
-    public boolean getIsHidden() {
-        return parametersPanel.getIsHidden();
-
-    }
-
-    public boolean getIsReadOnly() {
-        return parametersPanel.getIsReadOnly();
-
-    }
-
-    public JButton getSearchButton() {
-        return parametersPanel.getSearchButton();
-    }
-
-    public void setResults(Object[] data) {
-        resultsPanel.setTableDate(data);
-
-    }
-
-    public void clearTable() {
-        resultsPanel.clearTable();
-    }
-
+	}
+	
+	/**
+	 * 
+	 */
+	public void clearTable() {
+		resultsPanel.clearTable();
+	}
+	
     public Date getStartDate() {
         return parametersPanel.getStartDate();
+	/**
+	 * 
+	 * @return
+	 */
 
-    }
-
+	}
+	
     public Date getEndDate() {
         return parametersPanel.getEndDate();
+	/**
+	 * 
+	 * @return
+	 */
 
-    }
-
+	}
+	
     public String getDateType() {
         return parametersPanel.getDateType();
+	/**
+	 * 
+	 * @return
+	 */
 
-    }
+	}
 }

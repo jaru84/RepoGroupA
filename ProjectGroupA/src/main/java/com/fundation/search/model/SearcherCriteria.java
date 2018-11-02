@@ -11,6 +11,8 @@
  *******************************************************************************/
 package com.fundation.search.model;
 
+import java.util.Date;
+
 /**
  * Class created to manage the search criteria object and its attributes.
  *
@@ -18,13 +20,31 @@ package com.fundation.search.model;
  * @version 1.0.
  */
 public class SearcherCriteria extends CustomFile {
-
+	
+	/** operator variable of String type used to save the value set by the user. */
 	private String operator;
+	
+	/** sizeScale variable of String type used to save the value set by the user. */
 	private String sizeScale;
+	
+	/** isDirectory variable of boolean type used to save the value set by the user. */
 	private boolean isDirectory;
+	
+	/** isHidden variable of boolean type used to save the value set by the user. */
 	private boolean isHidden;
+	
+	/** isHidden variable of boolean type used to save the value set by the user. */
 	private boolean isReadOnly;
-
+	
+	/** owner variable of String type used to save the value set by the user.*/
+	private String owner;
+	
+	/** startDate variable of Date type used to save the value selected by user from start date calendar.*/
+	private Date startDate;
+	
+	/** endDate variable of Date type used to save the value selected by user from start date calendar.*/
+	private Date endDate;
+	
 	/**
 	 * Constructor for SearcherCriteria class where the values inserted to be find
 	 * will be stored as an object.
@@ -36,10 +56,12 @@ public class SearcherCriteria extends CustomFile {
 		isDirectory = false;
 		isHidden = false;
 		isReadOnly = false;
+		owner = "";
 	}
 
 	/**
 	 * Method setter to operator value.
+	 * @param operator It is used to set a String value to operator attribute.
 	 */
 	public void setOperator(String operator) {
 		this.operator = operator;
@@ -47,72 +69,129 @@ public class SearcherCriteria extends CustomFile {
 
 	/**
 	 * Method setter to size scale value.
+	 * @param operator It is used to set a String value to sizeScale attribute.
 	 */
 	public void setSizeScale(String sizeScale) {
 		this.sizeScale = sizeScale;
 	}
-	
+
 	/**
 	 * Method getter to operator value.
+	 * @return the value of operator as String.
 	 */
 	public String getOperator() {
 		return operator;
 	}
-	
+
 	/**
 	 * Method setter to Directory box.
+	 * @param isDirectory It is used to set a boolean value to isDirectory attribute.
 	 */
 	public void setIsDirectory(boolean isDirectory) {
 		this.isDirectory = isDirectory;
 	}
-	
+
 	/**
 	 * Method setter to Hidden box.
+	 * @param isHidden It is used to set a boolean value to isHidden attribute.
 	 */
 	public void setIsHidden(boolean isHidden) {
 		this.isHidden = isHidden;
 	}
-	
+
 	/**
 	 * Method setter to Read Only box.
+	 * @param isReadOnly It is used to set a boolean value to isReadOnly attribute.
 	 */
 	public void setIsReadOnly(boolean isReadOnly) {
 		this.isReadOnly = isReadOnly;
 	}
 	
 	/**
+	 * Method setter to owner value.
+	 * @param owner It is used to save the value inserted by the user on owner field.
+	 */
+	public void setOwner(String owner) {
+		this.owner = owner;
+	} 
+	
+	/**
+	 * Method setter to start date value.
+	 * @param startDate It is used to save the value selected by the user from calendar-start date.
+	 */
+	public void setStartDate(Date startDate){
+		this.startDate = startDate;
+	}
+	
+	/**
+	 * Method setter to end date value.
+	 * @param endDate It is used to save the value selected by the user from calendar-end date.
+	 */
+	public void setEndDate(Date endDate){
+		this.endDate = endDate;
+	}
+	
+	/**
 	 * method getter to size scale value.
+	 * @return the value of sizeScale as String.
 	 */
 	public String getSizeScale() {
 		return this.sizeScale;
 	}
-	
+
 	/**
 	 * Method getter to Directory box.
+	 * @return the value of isDirectory as boolean.
 	 */
 	public boolean getIsDirectory() {
 		return this.isDirectory;
 	}
-	
+
 	/**
 	 * Method getter to Hidden box.
+	 * @return the value of isHidden as boolean.
 	 */
 	public boolean getIsHidden() {
 		return this.isHidden;
 	}
-	
+
 	/**
 	 * Method getter to Read Only box.
+	 * @return the value of isReadOnly as boolean.
 	 */
 	public boolean getIsReadOnly() {
 		return this.isReadOnly;
 	}
 	
 	/**
-	 * Method which help to convert the criteria size to bytes.
-	 * Assumption, the default value is zero.
+	 * Method getter to owner value.
+	 * @return the value of owner as String
 	 */
-	public void sizeToBytes () {
+	public String getOwner() {
+		return this.owner;
+	}
+	
+	/**
+	 * Method getter to start date value.
+	 * @return the value of start date
+	 */
+	public Date getStartDate() {
+		return this.startDate;
+	}
+	
+	/**
+	 * Method getter to end date value.
+	 * @return the value of end date value.
+	 */
+	public Date getEndDate() {
+		return this.endDate;
+	}
+	
+	/**
+	 * Method which help to convert the criteria size to bytes. Assumption, the
+	 * default value is zero.
+	 */
+	public void sizeToBytes() {
 		long tempSize = Long.parseLong(this.size);
 		if (this.sizeScale.toUpperCase().equals("KB")) {
 			tempSize = tempSize * 1024;
@@ -127,11 +206,13 @@ public class SearcherCriteria extends CustomFile {
 		}
 		this.size = Long.toString(tempSize);
 	}
-	
+
 	/**
 	 * method toString to display attributes from Searcher Criteria object.
+	 * @return All attributes that have the class SearcherCriteria as String. 
 	 */
-	public String toString () {
-		return super.toString() + "\nOperator: " + operator + "\nIs Directory: " + isDirectory + "\nIs Hidden: " + isHidden + "\nIs ReadOnly: " + isReadOnly;
+	public String toString() {
+		return super.toString() + "\nOperator: " + operator + "\nIs Directory: " + isDirectory + "\nIs Hidden: "
+				+ isHidden + "\nIs ReadOnly: " + isReadOnly;
 	}
 }
