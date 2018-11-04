@@ -30,100 +30,114 @@ import javax.swing.table.TableColumn;
  */
 
 public class ResultsPanel extends JPanel {
-	
-	/** resultsTable variable of JTable used to display the results of searching in a table*/
-	private JTable resultsTable;
-	
-	/** defaultTableModel variable of DefaultTableModel type used for handling JTable*/
-	private DefaultTableModel defaultTableModel;
-	/** hiddenColumn/readonlyColumn variable of TableColumn type used for setting checkbox type in column*/
+
+    /**
+     * resultsTable variable of JTable used to display the results of searching in a table
+     */
+    private JTable resultsTable;
+
+    /**
+     * defaultTableModel variable of DefaultTableModel type used for handling JTable
+     */
+    private DefaultTableModel defaultTableModel;
+    /**
+     * hiddenColumn/readonlyColumn variable of TableColumn type used for setting checkbox type in column
+     */
     private TableColumn hiddenColumn;
     private TableColumn readonlyColumn;
-	/** scrollPane variable of JScrollPane type used for adding horizontal/vertical scrollbar to the table*/
-	JScrollPane scrollPane;
-	
-	/** columnHeaders variable of Vector type used for adding column headers to the table*/
-	Vector columnHeaders;
-	
-	/** borderPane variable of TitledBorder used for adding border and title to table*/
-	TitledBorder borderPane;
+    /**
+     * scrollPane variable of JScrollPane type used for adding horizontal/vertical scrollbar to the table
+     */
+    JScrollPane scrollPane;
 
-	/**
-	 * Constructor by default, where setting and init method are load.
-	 */
-	public ResultsPanel() {
-		setting();
-		init();
+    /**
+     * columnHeaders variable of Vector type used for adding column headers to the table
+     */
+    Vector columnHeaders;
 
-	}
-	
-	/**
-	 * Method used to configure layout of panel and borders
-	 */
-	public void setting() {
-		setLayout(new BorderLayout());
-		borderPane = BorderFactory.createTitledBorder("Search Results");
-		borderPane.setTitleJustification(TitledBorder.CENTER);
-		borderPane.setTitlePosition(TitledBorder.BELOW_TOP);
-		setBorder(borderPane);
+    /**
+     * borderPane variable of TitledBorder used for adding border and title to table
+     */
+    TitledBorder borderPane;
 
-	}
-	
-	/**
-	 * Method used to initialize the elements related to table
-	 */
-	public void init() {
-		columnHeaders = new Vector();
-		columnHeaders.addElement("Path");
-		columnHeaders.addElement("Name");
-		columnHeaders.addElement("Extension");
-		columnHeaders.addElement("Size");
-		columnHeaders.addElement("Owner");
-		columnHeaders.addElement("Creation Date");
-		columnHeaders.addElement("Last Modified Date");
-		columnHeaders.addElement("Accessed Date");
+    /**
+     * Constructor by default, where setting and init method are load.
+     */
+    public ResultsPanel() {
+        setting();
+        init();
+
+    }
+
+    /**
+     * Method used to configure layout of panel and borders
+     */
+    public void setting() {
+        setLayout(new BorderLayout());
+        borderPane = BorderFactory.createTitledBorder("Search Results");
+        borderPane.setTitleJustification(TitledBorder.CENTER);
+        borderPane.setTitlePosition(TitledBorder.BELOW_TOP);
+        setBorder(borderPane);
+
+    }
+
+    /**
+     * Method used to initialize the elements related to table
+     */
+    public void init() {
+        columnHeaders = new Vector();
+        columnHeaders.addElement("Path");
+        columnHeaders.addElement("Name");
+        columnHeaders.addElement("Extension");
+        columnHeaders.addElement("Size");
+        columnHeaders.addElement("Owner");
+        columnHeaders.addElement("Creation Date");
+        columnHeaders.addElement("Last Modified Date");
+        columnHeaders.addElement("Accessed Date");
         columnHeaders.addElement("Hidden");
         columnHeaders.addElement("Read-only");
-		defaultTableModel = new DefaultTableModel();
-		defaultTableModel.setColumnIdentifiers(columnHeaders);
-		resultsTable = new JTable() {
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-            public boolean getScrollableTracksViewportWidth()
-            {
+        defaultTableModel = new DefaultTableModel();
+        defaultTableModel.setColumnIdentifiers(columnHeaders);
+        resultsTable = new JTable() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+
+            public boolean getScrollableTracksViewportWidth() {
                 return getPreferredSize().width < getParent().getWidth();
             }
-		};
-		resultsTable.setModel(defaultTableModel);
+        };
+        resultsTable.setModel(defaultTableModel);
         resultsTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		resultsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane = new JScrollPane(resultsTable);
-		add(scrollPane, BorderLayout.CENTER);
+        resultsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        scrollPane = new JScrollPane(resultsTable);
+        add(scrollPane, BorderLayout.CENTER);
         initTableColumns();
-	}
-
-	/**
-	 * This method receives a Object array to be displayed in a row of the Jtable. This row
-	 * represents a file matching with searching criteria entered by the user.
-	 * @param data receives an Object array with Path, Name, Extension, Size, Owner,
-	 *             Creation Date, Last Modified Date, Accessed Date, Hidden, Read-only
-	 */
-	public void setTableDate(Object[] data) {
-		defaultTableModel.addRow(data);
-	}
-
-	/**
-	 * This method set to 0 the number of rows cleaning all the rows if exist
-	 */
-	public void clearTable() {
-		defaultTableModel.setRowCount(0);
     }
-	/**
-	 * This method configure the hidden and readonly columns to be checkboxes
-	 * also set the minimum size for every column
-	 */
-    public void initTableColumns(){
+
+    /**
+     * This method receives a Object array to be displayed in a row of the Jtable. This row
+     * represents a file matching with searching criteria entered by the user.
+     *
+     * @param data receives an Object array with Path, Name, Extension, Size, Owner,
+     *             Creation Date, Last Modified Date, Accessed Date, Hidden, Read-only
+     */
+    public void setTableDate(Object[] data) {
+        defaultTableModel.addRow(data);
+    }
+
+    /**
+     * This method set to 0 the number of rows cleaning all the rows if exist
+     */
+    public void clearTable() {
+        defaultTableModel.setRowCount(0);
+    }
+
+    /**
+     * This method configure the hidden and readonly columns to be checkboxes
+     * also set the minimum size for every column
+     */
+    public void initTableColumns() {
         hiddenColumn = resultsTable.getColumnModel().getColumn(8);
         readonlyColumn = resultsTable.getColumnModel().getColumn(9);
         hiddenColumn.setCellRenderer(resultsTable.getDefaultRenderer(Boolean.class));
@@ -139,5 +153,5 @@ public class ResultsPanel extends JPanel {
         resultsTable.getColumnModel().getColumn(8).setMinWidth(70);
         resultsTable.getColumnModel().getColumn(9).setMinWidth(70);
 
-	}
+    }
 }
