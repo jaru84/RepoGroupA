@@ -11,6 +11,15 @@
 package com.fundation.search.model;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileOwnerAttributeView;
+import java.nio.file.attribute.FileTime;
+import java.nio.file.attribute.UserPrincipal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Class created to manage the result files object and its attributes.
@@ -20,16 +29,33 @@ import java.io.File;
  * @version 1.0.
  */
 public class ResultFile extends CustomFile {
-	private String owner;
 
+	/** isHidden variable of boolean type used to save the value set by the user. */
+	private boolean isReadOnly;
+	
 	/**
 	 * constructor for ResultFiles object
 	 */
 	public ResultFile() {
 		super();
-		owner = "";
 	}
 
+	/**
+	 * Method getter to Read Only box.
+	 * @return the value of isReadOnly as boolean.
+	 */
+	public boolean getIsReadOnly() {
+		return this.isReadOnly;
+	}
+	
+	/**
+	 * Method setter to Read Only box.
+	 * @param isReadOnly It is used to set a boolean value to isReadOnly attribute.
+	 */
+	public void setIsReadOnly(boolean isReadOnly) {
+		this.isReadOnly = isReadOnly;
+	}
+	
 	/**
 	 * Constructor for ResultFiles with parameters.
 	 * @param inputline (required) file got from search process used to create the object of ResultFile type.
@@ -50,10 +76,10 @@ public class ResultFile extends CustomFile {
 		if (criteria.getIsDirectory()) {
 			fileName = "";
 			ext = "";
-			path = inputLine;
+			path = inputLine;			
 		} else {
 			setSizeKB(inputLine);
-
+				
 			String[] pathValues = inputLine.split("\\\\");
 			String fullFileName = pathValues[pathValues.length - 1];
 			String[] fileNameValues = fullFileName.split("\\.");
@@ -79,22 +105,13 @@ public class ResultFile extends CustomFile {
 				path += pathValues[i] + "\\";
 			}
 		}
-	}
-
-	/**
-	 * Method setter to owner value.
-	 * @param owner It is used to set an value to owner attribute.
-	 */
-	public void setOwner(String owner) {
-		this.owner = owner;
-	}
-
-	/**
-	 * method getter to owner value.
-	 * @return the value of owner as String.
-	 */
-	public String getOwner() {
-		return this.owner;
+		
+		setDates(inputLine);
+		try {
+			setOwnerFile(inputLine);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -112,5 +129,50 @@ public class ResultFile extends CustomFile {
 		String s = String.valueOf(tempFileSize / 1024) + " " + "KB";
 		this.setSize(s);
 	}
+	
+	/**
+	 * Method to update the size of the file found into KB to follow Windows
+	 * standard.
+	 * @param inputline (required) file got from search process used to get its size value.
+	 * @throws IOException 
+	 */
+	public void setOwnerFile(String inputLine) throws IOException {
+		
+		File tempFile = new File(inputLine);
+		Path pathFile = tempFile.toPath();
+		
+		FileOwnerAttributeView atrib = Files.getFileAttributeView(pathFile, FileOwnerAttributeView.class);
+        UserPrincipal owner = atrib.getOwner();
+        this.owner = owner.getName();
+	}
+	
+	/**
+	 * Method to update the dates of an item found
+	 * @param inputline (required) file got from search process used to get the dates.
+	 */
+	public void setDates(String inputLine) {
+		File tempFile = new File(inputLine);
+		Path pFile = tempFile.toPath();
+		
+		//Defining the format we will use to show the date, it could be dd/mm/yyyy
+		DateFormat dateF = new SimpleDateFormat("EEEE, MMMM d, yyyy");
+		BasicFileAttributes dateFile;
+		
+		try {
+			dateFile = Files.readAttributes(pFile, BasicFileAttributes.class);
+			
+			FileTime dateC = dateFile.creationTime();
+			this.createDate = dateF.format(dateC.toMillis());
+			
+			FileTime dateM = dateFile.lastModifiedTime();
+			this.modDate = dateF.format(dateM.toMillis());
+			
+			FileTime dateA = dateFile.lastAccessTime();
+			this.accessDate = dateF.format(dateA.toMillis());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}	
 
 }

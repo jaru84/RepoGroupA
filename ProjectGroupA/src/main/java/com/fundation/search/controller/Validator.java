@@ -170,13 +170,16 @@ public class Validator {
 		Date endDate = file.getEndDate();
 		Date currDate = new Date();
 		
-		if (startDate.after(endDate)) {
-			window.setErrorMessage("The Start Date selected could not be after End Date.");
-			throw new CustomSearchException("The Start Date selected could not be after End Date.");
-		} else if (startDate.after(currDate)) {
-			window.setErrorMessage("The Start Date selected could not be after Current Date.");
-			throw new CustomSearchException("The Start Date selected could not be after Current Date.");
+		if ((startDate!=null) && (endDate!=null) ) {
+			if (startDate.after(endDate)) {
+				window.setErrorMessage("The Start Date selected could not be after End Date.");
+				throw new CustomSearchException("The Start Date selected could not be after End Date.");
+			} else if (startDate.after(currDate)) {
+				window.setErrorMessage("The Start Date selected could not be after Current Date.");
+				throw new CustomSearchException("The Start Date selected could not be after Current Date.");
+			}	
 		}
+				
 	}
 	/**
 	 * method in charge to validate that size only allows integer numbers.

@@ -30,6 +30,25 @@ public abstract class CustomFile {
 	/** size variable of String type used to save the value set by the user. */
 	protected String size;
 
+	/** isHidden variable of boolean type used to save the value set by the user. */
+	protected boolean isHidden;
+	
+	/** isHidden variable of boolean type used to save the value set by the user. */
+	protected boolean isReadOnly;
+	
+	/** owner variable of String type used to save the value set by the user.*/
+	protected String owner;
+	
+	/** createDate variable of String type used to save the value set by the user.*/
+	protected String createDate;
+	
+	/** accessDate variable of String type used to save the value set by the user.*/
+	protected String accessDate;
+	
+	/** modDate variable of String type used to save the value set by the user.*/
+	protected String modDate;
+	
+	
 	/**
 	 * Default constructor for CustomFile.
 	 */
@@ -38,6 +57,11 @@ public abstract class CustomFile {
 		fileName = "";
 		ext = "";
 		size = "";
+		isHidden = false;
+		owner = "";
+		createDate = "";
+		accessDate = "";
+		modDate = "";
 	}
 
 	/**
@@ -83,6 +107,46 @@ public abstract class CustomFile {
 	public void setSize(String size) {
 		this.size = size;
 	}
+	
+	/**
+	 * Method setter to Hidden box.
+	 * @param isHidden It is used to set a boolean value to isHidden attribute.
+	 */
+	public void setIsHidden(boolean isHidden) {
+		this.isHidden = isHidden;
+	}
+		
+	/**
+	 * Method setter to owner value.
+	 * @param owner It is used to set an value to owner attribute.
+	 */
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+	
+	/**
+	 * Method setter to Creation Date value.
+	 * @param date It is used to set a value to createDate attribute.
+	 */
+	public void setCreateDate(String date) {
+		this.createDate = date;
+	}
+	
+	/**
+	 * Method setter to Last Access Date value.
+	 * @param date It is used to set a value to accessDate attribute.
+	 */
+	public void setAccessDate(String date) {
+		this.accessDate = date;
+	}
+	
+	/**
+	 * Method setter to Last Modified Date value.
+	 * @param date It is used to set a value to modDate attribute.
+	 */
+	public void setModDate(String date) {
+		this.modDate = date;
+	}
 
 	/**
 	 * Method getter to path value.
@@ -115,7 +179,47 @@ public abstract class CustomFile {
 	public String getSize() {
 		return this.size;
 	}
+	
+	/**
+	 * Method getter to Hidden box.
+	 * @return the value of isHidden as boolean.
+	 */
+	public boolean getIsHidden() {
+		return this.isHidden;
+	}
+		
+	/**
+	 * method getter to owner value.
+	 * @return the value of owner as String.
+	 */
+	public String getOwner() {
+		return this.owner;
+	}
 
+	/**
+	 * Method getter to Creation Date value.
+	 * @return the value of createDate as String.
+	 */
+	public String getCreateDate() {
+		return this.createDate;
+	}
+	
+	/**
+	 * Method getter to Last Access Date value.
+	 * @return the value of accessDate as String.
+	 */
+	public String getAccessDate() {
+		return this.accessDate;
+	}
+	
+	/**
+	 * Method getter to Last Modified Date value.
+	 * @return the value of modDate as String.
+	 */
+	public String getModDate() {
+		return this.modDate;
+	}
+	
 	/**
 	 * Method ToString to print data from CustomerFile object.
 	 * @return All attributes that have the class SearcherCriteria as String. 

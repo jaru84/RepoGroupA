@@ -31,19 +31,16 @@ public class SearcherCriteria extends CustomFile {
 	private boolean isDirectory;
 	
 	/** isHidden variable of boolean type used to save the value set by the user. */
-	private boolean isHidden;
-	
-	/** isHidden variable of boolean type used to save the value set by the user. */
 	private boolean isReadOnly;
-	
-	/** owner variable of String type used to save the value set by the user.*/
-	private String owner;
 	
 	/** startDate variable of Date type used to save the value selected by user from start date calendar.*/
 	private Date startDate;
 	
 	/** endDate variable of Date type used to save the value selected by user from start date calendar.*/
 	private Date endDate;
+	
+	/** dateSearch variable of String type used to save the value selected by user.*/
+	private String dateSearch;
 	
 	/**
 	 * Constructor for SearcherCriteria class where the values inserted to be find
@@ -54,9 +51,7 @@ public class SearcherCriteria extends CustomFile {
 		operator = "";
 		sizeScale = "";
 		isDirectory = false;
-		isHidden = false;
 		isReadOnly = false;
-		owner = "";
 	}
 
 	/**
@@ -90,15 +85,7 @@ public class SearcherCriteria extends CustomFile {
 	public void setIsDirectory(boolean isDirectory) {
 		this.isDirectory = isDirectory;
 	}
-
-	/**
-	 * Method setter to Hidden box.
-	 * @param isHidden It is used to set a boolean value to isHidden attribute.
-	 */
-	public void setIsHidden(boolean isHidden) {
-		this.isHidden = isHidden;
-	}
-
+	
 	/**
 	 * Method setter to Read Only box.
 	 * @param isReadOnly It is used to set a boolean value to isReadOnly attribute.
@@ -106,14 +93,6 @@ public class SearcherCriteria extends CustomFile {
 	public void setIsReadOnly(boolean isReadOnly) {
 		this.isReadOnly = isReadOnly;
 	}
-	
-	/**
-	 * Method setter to owner value.
-	 * @param owner It is used to save the value inserted by the user on owner field.
-	 */
-	public void setOwner(String owner) {
-		this.owner = owner;
-	} 
 	
 	/**
 	 * Method setter to start date value.
@@ -132,6 +111,14 @@ public class SearcherCriteria extends CustomFile {
 	}
 	
 	/**
+	 * Method setter to the type of date to look for (creation, modified, access).
+	 * @param s It is used to save the value selected by the user from the type of date to search.
+	 */
+	public void setDateSearch(String s){
+		this.dateSearch = s;
+	}
+	
+	/**
 	 * method getter to size scale value.
 	 * @return the value of sizeScale as String.
 	 */
@@ -146,29 +133,13 @@ public class SearcherCriteria extends CustomFile {
 	public boolean getIsDirectory() {
 		return this.isDirectory;
 	}
-
-	/**
-	 * Method getter to Hidden box.
-	 * @return the value of isHidden as boolean.
-	 */
-	public boolean getIsHidden() {
-		return this.isHidden;
-	}
-
+	
 	/**
 	 * Method getter to Read Only box.
 	 * @return the value of isReadOnly as boolean.
 	 */
 	public boolean getIsReadOnly() {
 		return this.isReadOnly;
-	}
-	
-	/**
-	 * Method getter to owner value.
-	 * @return the value of owner as String
-	 */
-	public String getOwner() {
-		return this.owner;
 	}
 	
 	/**
@@ -185,6 +156,14 @@ public class SearcherCriteria extends CustomFile {
 	 */
 	public Date getEndDate() {
 		return this.endDate;
+	}
+	
+	/**
+	 * Method getter to date search value.
+	 * @return the value of the type of date to search.
+	 */
+	public String getDateSearh() {
+		return this.dateSearch;
 	}
 	
 	/**

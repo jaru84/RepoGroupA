@@ -80,6 +80,7 @@ public class Controller {
 			file.setIsDirectory(windowUI.getIsDirectory());
 			file.setIsHidden(windowUI.getIsHidden());
 			file.setIsReadOnly(windowUI.getIsReadOnly());
+			file.setDateSearch(windowUI.getDateType());
 			file.setStartDate(windowUI.getStartDate());
 			file.setEndDate(windowUI.getEndDate());
 			
@@ -103,7 +104,7 @@ public class Controller {
 		} else {
 			for (ResultFile item : resultList) {
 				System.out.println(item.getPath() + " " + item.getFileName() + " " + item.getExt());
-				Object[] arrRes = { item.getPath(), item.getFileName(), item.getExt(), item.getSize(), item.getOwner() };
+				Object[] arrRes = { item.getPath(), item.getFileName(), item.getExt(), item.getSize(), item.getOwner(), item.getCreateDate(), item.getModDate(), item.getAccessDate() };
 				windowUI.setSearchResults(arrRes);
 			}
 			resultList.clear();
