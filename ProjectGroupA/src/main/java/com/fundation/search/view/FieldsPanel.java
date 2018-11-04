@@ -14,9 +14,6 @@ package com.fundation.search.view;
 import java.awt.GridBagConstraints;
 import java.awt.Component;
 import java.awt.GridBagLayout;
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -303,19 +300,16 @@ public class FieldsPanel extends JPanel {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 			nameText.setEditable(false);
 			extensionText.setEditable(false);
-			sizeText.setEditable(false);
-			sizeOperator.setEnabled(false);
-			sizeScale.setEnabled(false);
 			contentText.setEditable(false);
 			readonlyCheckbox.setEnabled(false);
+			dateType.setSelectedIndex(0);
+			dateType.setEnabled(false);
 		} else {
 			nameText.setEditable(true);
 			extensionText.setEditable(true);
-			sizeText.setEditable(true);
-			sizeOperator.setEnabled(true);
-			sizeScale.setEnabled(true);
 			readonlyCheckbox.setEnabled(true);
 			contentText.setEditable(true);
+			dateType.setEnabled(true);
 
 		}
 	}
