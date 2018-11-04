@@ -91,6 +91,7 @@ public class FieldsPanel extends JPanel {
 	/** sizeScale variable of JComboBox type. */
 	private JComboBox sizeScale;
     private JComboBox dateType;
+    
 	/** chooser variable of JFileChooser type. */
 	private JFileChooser chooser;
 	
@@ -392,7 +393,7 @@ public class FieldsPanel extends JPanel {
 		chooserButton = new JButton("...");
 		sizeOperator = new JComboBox(new Object[] { "==", ">", ">=", "<", "<=" });
         sizeScale = new JComboBox(new Object[]{"bytes", "kB", "MB", "GB"});
-        dateType = new JComboBox(new Object[]{"Creation Date", "Modified Date", "Accessed Date"});
+        dateType = new JComboBox(new Object[]{"< Select a Value >", "Creation Date", "Modified Date", "Accessed Date"});
 		chooser = new JFileChooser();
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		chooserButton.addActionListener(new ActionListener() {

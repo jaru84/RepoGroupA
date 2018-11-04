@@ -11,6 +11,12 @@
 package com.fundation.search.model;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileOwnerAttributeView;
+import java.nio.file.attribute.UserPrincipal;
+import java.util.Date;
 
 /**
  * Class created to manage the result files object and its attributes.
@@ -20,30 +26,92 @@ import java.io.File;
  * @version 1.0.
  */
 public class ResultFile extends CustomFile {
-	private String owner;
-
+	
+	/** creationDate variable of Date type used to store the value of Creation Date of a file.*/
+	private Date creationDate;
+	
+	/** lastModifiedDate variable of Date type used to store the value of Last Modified Date of a file.*/
+	private Date lastModifiedDate;
+	
+	/** accessedDate variable of Date type used to store the value of Accessed Date of a file.*/
+	private Date accessedDate;
+	
 	/**
 	 * constructor for ResultFiles object
 	 */
 	public ResultFile() {
 		super();
-		owner = "";
+		creationDate = null;
+		lastModifiedDate = null;
+		accessedDate = null;
 	}
 
 	/**
 	 * Constructor for ResultFiles with parameters.
 	 * @param inputline (required) file got from search process used to create the object of ResultFile type.
 	 * @param file (required)  SearcherCriteria type, used to create the object of ResultFile type.
+	 * @throws IOException If during dates assignation something is wrong.
 	 */
-	public ResultFile(String inputLine, SearcherCriteria file) {
+	public ResultFile(String inputLine, SearcherCriteria criteria) throws IOException {
 		super();
-		setFileValues(inputLine, file);
+		setFileValues(inputLine, criteria);
+		setHiddenAndReadOnly(inputLine);
+		setDates(inputLine);
+		setOwner(inputLine);
 	}
-
+	
 	/**
-	 * Method used by the constructor with parameters required to fill the data of the Result file to show in the table later.
+	 * Method setter to the creationDate value.
+	 * @param creationDate (required) It needs an attribute of Date value.
+	 */
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+	
+	/**
+	 * Method setter to the lastModifiedDate value.
+	 * @param lastModifiedDate (required) It needs an attribute of Date value.
+	 */
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+	
+	/**
+	 * Method setter to the lastModifiedDate value.
+	 * @param accessedDate (required) It needs an attribute of Date value.
+	 */
+	public void setAccessedDate(Date accessedDate) {
+		this.accessedDate = accessedDate;
+	}
+	
+	/**
+	 * Method getter to return the value of creationDate attribute.
+	 * @return An value on Date type.
+	 */
+	public Date getCreationDate() {
+		return this.creationDate;
+	}
+	
+	/**
+	 * Method getter to return the value of creationDate attribute.
+	 * @return An value on Date type.
+	 */
+	public Date getLastModifiedDate() {
+		return this.lastModifiedDate;
+	}
+	
+	/**
+	 * Method getter to return the value of creationDate attribute.
+	 * @return An value on Date type.
+	 */
+	public Date getAccessedDate() {
+		return this.accessedDate;
+	}
+	
+	/**
+	 * Method used by the constructor with parameters required to fill the data of the Result file (file name, extension, path, size) to show in the table later.
 	 * @param inputline (required) file got from search process used to create the object of ResultFile type.
-	 * @param file (required)  SearcherCriteria type, used to create the object of ResultFile type.
+	 * @param criteria (required)  SearcherCriteria type, used to create the object of ResultFile type.
 	 */
 	private void setFileValues(String inputLine, SearcherCriteria criteria) {
 
@@ -51,9 +119,11 @@ public class ResultFile extends CustomFile {
 			fileName = "";
 			ext = "";
 			path = inputLine;
+			setSizeKB(inputLine);
+			
 		} else {
 			setSizeKB(inputLine);
-
+			
 			String[] pathValues = inputLine.split("\\\\");
 			String fullFileName = pathValues[pathValues.length - 1];
 			String[] fileNameValues = fullFileName.split("\\.");
@@ -82,22 +152,6 @@ public class ResultFile extends CustomFile {
 	}
 
 	/**
-	 * Method setter to owner value.
-	 * @param owner It is used to set an value to owner attribute.
-	 */
-	public void setOwner(String owner) {
-		this.owner = owner;
-	}
-
-	/**
-	 * method getter to owner value.
-	 * @return the value of owner as String.
-	 */
-	public String getOwner() {
-		return this.owner;
-	}
-
-	/**
 	 * Method to update the size of the file found into KB to follow Windows
 	 * standard.
 	 * @param inputline (required) file got from search process used to get its size value.
@@ -112,5 +166,44 @@ public class ResultFile extends CustomFile {
 		String s = String.valueOf(tempFileSize / 1024) + " " + "KB";
 		this.setSize(s);
 	}
-
+	
+	/**
+	 * Method used by the constructor with parameters required to fill the data of the Result file (check boxes Hidden and Read Only) 
+	 * to show in the table later.
+	 * @param criteria (required)  SearcherCriteria type, used to create the object of ResultFile type.
+	 */
+	public void setHiddenAndReadOnly(String inputLine) {
+		File tempFile = new File(inputLine);
+		super.setIsHidden(tempFile.isHidden());
+		super.setIsReadOnly(!tempFile.canWrite());
+	}
+	
+	/**
+	 * Method used by the constructor with parameters required to fill the data of the Result file (Last Modified Date, Creation Date, 
+	 * and AccessedDate) to show in the table later.
+	 * @param inputLine (required) String value with the path to get the dates values.
+	 * @throws IOException If some exception is raised during this operation.
+	 */
+	public void setDates(String inputLine) throws IOException {
+		File tempFile = new File(inputLine);
+		setLastModifiedDate(new Date(tempFile.lastModified()));
+		
+		BasicFileAttributes fileAtt = Files.readAttributes(tempFile.toPath(), BasicFileAttributes.class);
+		setCreationDate(new Date(fileAtt.creationTime().toMillis()));
+		setAccessedDate(new Date(fileAtt.lastAccessTime().toMillis()));
+	}
+	
+	/**
+	 * Method used by the constructor with parameters required to fill the data of the Result file (Owner) 
+	 * to show in the table later.
+	 * @param inputLine (required) String value with the path to get the owner value.
+	 * @throws IOException If some exception is raised during this operation.
+	 */
+	public void setOwner(String inputLine) throws IOException{
+		File tempFile = new File(inputLine);
+		FileOwnerAttributeView view = Files.getFileAttributeView(tempFile.toPath(),FileOwnerAttributeView.class);
+		UserPrincipal userPrincipal = view.getOwner();
+		super.setOwner(userPrincipal.getName());
+	}
+	
 }
