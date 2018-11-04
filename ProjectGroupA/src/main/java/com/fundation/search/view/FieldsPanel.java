@@ -391,6 +391,13 @@ public class FieldsPanel extends JPanel {
         startDateModel = new UtilDateModel();
         startDatePanel = new JDatePanelImpl(startDateModel, pickerProperties);
         startDatePicker = new JDatePickerImpl(startDatePanel, new DateLabelFormatter());
+        startDatePicker.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                endDateModel.setValue(startDateModel.getValue());
+
+            }
+        });
         endDateModel = new UtilDateModel();
         endDatePanel = new JDatePanelImpl(endDateModel, pickerProperties);
         endDatePicker = new JDatePickerImpl(endDatePanel, new DateLabelFormatter());
