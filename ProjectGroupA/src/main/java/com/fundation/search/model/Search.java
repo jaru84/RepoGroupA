@@ -24,10 +24,10 @@ import java.util.ArrayList;
  * @author Martha
  * @version 1.0
  */
-public class Search {
+public class Search implements ISearch{
 	
 	/** resultList is an ArrayList of type ResultFile, it will be used to save the findings results sent by Search class. */
-	private ArrayList<ResultFile> resultFiles;
+	private ArrayList<CustomFile> resultFiles;
 	
 	/** pDos is an variable of type Process used to run the command created. */
 	private Process pDOS;
@@ -36,7 +36,7 @@ public class Search {
 	 * Constructor for Search class.
 	 */
 	public Search() {
-		resultFiles = new ArrayList<ResultFile>();
+		resultFiles = new ArrayList<CustomFile>();
 	}
 
 	/**
@@ -83,9 +83,9 @@ public class Search {
 	 * Method to run the command in DOS and treat the output with the criteria.
 	 * @param file (required) of SearcherCriteria type, must have content, it has all values inserted by the user for the search process.
 	 * @throws IOException if something fails during BufferedReader process.
-	 * @return resultFiles it will return a ArrayList <CustomFile> with the results for the search process.	 * 
+	 * @return resultFiles it will return a ArrayList <CustomFile> with the results for the search process.
 	 */
-	public ArrayList<ResultFile> searchFile(SearcherCriteria file) throws IOException {
+	public ArrayList<CustomFile> searchFile(SearcherCriteria file) throws IOException {
 
 		pDOS = Runtime.getRuntime().exec(createCommand(file));
 
