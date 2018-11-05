@@ -47,7 +47,6 @@ public class CustomFile {
 	/** owner variable of String type used to save the value set by the user.*/
 	protected String owner;
 	
-	
 	/**
 	 * Default constructor for CustomFile.
 	 */
@@ -61,6 +60,7 @@ public class CustomFile {
 		isHidden = false;
 		isReadOnly = false;
 		owner = "";
+
 	}
 
 	/**
@@ -179,16 +179,16 @@ public class CustomFile {
 	public String getSize() {
 		return this.size;
 	}
-	
-	/**
+  
+	 /**
 	 * Method getter to size scale value.
 	 * @return the value of sizeScale as String.
 	 */
 	public String getSizeScale() {
 		return this.sizeScale;
 	}
-
-	/**
+  
+  /**
 	 * Method getter to Directory box.
 	 * @return the value of isDirectory as boolean.
 	 */
@@ -203,7 +203,15 @@ public class CustomFile {
 	public boolean getIsHidden() {
 		return this.isHidden;
 	}
-
+  
+  /**
+	 * Method getter to Hidden box.
+	 * @return the value of isHidden as boolean.
+	 */
+	public boolean getIsHidden() {
+		return this.isHidden;
+	}
+  
 	/**
 	 * Method getter to Read Only box.
 	 * @return the value of isReadOnly as boolean.
@@ -211,10 +219,10 @@ public class CustomFile {
 	public boolean getIsReadOnly() {
 		return this.isReadOnly;
 	}
-	
+  
 	/**
-	 * Method getter to owner value.
-	 * @return the value of owner as String
+	 * method getter to owner value.
+	 * @return the value of owner as String.
 	 */
 	public String getOwner() {
 		return this.owner;

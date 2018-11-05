@@ -169,7 +169,7 @@ public class Validator {
 		Date startDate = criteria.getStartDate();
 		Date endDate = criteria.getEndDate();
 		Date currDate = new Date();
-		
+				
 		if (!criteria.getDateType().equals("< Select a Value >")) {
 			if ((startDate == null) || (endDate == null)) {
 				window.setErrorMessage("Please select valid dates for interval: between - and.");

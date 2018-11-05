@@ -13,10 +13,14 @@ package com.fundation.search.model;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileOwnerAttributeView;
+import java.nio.file.attribute.FileTime;
 import java.nio.file.attribute.UserPrincipal;
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 
 /**
  * Class created to manage the result files object and its attributes.
@@ -45,7 +49,7 @@ public class ResultFile extends CustomFile {
 		lastModifiedDate = null;
 		accessedDate = null;
 	}
-
+	
 	/**
 	 * Constructor for ResultFiles with parameters.
 	 * @param inputline (required) file got from search process used to create the object of ResultFile type.
@@ -166,8 +170,8 @@ public class ResultFile extends CustomFile {
 		String s = String.valueOf(tempFileSize / 1024) + " " + "KB";
 		this.setSize(s);
 	}
-	
-	/**
+  
+  /**
 	 * Method used by the constructor with parameters required to fill the data of the Result file (check boxes Hidden and Read Only) 
 	 * to show in the table later.
 	 * @param criteria (required)  SearcherCriteria type, used to create the object of ResultFile type.
@@ -205,5 +209,4 @@ public class ResultFile extends CustomFile {
 		UserPrincipal userPrincipal = view.getOwner();
 		super.setOwner(userPrincipal.getName());
 	}
-	
 }

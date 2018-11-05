@@ -23,7 +23,7 @@ public class SearcherCriteria extends CustomFile {
 	
 	/** operator variable of String type used to save the value set by the user. */
 	private String operator;
-	
+
 	/** startDate variable of Date type used to save the value selected by user from start date calendar.*/
 	private Date startDate;
 	
@@ -32,6 +32,7 @@ public class SearcherCriteria extends CustomFile {
 	
 	/**dateType variable of String type used to save the value selected by user from drop down list.*/
 	private String dateType;
+
 	
 	/**
 	 * Constructor for SearcherCriteria class where the values inserted to be find
@@ -40,7 +41,6 @@ public class SearcherCriteria extends CustomFile {
 	public SearcherCriteria() {
 		super();
 		operator = "";
-		
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public class SearcherCriteria extends CustomFile {
 	public void setEndDate(Date endDate){
 		this.endDate = endDate;
 	}
-	
+  
 	/**
 	 * Method setter to dateType value.
 	 * @param dateType String type with a value of "Creation Date", "Modified Date", "Accessed Date"
