@@ -10,13 +10,15 @@
  *******************************************************************************/
 package com.fundation.search.model;
 
+import java.io.IOException;
+
 /**
  * Class created to manage the Custom Files object and its attributes.
  *
  * @author Jacqueline Rosales
  * @version 1.0.
  */
-public abstract class CustomFile {
+public class CustomFile {
 	
 	/** path variable of String type used to save the value set by the user. */
 	protected String path;
@@ -29,7 +31,13 @@ public abstract class CustomFile {
 	
 	/** size variable of String type used to save the value set by the user. */
 	protected String size;
-
+	
+	/** sizeScale variable of String type used to save the value set by the user. */
+	protected String sizeScale;
+	
+	/** isDirectory variable of boolean type used to save the value set by the user. */
+	protected boolean isDirectory;
+	
 	/** isHidden variable of boolean type used to save the value set by the user. */
 	protected boolean isHidden;
 	
@@ -39,16 +47,6 @@ public abstract class CustomFile {
 	/** owner variable of String type used to save the value set by the user.*/
 	protected String owner;
 	
-	/** createDate variable of String type used to save the value set by the user.*/
-	protected String createDate;
-	
-	/** accessDate variable of String type used to save the value set by the user.*/
-	protected String accessDate;
-	
-	/** modDate variable of String type used to save the value set by the user.*/
-	protected String modDate;
-	
-	
 	/**
 	 * Default constructor for CustomFile.
 	 */
@@ -57,11 +55,12 @@ public abstract class CustomFile {
 		fileName = "";
 		ext = "";
 		size = "";
+		sizeScale = "";
+		isDirectory = false;
 		isHidden = false;
+		isReadOnly = false;
 		owner = "";
-		createDate = "";
-		accessDate = "";
-		modDate = "";
+
 	}
 
 	/**
@@ -75,7 +74,7 @@ public abstract class CustomFile {
 		this.fileName = fileName;
 		this.ext = ext;
 	}
-
+		
 	/**
 	 * Method setter to path value.
 	 * @param path It is used to set a String value to path attribute.
@@ -109,45 +108,46 @@ public abstract class CustomFile {
 	}
 	
 	/**
+	 * Method setter to size scale value.
+	 * @param operator It is used to set a String value to sizeScale attribute.
+	 */
+	public void setSizeScale(String sizeScale) {
+		this.sizeScale = sizeScale;
+	}
+
+	/**
+	 * Method setter to Directory box.
+	 * @param isDirectory It is used to set a boolean value to isDirectory attribute.
+	 */
+	public void setIsDirectory(boolean isDirectory) {
+		this.isDirectory = isDirectory;
+	}
+
+	/**
 	 * Method setter to Hidden box.
 	 * @param isHidden It is used to set a boolean value to isHidden attribute.
 	 */
 	public void setIsHidden(boolean isHidden) {
 		this.isHidden = isHidden;
 	}
-		
+
+	/**
+	 * Method setter to Read Only box.
+	 * @param isReadOnly It is used to set a boolean value to isReadOnly attribute.
+	 */
+	public void setIsReadOnly(boolean isReadOnly) {
+		this.isReadOnly = isReadOnly;
+	}
+	
 	/**
 	 * Method setter to owner value.
-	 * @param owner It is used to set an value to owner attribute.
+	 * @param owner It is used to save the value inserted by the user on owner field.
+	 * @throws IOException 
 	 */
-	public void setOwner(String owner) {
+	public void setOwner(String owner) throws IOException {
 		this.owner = owner;
-	}
+	} 
 	
-	/**
-	 * Method setter to Creation Date value.
-	 * @param date It is used to set a value to createDate attribute.
-	 */
-	public void setCreateDate(String date) {
-		this.createDate = date;
-	}
-	
-	/**
-	 * Method setter to Last Access Date value.
-	 * @param date It is used to set a value to accessDate attribute.
-	 */
-	public void setAccessDate(String date) {
-		this.accessDate = date;
-	}
-	
-	/**
-	 * Method setter to Last Modified Date value.
-	 * @param date It is used to set a value to modDate attribute.
-	 */
-	public void setModDate(String date) {
-		this.modDate = date;
-	}
-
 	/**
 	 * Method getter to path value.
 	 * @return the value of path as String.
@@ -179,7 +179,23 @@ public abstract class CustomFile {
 	public String getSize() {
 		return this.size;
 	}
-	
+  
+	 /**
+	 * Method getter to size scale value.
+	 * @return the value of sizeScale as String.
+	 */
+	public String getSizeScale() {
+		return this.sizeScale;
+	}
+  
+  /**
+	 * Method getter to Directory box.
+	 * @return the value of isDirectory as boolean.
+	 */
+	public boolean getIsDirectory() {
+		return this.isDirectory;
+	}
+
 	/**
 	 * Method getter to Hidden box.
 	 * @return the value of isHidden as boolean.
@@ -187,37 +203,29 @@ public abstract class CustomFile {
 	public boolean getIsHidden() {
 		return this.isHidden;
 	}
-		
+  
+  /**
+	 * Method getter to Hidden box.
+	 * @return the value of isHidden as boolean.
+	 */
+	public boolean getIsHidden() {
+		return this.isHidden;
+	}
+  
+	/**
+	 * Method getter to Read Only box.
+	 * @return the value of isReadOnly as boolean.
+	 */
+	public boolean getIsReadOnly() {
+		return this.isReadOnly;
+	}
+  
 	/**
 	 * method getter to owner value.
 	 * @return the value of owner as String.
 	 */
 	public String getOwner() {
 		return this.owner;
-	}
-
-	/**
-	 * Method getter to Creation Date value.
-	 * @return the value of createDate as String.
-	 */
-	public String getCreateDate() {
-		return this.createDate;
-	}
-	
-	/**
-	 * Method getter to Last Access Date value.
-	 * @return the value of accessDate as String.
-	 */
-	public String getAccessDate() {
-		return this.accessDate;
-	}
-	
-	/**
-	 * Method getter to Last Modified Date value.
-	 * @return the value of modDate as String.
-	 */
-	public String getModDate() {
-		return this.modDate;
 	}
 	
 	/**

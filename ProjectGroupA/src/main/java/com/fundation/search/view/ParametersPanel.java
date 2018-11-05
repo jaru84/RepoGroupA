@@ -12,214 +12,237 @@
 
 package com.fundation.search.view;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.BoxLayout;
+import javax.swing.*;
 
 /**
  * This panel keeps the fields panel in top and search button in the bottom.
  * It inherits from JPanel class.
- * 
+ *
  * @author Jose Colina
  * @version 1.0.
  */
 
 public class ParametersPanel extends JPanel {
-	
-	/** fieldsPanel variable of FieldsPanel type used to.....*/
-	private FieldsPanel fieldsPanel;
-	
-	/** searchButton variable of JButton type used to.....*/
-	private JButton searchButton;
-	
-	/** clearButton variable of JButton type used to.....*/
-	private JButton clearButton;
-	
-	/** buttonsPanel variable of JPanel type used to.....*/
-	private JPanel buttonsPanel;
 
-	/**
-	 * Constructor by default where setting and init methods are load.
-	 */
-	public ParametersPanel() {
-		setting();
-		init();
-	}
-	
-	/**
-	 * Method used to set layout manager
-	 */
-	public void setting() {
-		setLayout(new BorderLayout());
-	}
-	
-	/**
-	 * method used to instantiate the GUI elements and add them to panel
-	 */
-	public void init() {
-		searchButton = new JButton("Search");
-		clearButton = new JButton("Clear");
-		clearButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fieldsPanel.clearFields();
-			}
-		});
-		buttonsPanel = new JPanel();
+    /**
+     * fieldsPanel variable of FieldsPanel type used to.....
+     */
+    private FieldsPanel fieldsPanel;
 
-		BoxLayout box = new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS);
-		buttonsPanel.setLayout(box);
-		searchButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-		clearButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-		searchButton.setMaximumSize(new Dimension(400, 30));
-		clearButton.setMaximumSize(new Dimension(400, 30));
-		buttonsPanel.add(searchButton);
-		buttonsPanel.add(clearButton);
-		fieldsPanel = new FieldsPanel();
-		add(fieldsPanel, BorderLayout.CENTER);
-		add(buttonsPanel, BorderLayout.EAST);
+    /**
+     * searchButton variable of JButton type used to.....
+     */
+    private JButton searchButton;
 
-	}
+    /**
+     * clearButton variable of JButton type used to.....
+     */
+    private JButton clearButton;
 
-	/**
-	 * This method return the value in path text field in a String.
-	 * @return path value as String.
-	 */
-	public String getPath() {
-		return fieldsPanel.getPath();
+    /**
+     * buttonsPanel variable of JPanel type used to.....
+     */
+    private JPanel buttonsPanel;
 
-	}
-	
-	/**
-	 * This method return the value in file name text field in a String.
-	 * @return fileName value as String.
-	 */
-	public String getName() {
-		return fieldsPanel.getName();
+    /**
+     * Constructor by default where setting and init methods are load.
+     */
+    public ParametersPanel() {
+        setting();
+        init();
+    }
 
-	}
-	
-	/**
-	 * This method return the value in extension text field in a String.
-	 * @return extension value as String.
-	 */
-	public String getExtension() {
-		return fieldsPanel.getExtension();
+    /**
+     * Method used to set layout manager
+     */
+    public void setting() {
+        setLayout(new BorderLayout());
+    }
 
-	}
-	
-	/**
-	 * This method return the value in File Size text field in a String.
-	 * @return File Size value as String.
-	 */
-	public String getFileSize() {
-		return fieldsPanel.getFileSize();
+    /**
+     * method used to instantiate the GUI elements and add them to panel
+     */
+    public void init() {
+        searchButton = new JButton("Search");
+        clearButton = new JButton("Clear");
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fieldsPanel.clearFields();
+                clearTable();
+            }
+        });
+        buttonsPanel = new JPanel();
 
-	}
-	
-	/**
-	 * This method return the value in Size Operator text field in a String.
-	 * @return Size Operator value as String.
-	 */
-	public String getSizeOperator() {
-		return fieldsPanel.getSizeOperator();
+        BoxLayout box = new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS);
+        buttonsPanel.setLayout(box);
+        searchButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        clearButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        searchButton.setMaximumSize(new Dimension(400, 30));
+        clearButton.setMaximumSize(new Dimension(400, 30));
+        buttonsPanel.add(searchButton);
+        buttonsPanel.add(clearButton);
+        fieldsPanel = new FieldsPanel();
+        add(fieldsPanel, BorderLayout.CENTER);
+        add(buttonsPanel, BorderLayout.EAST);
 
-	}
-	
-	/**
-	 * This method return the value in Size Scale text field in a String.
-	 * @return Size Scale value as String.
-	 */
-	public String getSizeScale() {
-		return fieldsPanel.getSizeScale();
+    }
 
-	}
-	
-	/**
-	 * This method return the value in File Owner text field in a String.
-	 * @return File Owner value as String.
-	 */
-	public String getOwner() {
-		return fieldsPanel.getOwner();
+    /**
+     * This method return the value in path text field in a String.
+     *
+     * @return path value as String.
+     */
+    public String getPath() {
+        return fieldsPanel.getPath();
 
-	}
-	
-	/**
-	 * This method return the value in Content text field in a String.
-	 * @return Content value as String.
-	 */
-	public String getContent() {
-		return fieldsPanel.getContent();
+    }
 
-	}
-	
-	/**
-	 * This method return the value in Is Directory check box as boolean.
-	 * @return true if Directory check box was checked and false if not.
-	 */
-	public boolean getIsDirectory() {
-		return fieldsPanel.getIsDirectory();
+    /**
+     * This method return the value in file name text field in a String.
+     *
+     * @return fileName value as String.
+     */
+    public String getName() {
+        return fieldsPanel.getName();
 
-	}
-	
-	/**
-	 * This method return the value in Hidden check box as boolean.
-	 * @return true if Hidden check box was checked and false if not.
-	 */
-	public boolean getIsHidden() {
-		return fieldsPanel.getIsHidden();
+    }
 
-	}
-	
-	/**
-	 * This method return the value in Read Only check box as boolean.
-	 * @return true if Read Only check box was checked and false if not.
-	 */
-	public boolean getIsReadOnly() {
-		return fieldsPanel.getIsReadOnly();
+    /**
+     * This method return the value in extension text field in a String.
+     *
+     * @return extension value as String.
+     */
+    public String getExtension() {
+        return fieldsPanel.getExtension();
 
-	}
-	
-	/**
-	 * Method used for...
-	 * @return
-	 */
-	public JButton getSearchButton() {
-		return searchButton;
-	}
-	
-	/**
-	 * Method used for...
-	 * @return
-	 */
+    }
+
+    /**
+     * This method return the value in File Size text field in a String.
+     *
+     * @return File Size value as String.
+     */
+    public String getFileSize() {
+        return fieldsPanel.getFileSize();
+
+    }
+
+    /**
+     * This method return the value in Size Operator text field in a String.
+     *
+     * @return Size Operator value as String.
+     */
+    public String getSizeOperator() {
+        return fieldsPanel.getSizeOperator();
+
+    }
+
+    /**
+     * This method return the value in Size Scale text field in a String.
+     *
+     * @return Size Scale value as String.
+     */
+    public String getSizeScale() {
+        return fieldsPanel.getSizeScale();
+
+    }
+
+    /**
+     * This method return the value in File Owner text field in a String.
+     *
+     * @return File Owner value as String.
+     */
+    public String getOwner() {
+        return fieldsPanel.getOwner();
+
+    }
+
+    /**
+     * This method return the value in Content text field in a String.
+     *
+     * @return Content value as String.
+     */
+    public String getContent() {
+        return fieldsPanel.getContent();
+
+    }
+
+    /**
+     * This method return the value in Is Directory check box as boolean.
+     *
+     * @return true if Directory check box was checked and false if not.
+     */
+    public boolean getIsDirectory() {
+        return fieldsPanel.getIsDirectory();
+
+    }
+
+    /**
+     * This method return the value in Hidden check box as boolean.
+     *
+     * @return true if Hidden check box was checked and false if not.
+     */
+    public boolean getIsHidden() {
+        return fieldsPanel.getIsHidden();
+
+    }
+
+    /**
+     * This method return the value in Read Only check box as boolean.
+     *
+     * @return true if Read Only check box was checked and false if not.
+     */
+    public boolean getIsReadOnly() {
+        return fieldsPanel.getIsReadOnly();
+
+    }
+
+    /**
+     * Method used for...
+     *
+     * @return
+     */
+    public JButton getSearchButton() {
+        return searchButton;
+    }
+
+    /**
+     * Method used for...
+     *
+     * @return
+     */
     public Date getStartDate() {
         return fieldsPanel.getStartDate();
 
-	}
-	
+    }
+
     public Date getEndDate() {
         return fieldsPanel.getEndDate();
-	/**
-	 * Method used for...
-	 * @return
-	 */
+        /**
+         * Method used for...
+         * @return
+         */
 
-	}
-	
+    }
+
     public String getDateType() {
         return fieldsPanel.getDateType();
-	/**
-	 * Method used for...
-	 * @return
-	 */
+        /**
+         * Method used for...
+         * @return
+         */
 
-	}
+    }
+
+    public void clearTable() {
+        MainContainer ancestorPane = (MainContainer) SwingUtilities.getAncestorOfClass(MainContainer.class, this);
+        ancestorPane.clearTable();
+    }
 
 
 }
