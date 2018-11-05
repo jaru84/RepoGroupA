@@ -320,7 +320,7 @@ public class Search implements ISearch{
 				}
 				break;
 			case "accessed date":
-				FileTime dateA = dateFile.lastModifiedTime();
+				FileTime dateA = dateFile.lastAccessTime();
 				if ((dateA.toMillis() >= criteria.getStartDate().getTime()) && (dateA.toMillis() <= criteria.getEndDate().getTime())) {
 					res = 1;
 				}
