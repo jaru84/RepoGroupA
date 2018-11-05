@@ -60,7 +60,7 @@ public class Controller {
 	 * process.
 	 */
 	public void init() {
-		windowUI.setSearchListener(e -> search());
+			windowUI.setSearchListener(e ->	search());
 		
 	}
 
@@ -68,6 +68,7 @@ public class Controller {
 	 * method where all values inserted by the user in the UI like path, filename, extension, size, etc. 
 	 * will be assigned to file object and all them will be validated, then will be sent to
 	 * search process and then showed under UI.
+	 * @throws CustomSearchException 
 	 */
 	private void search() {
 		try {
@@ -88,15 +89,16 @@ public class Controller {
 			val.validate(criteria);
 			displayResults();
 		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
+			new CustomSearchException("Something was wrong during Search method in Controller class.", ex.getCause());
 		}
 	}
 
 	/**
 	 * method used to show the results in the UI table.
 	 * @throws IOException if something fails during the process of show results.
+	 * @throws CustomSearchException 
 	 */
-	private void displayResults() throws IOException {
+	private void displayResults() throws CustomSearchException  {
 		resultList = searcher.searchFile(criteria);
 		windowUI.clearResults();
 		
@@ -104,7 +106,6 @@ public class Controller {
 			windowUI.setErrorMessage("No items match your search.");
 		} else {
 			for (CustomFile item : resultList) {
-				System.out.println(item.getPath() + " " + item.getFileName() + " " + item.getExt());
 				Object[] arrRes = { item.getPath(), item.getFileName(), item.getExt(), item.getSize(), item.getOwner(), ((ResultFile) item).getCreationDate(), 
 						((ResultFile) item).getLastModifiedDate(), ((ResultFile) item).getAccessedDate(), item.getIsHidden(), item.getIsReadOnly() };
 				windowUI.setSearchResults(arrRes);

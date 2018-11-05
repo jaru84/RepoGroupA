@@ -13,13 +13,14 @@ package com.fundation.search.model;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileOwnerAttributeView;
-import java.nio.file.attribute.FileTime;
 import java.nio.file.attribute.UserPrincipal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.fundation.search.controller.CustomSearchException;
 
 
 /**
@@ -31,14 +32,14 @@ import java.text.SimpleDateFormat;
  */
 public class ResultFile extends CustomFile {
 	
-	/** creationDate variable of Date type used to store the value of Creation Date of a file.*/
-	private Date creationDate;
+	/** creationDate variable of String type used to store the value of Creation Date of a file.*/
+	private String creationDate;
 	
-	/** lastModifiedDate variable of Date type used to store the value of Last Modified Date of a file.*/
-	private Date lastModifiedDate;
+	/** lastModifiedDate variable of String type used to store the value of Last Modified Date of a file.*/
+	private String lastModifiedDate;
 	
-	/** accessedDate variable of Date type used to store the value of Accessed Date of a file.*/
-	private Date accessedDate;
+	/** accessedDate variable of Date String used to store the value of Accessed Date of a file.*/
+	private String accessedDate;
 	
 	/**
 	 * constructor for ResultFiles object
@@ -68,7 +69,7 @@ public class ResultFile extends CustomFile {
 	 * Method setter to the creationDate value.
 	 * @param creationDate (required) It needs an attribute of Date value.
 	 */
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(String creationDate) {
 		this.creationDate = creationDate;
 	}
 	
@@ -76,7 +77,7 @@ public class ResultFile extends CustomFile {
 	 * Method setter to the lastModifiedDate value.
 	 * @param lastModifiedDate (required) It needs an attribute of Date value.
 	 */
-	public void setLastModifiedDate(Date lastModifiedDate) {
+	public void setLastModifiedDate(String lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 	
@@ -84,7 +85,7 @@ public class ResultFile extends CustomFile {
 	 * Method setter to the lastModifiedDate value.
 	 * @param accessedDate (required) It needs an attribute of Date value.
 	 */
-	public void setAccessedDate(Date accessedDate) {
+	public void setAccessedDate(String accessedDate) {
 		this.accessedDate = accessedDate;
 	}
 	
@@ -92,7 +93,7 @@ public class ResultFile extends CustomFile {
 	 * Method getter to return the value of creationDate attribute.
 	 * @return An value on Date type.
 	 */
-	public Date getCreationDate() {
+	public String getCreationDate() {
 		return this.creationDate;
 	}
 	
@@ -100,7 +101,7 @@ public class ResultFile extends CustomFile {
 	 * Method getter to return the value of creationDate attribute.
 	 * @return An value on Date type.
 	 */
-	public Date getLastModifiedDate() {
+	public String getLastModifiedDate() {
 		return this.lastModifiedDate;
 	}
 	
@@ -108,7 +109,7 @@ public class ResultFile extends CustomFile {
 	 * Method getter to return the value of creationDate attribute.
 	 * @return An value on Date type.
 	 */
-	public Date getAccessedDate() {
+	public String getAccessedDate() {
 		return this.accessedDate;
 	}
 	
@@ -163,10 +164,6 @@ public class ResultFile extends CustomFile {
 	public void setSizeKB(String inputLine) {
 		File tempFile = new File(inputLine);
 		long tempFileSize = tempFile.length();
-
-		// Need to check a better way to round the size, tried with Math.round,
-		// BinaryDecimal...
-		// none of them provided the results needed gathered manually.
 		String s = String.valueOf(tempFileSize / 1024) + " " + "KB";
 		this.setSize(s);
 	}
@@ -189,12 +186,14 @@ public class ResultFile extends CustomFile {
 	 * @throws IOException If some exception is raised during this operation.
 	 */
 	public void setDates(String inputLine) throws IOException {
-		File tempFile = new File(inputLine);
-		setLastModifiedDate(new Date(tempFile.lastModified()));
 		
+		File tempFile = new File(inputLine);
 		BasicFileAttributes fileAtt = Files.readAttributes(tempFile.toPath(), BasicFileAttributes.class);
-		setCreationDate(new Date(fileAtt.creationTime().toMillis()));
-		setAccessedDate(new Date(fileAtt.lastAccessTime().toMillis()));
+		DateFormat dateF = new SimpleDateFormat("EEEE, MMMM d, yyyy");
+		
+		setLastModifiedDate(dateF.format(new Date(tempFile.lastModified())));
+		setCreationDate(dateF.format(new Date(fileAtt.creationTime().toMillis())));
+		setAccessedDate(dateF.format(new Date(fileAtt.lastAccessTime().toMillis())));
 	}
 	
 	/**
@@ -203,10 +202,15 @@ public class ResultFile extends CustomFile {
 	 * @param inputLine (required) String value with the path to get the owner value.
 	 * @throws IOException If some exception is raised during this operation.
 	 */
-	public void setOwner(String inputLine) throws IOException{
+	public void setOwner(String inputLine) {
 		File tempFile = new File(inputLine);
 		FileOwnerAttributeView view = Files.getFileAttributeView(tempFile.toPath(),FileOwnerAttributeView.class);
-		UserPrincipal userPrincipal = view.getOwner();
+		UserPrincipal userPrincipal = null;
+		try {
+			userPrincipal = view.getOwner();
+		} catch (IOException e) {
+			new CustomSearchException("Something was owner assignation from ResultFile.setOwner method", e.getCause());
+		}
 		super.setOwner(userPrincipal.getName());
 	}
 }

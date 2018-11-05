@@ -10,7 +10,7 @@
  *******************************************************************************/
 package com.fundation.search.model;
 
-import java.io.IOException;
+
 
 /**
  * Class created to manage the Custom Files object and its attributes.
@@ -144,7 +144,7 @@ public class CustomFile {
 	 * @param owner It is used to save the value inserted by the user on owner field.
 	 * @throws IOException 
 	 */
-	public void setOwner(String owner) throws IOException {
+	public void setOwner(String owner) {
 		this.owner = owner;
 	} 
 	
@@ -194,14 +194,6 @@ public class CustomFile {
 	 */
 	public boolean getIsDirectory() {
 		return this.isDirectory;
-	}
-
-	/**
-	 * Method getter to Hidden box.
-	 * @return the value of isHidden as boolean.
-	 */
-	public boolean getIsHidden() {
-		return this.isHidden;
 	}
   
   /**

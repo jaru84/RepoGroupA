@@ -19,12 +19,22 @@ package com.fundation.search.controller;
  * @version 1.0.
  */
 public class CustomSearchException extends Exception {
-		
+	
+	
+	
 	/**
 	 * method to send our custom message to super class.
 	 * @param errorMessage (required) String type, error message necessary to send to parent Exception. 
 	 */
 	public CustomSearchException(String errorMessage) {
 		super(errorMessage);
+		System.out.println(errorMessage);
+		
+	}
+	
+	public CustomSearchException(String errorMessage, Throwable cause) {
+		super(errorMessage, cause);
+		System.out.println(errorMessage);
+		//System.out.println(cause.getMessage());
 	}
 }

@@ -12,6 +12,9 @@
 package com.fundation.search.controller;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.fundation.search.model.SearcherCriteria;
@@ -31,7 +34,7 @@ public class Validator {
 
 	/**
 	 * Constructor for the Validator class.
-	 * @param window required to show during the error messages captured in validation.
+	 * @param window (required) to show during the error messages captured in validation.
 	 */
 	public Validator(SearchWindow window) {
 		this.window = window;
@@ -48,7 +51,8 @@ public class Validator {
 		validateExtension(criteria);
 		validateSize(criteria);
 		validateOwner(criteria);
-		validateDates(criteria);
+		validateDateType(criteria);
+		
 	}
 	
 	/**
@@ -166,29 +170,35 @@ public class Validator {
 	 * @throws CustomSearchException if the dates are nulls or start date is after than end date or current date.
 	 */
 	private void validateDates(SearcherCriteria criteria) throws CustomSearchException {
-		Date startDate = criteria.getStartDate();
-		Date endDate = criteria.getEndDate();
-		Date currDate = new Date();
+		Date currDate = criteria.setTimeCustom(new Date(), 23, 59, 59);
+		DateFormat dateF = new SimpleDateFormat("EEEE, MMMM d, yyyy");
 				
-		if (!criteria.getDateType().equals("< Select a Value >")) {
-			if ((startDate == null) || (endDate == null)) {
-				window.setErrorMessage("Please select valid dates for interval: between - and.");
-				throw new CustomSearchException("Please select valid dates for interval: between - and.");
-			} else {
-				if (startDate.after(endDate)) {
-					window.setErrorMessage("The Start Date selected could not be after End Date.");
-					throw new CustomSearchException("The Start Date selected could not be after End Date.");
-				} else if (startDate.after(currDate)) {
-					window.setErrorMessage("The Start Date selected could not be after Current Date.");
-					throw new CustomSearchException("The Start Date selected could not be after Current Date.");
-				}
-			}
+		if (criteria.getStartDate().after(criteria.getEndDate())) {
+			window.setErrorMessage("The Start Date selected could not be after End Date.");
+			throw new CustomSearchException("The Start Date selected could not be after End Date.");
+		} else if (criteria.getStartDate().after(currDate)) {
+			window.setErrorMessage("The Start Date selected could not be after your Current Date: " + dateF.format(currDate));
+			throw new CustomSearchException("The Start Date selected could not be after your Current Date: " + dateF.format(currDate));
+		}
+
+	}
+	
+	private void validateDateType(SearcherCriteria criteria) throws CustomSearchException {
+	
+		if (criteria.getDateType().equals("< Select a Value >")) {
+			if ((criteria.getStartDate() != null) || (criteria.getEndDate() != null)) {
+				window.setErrorMessage("Please select some value from drop-down list different to: <Select a value> and ensure that you have selected valid dates in the interval.");
+				throw new CustomSearchException("Please select some value from drop-down list different to: <Select a value> and ensure that you have selected valid dates in the interval.");
+			} 
 		} else {
-			if ((startDate != null) || (endDate != null)) {
-				window.setErrorMessage("Please select some value from drop-down list different to: <Select a value> and ensure that you select valid dates.");
-				throw new CustomSearchException("Please select some value from drop-down list different to: <Select a value> and ensure that you select valid dates.");
+			if ((criteria.getStartDate() == null) || (criteria.getEndDate() == null)) {
+				window.setErrorMessage("Please select valid dates in the interval: between - and.");
+				throw new CustomSearchException("Please select valid dates in the interval: between - and.");
+			} else {
+				validateDates(criteria);
 			}
-		} 		
+		}
+		
 	}
 	
 	/**

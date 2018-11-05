@@ -11,6 +11,7 @@
  *******************************************************************************/
 package com.fundation.search.model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -33,7 +34,6 @@ public class SearcherCriteria extends CustomFile {
 	/**dateType variable of String type used to save the value selected by user from drop down list.*/
 	private String dateType;
 
-	
 	/**
 	 * Constructor for SearcherCriteria class where the values inserted to be find
 	 * will be stored as an object.
@@ -41,6 +41,9 @@ public class SearcherCriteria extends CustomFile {
 	public SearcherCriteria() {
 		super();
 		operator = "";
+		startDate = null;
+		endDate = null;
+		dateType = "";
 	}
 	
 	/**
@@ -88,7 +91,8 @@ public class SearcherCriteria extends CustomFile {
 	 * @return the value of start date
 	 */
 	public Date getStartDate() {
-		return this.startDate;
+		return setTimeCustom(this.startDate,0,0,0);
+	
 	}
 	
 	/**
@@ -96,7 +100,7 @@ public class SearcherCriteria extends CustomFile {
 	 * @return the value of end date value.
 	 */
 	public Date getEndDate() {
-		return this.endDate;
+		return setTimeCustom(this.endDate,23,59,59);
 	}
 	
 	/**
@@ -125,6 +129,32 @@ public class SearcherCriteria extends CustomFile {
 			}
 		}
 		this.size = Long.toString(tempSize);
+	}
+	
+	/**
+	 * Method which set a date with a given hour, so later we can covert the dates to milliseconds.
+	 * using the calendar since the another methods from Date were deprecated.
+	 * @param d (required) Date type, which will be modified.
+	 * @param h (required) int type, hour(s) to be specified.
+	 * @param m (required) int type, minute(s) to be specified.
+	 * @param s (required) int type, second(s) to be specified.
+	 * @return a Date value with everything customized.  
+	 */
+	public Date setTimeCustom (Date d, int h, int m, int s) {
+		if (d != null) {
+			Calendar c = Calendar.getInstance();
+	        c.setTime(d);
+	        c.set(Calendar.HOUR_OF_DAY, h);
+	        c.set(Calendar.MINUTE, m);
+	        c.set(Calendar.SECOND, s);
+	        c.set(Calendar.MILLISECOND, 0);   
+			return c.getTime();
+		}
+		else {
+			return null;
+		}
+		
+		
 	}
 
 	/**

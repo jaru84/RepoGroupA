@@ -16,14 +16,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileOwnerAttributeView;
 import java.nio.file.attribute.FileTime;
 import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+
+import com.fundation.search.controller.CustomSearchException;
+
 
 /**
  * This class will allow to search a file given a criteria. The assumption is
@@ -42,6 +42,7 @@ public class Search implements ISearch{
 
 	/**
 	 * Constructor for Search class.
+	 * @param window (required) to show during the error messages captured in validation.
 	 */
 	public Search() {
 		resultFiles = new ArrayList<CustomFile>();
@@ -83,7 +84,7 @@ public class Search implements ISearch{
 			}
 		}
 		String[] command = { "cmd.exe", "/c", res };
-		System.out.println(res);
+		//System.out.println(res);   /** Uncomment this if you need help to get the correct command and try this from CMD console to compare with the results got in table.*/
 		return command;
 	}
 
@@ -92,10 +93,15 @@ public class Search implements ISearch{
 	 * @param criteria (required) of SearcherCriteria type, must have content, it has all values inserted by the user for the search process.
 	 * @throws IOException if something fails during BufferedReader process.
 	 * @return resultFiles it will return a ArrayList <CustomFile> with the results for the search process.
+	 * @throws CustomSearchException  if something fails during the searchFile process an error message will be raised.
 	 */
-	public ArrayList<CustomFile> searchFile(SearcherCriteria criteria) throws IOException {
+	public ArrayList<CustomFile> searchFile(SearcherCriteria criteria) {
 
-		pDOS = Runtime.getRuntime().exec(createCommand(criteria));
+		try {
+			pDOS = Runtime.getRuntime().exec(createCommand(criteria));
+		} catch (IOException e) {			
+			new CustomSearchException("Something was wrong during command creation.", e.getCause());
+		}
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(pDOS.getInputStream()));
 		String inputLine = "";
@@ -104,53 +110,32 @@ public class Search implements ISearch{
 			criteria.sizeToBytes();
 		}
 		
-		//These variables will help to know if the another option for the search criteria are being used
-		int matchSize = -1;
-		int matchOwner = -1;
-		int matchDate = -1;
 		
-		while ((inputLine = in.readLine()) != null) {
-			if (filterResults(inputLine, criteria)) {
-							
-				if (!criteria.getSize().equals("0")) {
-					matchSize = matchSizeCriteria(inputLine, criteria);
-				}
+		int matchSize = -1;    	/* This variables will help to know if the another option for the search criteria are being used */
+		int matchOwner = -1;	/* This variables will help to know if the another option for the search criteria are being used */
+		int matchDate = -1;		/* This variables will help to know if the another option for the search criteria are being used */
+		
+		try {
+			while ((inputLine = in.readLine()) != null) {
+				if (filterResults(inputLine, criteria)) {
+								
+					if (!criteria.getSize().equals("0")) {
+						matchSize = matchSizeCriteria(inputLine, criteria);
+					}
+					
+					if (!criteria.getOwner().equals("")) {
+						matchOwner = matchOwnerCriteria(inputLine, criteria);
+					}
 				
-				if (!criteria.getOwner().equals("")) {
-					matchOwner = matchOwnerCriteria(inputLine, criteria);
-				}
-			
-				if ( (criteria.getStartDate()!=null) && (criteria.getEndDate()!=null) ) {
-					matchDate = matchDateCriteria(inputLine, criteria);
-				}
-				
-				//The Size, owner or date criteria has been selected.
-				boolean flag = false;
-				if ((matchSize==-1) && (matchOwner==-1) && (matchDate==-1)) {
-					resultFiles.add(new ResultFile(inputLine, criteria));
-				} else {
-					if (matchSize==1) {
-						if (matchOwner==1) {
-							if (matchDate==1) {
-								resultFiles.add(new ResultFile(inputLine, criteria));
-								flag = true;
-							}
-							if (!flag && matchDate==-1) {
-								resultFiles.add(new ResultFile(inputLine, criteria));
-								flag = true;
-							}
-						} else {
-							if (matchDate==1 && matchOwner==-1) {
-								resultFiles.add(new ResultFile(inputLine, criteria));
-								flag = true;
-							}
-						}
-						if (!flag && matchOwner==-1 && matchDate==-1) {
-							resultFiles.add(new ResultFile(inputLine, criteria));
-							flag = true;
-						}
+					if ( (criteria.getStartDate()!=null) && (criteria.getEndDate()!=null) ) {
+						matchDate = matchDateCriteria(inputLine, criteria);
+					}
+					
+					boolean flag = false;
+					if ((matchSize==-1) && (matchOwner==-1) && (matchDate==-1)) {
+						resultFiles.add(new ResultFile(inputLine, criteria));
 					} else {
-						if (matchSize==-1) {
+						if (matchSize==1) {
 							if (matchOwner==1) {
 								if (matchDate==1) {
 									resultFiles.add(new ResultFile(inputLine, criteria));
@@ -164,14 +149,38 @@ public class Search implements ISearch{
 								if (matchDate==1 && matchOwner==-1) {
 									resultFiles.add(new ResultFile(inputLine, criteria));
 									flag = true;
-								}							
-							}		
-						}						
+								}
+							}
+							if (!flag && matchOwner==-1 && matchDate==-1) {
+								resultFiles.add(new ResultFile(inputLine, criteria));
+								flag = true;
+							}
+						} else {
+							if (matchSize==-1) {
+								if (matchOwner==1) {
+									if (matchDate==1) {
+										resultFiles.add(new ResultFile(inputLine, criteria));
+										flag = true;
+									}
+									if (!flag && matchDate==-1) {
+										resultFiles.add(new ResultFile(inputLine, criteria));
+										flag = true;
+									}
+								} else {
+									if (matchDate==1 && matchOwner==-1) {
+										resultFiles.add(new ResultFile(inputLine, criteria));
+										flag = true;
+									}							
+								}		
+							}						
+						}
 					}
-				}
-			}					
+				}					
+			}
+			in.close();
+		} catch (IOException e) {
+			new CustomSearchException("Something was wrong during command creation.", e.getCause());
 		}
-		in.close();
 		return resultFiles;
 	}
 
@@ -196,7 +205,7 @@ public class Search implements ISearch{
 	 * Method which compares the size by converting everything to bytes.
 	 * @param inputline (required) String type, it has one line of value got by search process.
 	 * @param criteria (required) SearcherCriteria type, must have content, it has all values inserted by the user to the match process.
-	 * @return a int value (1) if the size criteria inserted match with the size in the file found.  
+	 * @return an int value (1) if the size criteria inserted match with the size in the file found.  
 	 */
 	private int matchSizeCriteria(String inputline, SearcherCriteria criteria) {
 		int res = 0;
@@ -242,18 +251,22 @@ public class Search implements ISearch{
 	 * @param inputline (required) String type, it has one line of value got by search process.
 	 * @param criteria (required) SearcherCriteria type, must have content, it has all values inserted by the user to the match process.
 	 * @return a int (1) if the owner criteria matches with the owner in the file found.  
+	 * @throws CustomSearchException if something fails during match owner process an error message will be raised.
 	 * @throws IOException in case the file cannot be opened or review the attributes
 	 */
-	private int matchOwnerCriteria(String inputline, SearcherCriteria criteria) throws IOException {
+	private int matchOwnerCriteria(String inputline, SearcherCriteria criteria) {
 		int res = 0;
 		if (!criteria.getOwner().equals("")) {
 			
 			File tFile = new File(inputline);
-			Path pathFile = tFile.toPath();
+			FileOwnerAttributeView atrib = Files.getFileAttributeView(tFile.toPath(), FileOwnerAttributeView.class);
+	        UserPrincipal owner= null;
+			try {
+				owner = atrib.getOwner();
+			} catch (IOException e) {
+				new CustomSearchException("Something was wrong during Read Owner process from file inputline.",	e.getCause());
+			}
 			
-			FileOwnerAttributeView atrib = Files.getFileAttributeView(pathFile, FileOwnerAttributeView.class);
-	        UserPrincipal owner = atrib.getOwner();
-			//System.out.println(x);
 	        if (criteria.getOwner().toLowerCase().trim().equals(owner.getName().toLowerCase().trim()))
 	        	res = 1;
 		}
@@ -277,68 +290,44 @@ public class Search implements ISearch{
 	}
 	
 	/**
-	 * Method which set a date with a given hour, so later we can covert the dates to milliseconds.
-	 * using the calendar since the another methods from Date were deprecated.
-	 * @param d (required) Date type, which will be modified.
-	 * @param h (required) int type, hour(s) to be specified.
-	 * @param m (required) int type, minute(s) to be specified.
-	 * @param s (required) int type, second(s) to be specified.
-	 * @return a Date value with everything customized.  
-	 */
-	private Date setTimeCustom (Date d, int h, int m, int s) {
-		Calendar c = Calendar.getInstance();
-        c.setTime(d);
-        c.set(Calendar.HOUR_OF_DAY, h);
-        c.set(Calendar.MINUTE, m);
-        c.set(Calendar.SECOND, s);
-        c.set(Calendar.MILLISECOND, 0);   
-		return c.getTime();
-		
-	}
-	
-	/**
 	 * Method which compares dates specified in the criteria and the files found.
 	 * Using a minimum unit for time : milliseconds.
 	 * @param inputline (required) String type, it has one line of value got by search process.
 	 * @param criteria (required) SearcherCriteria type, must have content, it has all values inserted by the user to the match process.
-	 * @return a int value (1) if the file belongs to the range of dates specified.  
+	 * @return an int value (1) if the file belongs to the range of dates specified.  
+	 * @throws CustomSearchException if something fails during the matchDateCriteria an error message will be raised.
 	 */
 	public int matchDateCriteria (String inputline, SearcherCriteria criteria) {
 		int res=0;
-
-		Date startDate = setTimeCustom(criteria.getStartDate(),0,0,0);
-		Date endDate = setTimeCustom(criteria.getEndDate(),23,59,59);
-		
 		File tFile = new File(inputline);
-		Path pFile = tFile.toPath();
 		BasicFileAttributes dateFile;
 		
 		try {
-			dateFile = Files.readAttributes(pFile, BasicFileAttributes.class);
+			dateFile = Files.readAttributes(tFile.toPath(), BasicFileAttributes.class);
 			
-			String option = criteria.getDateSearh().toLowerCase().trim();
+			String option = criteria.getDateType().toLowerCase().trim();
 			switch (option) {
 			case "creation date":
 				FileTime dateC = dateFile.creationTime();
-				if ((dateC.toMillis() >= startDate.getTime()) && (dateC.toMillis() <= endDate.getTime())) {
+				if ((dateC.toMillis() >= criteria.getStartDate().getTime()) && (dateC.toMillis() <= criteria.getEndDate().getTime())) {
 					res = 1;
 				}
 				break;
 			case "modified date":
 				FileTime dateM = dateFile.lastModifiedTime();
-				if ((dateM.toMillis() >= startDate.getTime()) && (dateM.toMillis() <= endDate.getTime())) {
+				if ((dateM.toMillis() >= criteria.getStartDate().getTime()) && (dateM.toMillis() <= criteria.getEndDate().getTime())) {
 					res = 1;
 				}
 				break;
 			case "accessed date":
 				FileTime dateA = dateFile.lastModifiedTime();
-				if ((dateA.toMillis() >= startDate.getTime()) && (dateA.toMillis() <= endDate.getTime())) {
+				if ((dateA.toMillis() >= criteria.getStartDate().getTime()) && (dateA.toMillis() <= criteria.getEndDate().getTime())) {
 					res = 1;
 				}
 				break;
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			new CustomSearchException("Something was wrong during matchDateCriteria method", e.getCause());
 		}
 		return res;
 	}
