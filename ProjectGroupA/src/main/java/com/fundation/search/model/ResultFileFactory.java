@@ -27,6 +27,7 @@ public class ResultFileFactory {
      * @param inputLine (required) of String type, file got from search process used to create the object of ResultFile typ
      * @param criteria  SearcherCriteria type, used to create the object of ResultFile type.
      * @return command it will return a String [] with the command created.
+     * @throws IOException If this fails the error will be printed by the Controller in console.
      */
     public CustomFile createResultFile(String inputLine, SearcherCriteria criteria) throws IOException {
         CustomFile resultFile = new ResultFile(inputLine, criteria);

@@ -124,7 +124,7 @@ public class Validator {
     }
 
     /**
-     * method in charge to validate special chars not allowed in file name and extension fields.
+     * Method in charge to validate special chars not allowed in file name and extension fields.
      *
      * @param wordCheck (required) string word that will be revised.
      */
@@ -142,7 +142,7 @@ public class Validator {
     }
 
     /**
-     * method in charge to validate the size value inserted.
+     * Method in charge to validate the size value inserted.
      *
      * @param file object must have content, it is used to validate its different attributes.
      * @throws CustomSearchException if the size is a negative number or is not an integer value.

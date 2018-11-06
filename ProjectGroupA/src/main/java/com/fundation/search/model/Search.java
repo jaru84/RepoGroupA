@@ -29,7 +29,7 @@ import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-//import com.fundation.search.controller.LogUtil;
+import com.fundation.search.controller.LogUtil;
 
 /**
  * This class will allow to search a file given a criteria. The assumption is
@@ -76,10 +76,11 @@ public class Search implements ISearch {
         String ext = file.getExt();
         String path = file.getPath();
         String res = "dir ";
-        /** If it is a directory, the readOnly parameter is not valid. */
+        
         if (file.getIsDirectory()) {
+        	/* If it is a directory, the readOnly parameter is not valid. */
             if (!file.getIsHidden()) {
-                res = res + "\"" + path + "\" /s /b /ad";
+                res = res + "\"" + path + "\" /s /b /ad";  
             } else {
                 res = res + "\"" + path + "\" /s /b /adh";
             }
@@ -100,7 +101,7 @@ public class Search implements ISearch {
             }
         }
         String[] command = {"cmd.exe", "/c", res};
-        //LogUtil.print(res);  /** Only will be printed when the flag DEBUG_MODE is in true.*/
+        LogUtil.print(res);  /* Only will be printed when the flag DEBUG_MODE is in true.*/
         return command;
     }
 
@@ -120,13 +121,13 @@ public class Search implements ISearch {
             criteria.sizeToBytes();
         }
 
-        int matchSize;        /** This variables will help to know if the another option for the search criteria are being used */
-        int matchOwner;        /** This variables will help to know if the another option for the search criteria are being used */
-        int matchDate;        /** This variables will help to know if the another option for the search criteria are being used */
-        int matchContent;    /** This variables will help to know if the another option for the search criteria are being used */
+        int matchSize;        /* This variables will help to know if the another option for the search criteria are being used */
+        int matchOwner;        /* This variables will help to know if the another option for the search criteria are being used */
+        int matchDate;        /* This variables will help to know if the another option for the search criteria are being used */
+        int matchContent;    /* This variables will help to know if the another option for the search criteria are being used */
         List<Integer> listMatched = new ArrayList<Integer>(); /** This variables will help to know if the another option for the search criteria are being used */
-        boolean isThereCriteria;    /** This variables will help to know whether there is one of size, owner, date, content criteria  */
-        boolean isCriteriaMatched;  /** This variables will help to know whether all of size, owner, date, content criteria is met */
+        boolean isThereCriteria;    /* This variables will help to know whether there is one of size, owner, date, content criteria  */
+        boolean isCriteriaMatched;  /* This variables will help to know whether all of size, owner, date, content criteria is met */
 
         while ((inputLine = in.readLine()) != null) {
             listMatched.clear();
@@ -213,31 +214,31 @@ public class Search implements ISearch {
             long tFileSize = tFile.length();
 
             switch (criteria.getOperator()) {
-                case "==":
-                    if (tFileSize == cSize) {
-                        res = 1;
-                    }
-                    break;
-                case ">":
-                    if (tFileSize > cSize) {
-                        res = 1;
-                    }
-                    break;
-                case ">=":
-                    if (tFileSize >= cSize) {
-                        res = 1;
-                    }
-                    break;
-                case "<":
-                    if (tFileSize < cSize) {
-                        res = 1;
-                    }
-                    break;
-                case "<=":
-                    if (tFileSize <= cSize) {
-                        res = 1;
-                    }
-                    break;
+            case "==":
+                if (tFileSize == cSize) {
+                    res = 1;
+                }
+                break;
+            case ">":
+                if (tFileSize > cSize) {
+                    res = 1;
+                }
+                break;
+            case ">=":
+                if (tFileSize >= cSize) {
+                    res = 1;
+                }
+                break;
+            case "<":
+                if (tFileSize < cSize) {
+                    res = 1;
+                }
+                break;
+            case "<=":
+                if (tFileSize <= cSize) {
+                    res = 1;
+                }
+                break;
             }
         }
         return res;
@@ -270,26 +271,21 @@ public class Search implements ISearch {
      * @param inputline (required) String type, it has one line of value got by search process.
      * @param criteria  (required) SearcherCriteria type, must have content, it has all values inserted by the user to the match process.
      * @return an int value (1) if the content is found.
+     * @throws IOException It will be send to Controller and the error will be printed by console.
      */
-    public int matchContentCriteria(String inputline, SearcherCriteria criteria) {
+    public int matchContentCriteria(String inputline, SearcherCriteria criteria) throws IOException {
         int res = 0;
         if (isTextFile(inputline)) {
             Pattern contentPattern = Pattern.compile(".*" + criteria.getContent() + ".*", Pattern.DOTALL);
             Path filepath = Paths.get(inputline);
-            try (FileChannel fileChannel = (FileChannel.open(filepath,
-                    StandardOpenOption.READ))) {
-                MappedByteBuffer buffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0, fileChannel.size());
-                String file = Charset.forName("UTF-8").decode(buffer).toString();
+            FileChannel fileChannel = FileChannel.open(filepath,StandardOpenOption.READ); 
+            MappedByteBuffer buffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0, fileChannel.size());
+            String file = Charset.forName("UTF-8").decode(buffer).toString();
                 if (contentPattern.matcher(file).find()) {
                     res = 1;
                 }
-
-            } catch (IOException ex) {
-                System.out.println("exception: " + ex);
-                ex.printStackTrace();
-            }
-        }
-
+            
+         }
         return res;
     }
 

@@ -66,12 +66,12 @@ public class Controller {
      * process.
      */
     public void init() {
-        //LogUtil.setDEBUG_MODE(false);  /** Only to debug propose set to TRUE, to production leave in FALSE */
+        LogUtil.setDEBUG_MODE(false);  /* Only to debug propose set to TRUE, to production leave in false */
         windowUI.setSearchListener(e -> search());
     }
 
     /**
-     * method where all values inserted by the user in the UI like path, filename, extension, size, etc.
+     * Method where all values inserted by the user in the UI like path, filename, extension, size, etc.
      * will be assigned to file object and all them will be validated, then will be sent to
      * search process and then showed under UI.
      *
@@ -94,7 +94,6 @@ public class Controller {
             criteria.setStartDate(windowUI.getStartDate());
             criteria.setEndDate(windowUI.getEndDate());
             criteria.setContent(windowUI.getContent());
-
             val.validate(criteria);
             displayResults();
         } catch (CustomSearchException ex) {
@@ -118,7 +117,7 @@ public class Controller {
             windowUI.setErrorMessage("No items match your search.");
         } else {
             for (CustomFile item : resultList) {
-                //LogUtil.print(item.getPath() + " " + item.getFileName() + " " + item.getExt() + " " + item.getSize() + " " + item.getOwner());  /** Only will be printed when the flag DEBUG_MODE is in true.*/
+                LogUtil.print(item.getPath() + " " + item.getFileName() + " " + item.getExt() + " " + item.getSize() + " " + item.getOwner());  /* Only will be printed when the flag DEBUG_MODE is in true.*/
                 Object[] arrRes = {item.getPath(), item.getFileName(), item.getExt(), item.getSize(), item.getOwner(), ((ResultFile) item).getCreationDate(),
                         ((ResultFile) item).getLastModifiedDate(), ((ResultFile) item).getAccessedDate(), item.getIsHidden(), item.getIsReadOnly()};
                 windowUI.setSearchResults(arrRes);
