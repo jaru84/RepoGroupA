@@ -106,7 +106,6 @@ public class SearcherCriteria extends CustomFile {
      */
     public Date getStartDate() {
         return setTimeCustom(this.startDate, 0, 0, 0);
-
     }
 
     /**
@@ -169,8 +168,6 @@ public class SearcherCriteria extends CustomFile {
         } else {
             return null;
         }
-
-
     }
 
     /**

@@ -30,19 +30,15 @@ public class Controller {
 	
 	/** searcher is a object of type Searcher class, it will be used to call the searchFile method. */
 	private Search searcher;
-	
 	/** val is a object of type Validator class. */
 	private Validator val;
-	
 	/** file is an object of type SearcherCriteria, it will be used to save the inputs inserted by the user. */
 	public SearcherCriteria criteria;
-	
 	/** windowUI is an object of type SearchWindow, it will be used to interact with the View package and load the UI. */
 	private SearchWindow windowUI;
-	
 	/** resultList is an ArrayList of type CustomFile, it will be used to save the findings results sent by Search class. */
 	private ArrayList<CustomFile> resultList;
-
+	
 	/**
 	 * constructor for Controller class where the objects declared above will be
 	 * initialized by its respective constructors.
@@ -56,19 +52,20 @@ public class Controller {
 	}
 
 	/**
-	 * method used to call the action listener of button and perform the search
+	 * Method used to call the action listener of button and perform the search
 	 * process.
 	 */
 	public void init() {
-			windowUI.setSearchListener(e ->	search());
-		
+		LogUtil.setDEBUG_MODE(false);  /** Only to debug propose set to TRUE, to production leave in FALSE */
+		windowUI.setSearchListener(e ->	search());
 	}
 
 	/**
 	 * method where all values inserted by the user in the UI like path, filename, extension, size, etc. 
 	 * will be assigned to file object and all them will be validated, then will be sent to
 	 * search process and then showed under UI.
-	 * @throws CustomSearchException 
+	 * @throws CustomSearchException It will raise an error message on UI if something fails during search method.
+	 * @throws Exception It will print an error message by console.
 	 */
 	private void search() {
 		try {
@@ -88,17 +85,21 @@ public class Controller {
 			
 			val.validate(criteria);
 			displayResults();
-		} catch (Exception ex) {
-			new CustomSearchException("Something was wrong during Search method in Controller class.", ex.getCause());
+		}
+		catch (CustomSearchException ex) {
+			windowUI.setErrorMessage(ex.getMessage());
+		}
+		catch (Exception ex) {
+			System.out.println(ex.getMessage() + ex.getStackTrace());
 		}
 	}
 
 	/**
-	 * method used to show the results in the UI table.
+	 * Method used to show the results in the UI table.
 	 * @throws IOException if something fails during the process of show results.
-	 * @throws CustomSearchException 
+	 * @throws CustomSearchException It will print an error message if something fails during displayResults method.
 	 */
-	private void displayResults() throws CustomSearchException  {
+	private void displayResults() throws CustomSearchException, IOException  {
 		resultList = searcher.searchFile(criteria);
 		windowUI.clearResults();
 		
@@ -106,6 +107,7 @@ public class Controller {
 			windowUI.setErrorMessage("No items match your search.");
 		} else {
 			for (CustomFile item : resultList) {
+				LogUtil.print(item.getPath() + " " + item.getFileName() + " " + item.getExt() + " " + item.getSize() + " " + item.getOwner());  /** Only will be printed when the flag DEBUG_MODE is in true.*/
 				Object[] arrRes = { item.getPath(), item.getFileName(), item.getExt(), item.getSize(), item.getOwner(), ((ResultFile) item).getCreationDate(), 
 						((ResultFile) item).getLastModifiedDate(), ((ResultFile) item).getAccessedDate(), item.getIsHidden(), item.getIsReadOnly() };
 				windowUI.setSearchResults(arrRes);

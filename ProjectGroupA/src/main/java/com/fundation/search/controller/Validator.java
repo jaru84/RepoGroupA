@@ -14,7 +14,6 @@ package com.fundation.search.controller;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import com.fundation.search.model.SearcherCriteria;
@@ -41,7 +40,7 @@ public class Validator {
 	}
 
 	/**
-	 * method in charge to send the criteria object to be validated.
+	 * Method in charge to send the criteria object to be validated.
 	 * @param file object must have content, it is used to validate its different attributes.
 	 * @throws CustomSearchException if the validation fails for some attribute.
 	 */
@@ -52,7 +51,6 @@ public class Validator {
 		validateSize(criteria);
 		validateOwner(criteria);
 		validateDateType(criteria);
-		
 	}
 	
 	/**
@@ -62,7 +60,6 @@ public class Validator {
 	 */
 	private void validateOwner(SearcherCriteria criteria) throws CustomSearchException {
 		if ((! criteria.getOwner().contains("\\")) && (!criteria.getOwner().isEmpty())) {
-			window.setErrorMessage("Please introduce an account value in Owner field with following format: domain\\user.");
 			throw new CustomSearchException("Please introduce an account value in Owner field with following format: domain\\user.");
 		} 
 	}
@@ -74,15 +71,12 @@ public class Validator {
 	 */
 	private void validatePath(SearcherCriteria criteria) throws CustomSearchException {
 		if (criteria.getPath().isEmpty()) {
-			window.setErrorMessage("The path is a required field.");
 			throw new CustomSearchException("The path is a required field.");
 		} else {
 			File dir = new File(criteria.getPath());
 			if (!dir.exists()) {
-				window.setErrorMessage("The path inserted does not exist.");
 				throw new CustomSearchException("The path inserted does not exist.");
 			} else if (!dir.isDirectory()) {
-				window.setErrorMessage("The path inserted is not valid directory.");
 				throw new CustomSearchException("The path inserted is not valid directory.");
 			}
 		}
@@ -90,7 +84,7 @@ public class Validator {
 	}
 
 	/**
-	 * method in charge to validate the file name value inserted.
+	 * Method in charge to validate the file name value inserted.
 	 * @param file object must have content, it is used to validate its different attributes.
 	 * @throws CustomSearchException if the fileName is greater than 100 or has special symbols not allowed.
 	 */
@@ -99,17 +93,15 @@ public class Validator {
 			criteria.setFileName("*");
 		} else {
 			if (criteria.getFileName().length() > 100) {
-				window.setErrorMessage("Your file name inserted exceeds the limit of letters allowed 50");
 				throw new CustomSearchException("Your file name inserted exceeds the limit of letters allowed 50");
 			} else if (checkSymbols(criteria.getFileName())) {
-				window.setErrorMessage("Your file name can't contain any of following characters: \\/:?\"<>");
 				throw new CustomSearchException("Your file name can't contain any of following characters: \\/:?\"<>");
 			}
 		}
 	}
 
 	/**
-	 * method in charge to validate the extension value inserted.
+	 * Method in charge to validate the extension value inserted.
 	 * @param file object must have content, it is used to validate its different attributes.
 	 * @throws CustomSearchException if the extension has special symbols not allowed.
 	 */
@@ -118,10 +110,7 @@ public class Validator {
 			criteria.setExt("*");
 		} else {
 			if (checkSymbols(criteria.getExt())) {
-				window.setErrorMessage(
-						"Your extension can't contain any of following characters: \\\\\\\\/:?\\\\\\\"<>.");
-				throw new CustomSearchException(
-						"Your extension can't contain any of following characters: \\\\/:?\\\"<>.");
+				throw new CustomSearchException("Your extension can't contain any of following characters: \\\\/:?\\\"<>.");
 			}
 		}
 	}
@@ -151,16 +140,13 @@ public class Validator {
 	private void validateSize(SearcherCriteria criteria) throws CustomSearchException {
 		if ((criteria.getSize() == null) || (criteria.getSize().isEmpty())) {
 			criteria.setSize("0");
-		} else {
-			if (onlyNumbers(criteria.getSize())) {
+		} else { if (onlyNumbers(criteria.getSize())) {
 				if (Integer.valueOf(criteria.getSize()) < 0) {
-					window.setErrorMessage("You only can insert numbers greater than 0.");
 					throw new CustomSearchException("You only can insert numbers greater than 0.");
 				}
-			} else {
-				window.setErrorMessage("You only can insert integer numbers on size field.");
+		} else {
 				throw new CustomSearchException("You only can insert integer numbers on size field.");
-			}
+		}
 		}
 	}
 	
@@ -174,25 +160,25 @@ public class Validator {
 		DateFormat dateF = new SimpleDateFormat("EEEE, MMMM d, yyyy");
 				
 		if (criteria.getStartDate().after(criteria.getEndDate())) {
-			window.setErrorMessage("The Start Date selected could not be after End Date.");
 			throw new CustomSearchException("The Start Date selected could not be after End Date.");
 		} else if (criteria.getStartDate().after(currDate)) {
-			window.setErrorMessage("The Start Date selected could not be after your Current Date: " + dateF.format(currDate));
 			throw new CustomSearchException("The Start Date selected could not be after your Current Date: " + dateF.format(currDate));
 		}
-
 	}
 	
+	/**
+	 * Method in charge to validate the DateType drop-down list.
+	 * @param file object must have content, it is used to validate its different attributes.
+	 * @throws CustomSearchException if the dates are nulls or start date is after than end date or current date.
+	 */
 	private void validateDateType(SearcherCriteria criteria) throws CustomSearchException {
 	
 		if (criteria.getDateType().equals("< Select a Value >")) {
 			if ((criteria.getStartDate() != null) || (criteria.getEndDate() != null)) {
-				window.setErrorMessage("Please select some value from drop-down list different to: <Select a value> and ensure that you have selected valid dates in the interval.");
 				throw new CustomSearchException("Please select some value from drop-down list different to: <Select a value> and ensure that you have selected valid dates in the interval.");
 			} 
 		} else {
 			if ((criteria.getStartDate() == null) || (criteria.getEndDate() == null)) {
-				window.setErrorMessage("Please select valid dates in the interval: between - and.");
 				throw new CustomSearchException("Please select valid dates in the interval: between - and.");
 			} else {
 				validateDates(criteria);
@@ -202,7 +188,7 @@ public class Validator {
 	}
 	
 	/**
-	 * method in charge to validate that size only allows integer numbers.
+	 * Method in charge to validate that size only allows integer numbers.
 	 * @param sizeFile (required) value to be checked.
 	 */
 	private boolean onlyNumbers(String sizeFile) {

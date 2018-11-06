@@ -10,6 +10,7 @@
  *******************************************************************************/
 package com.fundation.search.model;
 
+import java.io.IOException;
 
 /**
  * Class created to manage the Custom Files object and its attributes.
@@ -171,7 +172,7 @@ public class CustomFile {
      * @param owner It is used to save the value inserted by the user on owner field.
      * @throws IOException
      */
-    public void setOwner(String owner) {
+    public void setOwner(String owner) throws IOException {
         this.owner = owner;
     }
 

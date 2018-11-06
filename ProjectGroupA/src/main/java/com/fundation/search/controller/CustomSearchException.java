@@ -29,12 +29,6 @@ public class CustomSearchException extends Exception {
 	public CustomSearchException(String errorMessage) {
 		super(errorMessage);
 		System.out.println(errorMessage);
-		
 	}
 	
-	public CustomSearchException(String errorMessage, Throwable cause) {
-		super(errorMessage, cause);
-		System.out.println(errorMessage);
-		//System.out.println(cause.getMessage());
-	}
 }

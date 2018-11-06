@@ -12,8 +12,6 @@
 package com.fundation.search;
 
 import java.io.IOException;
-import java.util.Date;
-
 import com.fundation.search.controller.Controller;
 import com.fundation.search.controller.CustomSearchException;
 
