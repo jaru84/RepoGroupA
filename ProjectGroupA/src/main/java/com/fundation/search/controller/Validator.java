@@ -32,7 +32,15 @@ public class Validator {
      * Window variable used to show the warnings messages.
      */
     private SearchWindow window;
-
+    
+    /**
+     * Constructor by default for the Validator class.
+     *
+     */
+    public Validator() {
+    	
+    }
+    
     /**
      * Constructor for the Validator class.
      *
@@ -100,7 +108,7 @@ public class Validator {
             criteria.setFileName("*");
         } else {
             if (criteria.getFileName().length() > 100) {
-                throw new CustomSearchException("Your file name inserted exceeds the limit of letters allowed 50");
+                throw new CustomSearchException("Your file name inserted exceeds the limit of letters allowed 100");
             } else if (checkSymbols(criteria.getFileName())) {
                 throw new CustomSearchException("Your file name can't contain any of following characters: \\/:?\"<>");
             }
@@ -118,7 +126,7 @@ public class Validator {
             criteria.setExt("*");
         } else {
             if (checkSymbols(criteria.getExt())) {
-                throw new CustomSearchException("Your extension can't contain any of following characters: \\\\/:?\\\"<>.");
+                throw new CustomSearchException("Your extension can't contain any of following characters: \\/:?\"<>");
             }
         }
     }
@@ -185,7 +193,6 @@ public class Validator {
      * @throws CustomSearchException if the dates are nulls or start date is after than end date or current date.
      */
     private void validateDateType(SearcherCriteria criteria) throws CustomSearchException {
-
         if (criteria.getDateType().equals("< Select a Value >")) {
             if ((criteria.getStartDate() != null) || (criteria.getEndDate() != null)) {
                 throw new CustomSearchException("Please select some value from drop-down list different to: <Select a value> and ensure that you have selected valid dates in the interval.");
