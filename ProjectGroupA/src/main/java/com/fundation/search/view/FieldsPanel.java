@@ -11,9 +11,7 @@
  *******************************************************************************/
 package com.fundation.search.view;
 
-import java.awt.GridBagConstraints;
-import java.awt.Component;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -372,15 +370,11 @@ public class FieldsPanel extends JPanel {
             extensionText.setEditable(false);
             contentText.setEditable(false);
             readonlyCheckbox.setEnabled(false);
-            dateType.setSelectedIndex(0);
-            dateType.setEnabled(false);
         } else {
             nameText.setEditable(true);
             extensionText.setEditable(true);
             readonlyCheckbox.setEnabled(true);
             contentText.setEditable(true);
-            dateType.setEnabled(true);
-
         }
     }
 
@@ -406,7 +400,7 @@ public class FieldsPanel extends JPanel {
         endDateModel = new UtilDateModel();
         endDatePanel = new JDatePanelImpl(endDateModel, pickerProperties);
         endDatePicker = new JDatePickerImpl(endDatePanel, new DateLabelFormatter());
-        datesPanel = new JPanel();
+        datesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         datesPanel.add(startDateLabel);
         datesPanel.add(startDatePicker);
         datesPanel.add(endDateLabel);

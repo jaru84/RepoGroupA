@@ -15,13 +15,21 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileOwnerAttributeView;
 import java.nio.file.attribute.FileTime;
 import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
-import com.fundation.search.controller.LogUtil;
+import java.util.List;
+import java.util.regex.Pattern;
+//import com.fundation.search.controller.LogUtil;
 
 /**
  * This class will allow to search a file given a criteria. The assumption is
@@ -92,7 +100,7 @@ public class Search implements ISearch {
 			}
 		}
 		String[] command = { "cmd.exe", "/c", res };
-		LogUtil.print(res);  /** Only will be printed when the flag DEBUG_MODE is in true.*/
+		//LogUtil.print(res);  /** Only will be printed when the flag DEBUG_MODE is in true.*/
 		return command;
 	}
 
@@ -112,70 +120,60 @@ public class Search implements ISearch {
 			criteria.sizeToBytes();
 		}
 
-		int matchSize = -1;    	/** This variables will help to know if the another option for the search criteria are being used */
-		int matchOwner = -1;	/** This variables will help to know if the another option for the search criteria are being used */
-		int matchDate = -1;		/** This variables will help to know if the another option for the search criteria are being used */
-		
+		int matchSize;    	/** This variables will help to know if the another option for the search criteria are being used */
+		int matchOwner;	    /** This variables will help to know if the another option for the search criteria are being used */
+		int matchDate;		/** This variables will help to know if the another option for the search criteria are being used */
+        int matchContent;	/** This variables will help to know if the another option for the search criteria are being used */
+        List<Integer> listMatched = new ArrayList<Integer>(); /** This variables will help to know if the another option for the search criteria are being used */
+		boolean isThereCriteria;    /** This variables will help to know whether there is one of size, owner, date, content criteria  */
+        boolean isCriteriaMatched;  /** This variables will help to know whether all of size, owner, date, content criteria is met */
+
         while ((inputLine = in.readLine()) != null) {
+            listMatched.clear();
+            isThereCriteria = false;
+            isCriteriaMatched = true;
             if (filterResults(inputLine, criteria)) {
 
                 if (!criteria.getSize().equals("0")) {
                     matchSize = matchSizeCriteria(inputLine, criteria);
+                    isThereCriteria = true;
+                    listMatched.add(matchSize);
                 }
 
                 if (!criteria.getOwner().equals("")) {
                     matchOwner = matchOwnerCriteria(inputLine, criteria);
+                    isThereCriteria = true;
+                    listMatched.add(matchOwner);
                 }
 
                 if ((criteria.getStartDate() != null) && (criteria.getEndDate() != null)) {
                     matchDate = matchDateCriteria(inputLine, criteria);
+                    isThereCriteria = true;
+                    listMatched.add(matchDate);
                 }
 
-                boolean flag = false;
-                if ((matchSize == -1) && (matchOwner == -1) && (matchDate == -1)) {
+                if (!criteria.getContent().equals("")) {
+                    matchContent = matchContentCriteria(inputLine, criteria);
+                    isThereCriteria = true;
+                    listMatched.add(matchContent);
+                }
+
+                if (!isThereCriteria){
                     resultFiles.add(resultFileFactory.createResultFile(inputLine, criteria));
                 } else {
-                    if (matchSize == 1) {
-                        if (matchOwner == 1) {
-                            if (matchDate == 1) {
-                                resultFiles.add(resultFileFactory.createResultFile(inputLine, criteria));
-                                flag = true;
-                            }
-                            if (!flag && matchDate == -1) {
-                                resultFiles.add(resultFileFactory.createResultFile(inputLine, criteria));
-                                flag = true;
-                            }
-                        } else {
-                            if (matchDate == 1 && matchOwner == -1) {
-                                resultFiles.add(resultFileFactory.createResultFile(inputLine, criteria));
-                                flag = true;
-                            }
-                        }
-                        if (!flag && matchOwner == -1 && matchDate == -1) {
-                            resultFiles.add(resultFileFactory.createResultFile(inputLine, criteria));
-                            flag = true;
-                        }
-                    } else {
-                        if (matchSize == -1) {
-                            if (matchOwner == 1) {
-                                if (matchDate == 1) {
-                                    resultFiles.add(resultFileFactory.createResultFile(inputLine, criteria));
-                                    flag = true;
-                                }
-                                if (!flag && matchDate == -1) {
-                                    resultFiles.add(resultFileFactory.createResultFile(inputLine, criteria));
-                                    flag = true;
-                                }
-                            } else {
-                                if (matchDate == 1 && matchOwner == -1) {
-                                    resultFiles.add(resultFileFactory.createResultFile(inputLine, criteria));
-                                    flag = true;
-                                }
-                            }
+                    for (int result: listMatched){
+                        if(result == 0){
+                            isCriteriaMatched = false;
                         }
                     }
+                    if(isCriteriaMatched){
+                        resultFiles.add(resultFileFactory.createResultFile(inputLine, criteria));
+                    }
                 }
+
             }
+
+
         }
         in.close();
         return resultFiles;
@@ -275,11 +273,24 @@ public class Search implements ISearch {
      */
     public int matchContentCriteria(String inputline, SearcherCriteria criteria) {
         int res = 0;
+        if(isTextFile(inputline)){
+            Pattern contentPattern = Pattern.compile(".*" + criteria.getContent() + ".*", Pattern.DOTALL);
+            Path filepath = Paths.get(inputline);
+            try (FileChannel fileChannel = (FileChannel.open(filepath,
+                    StandardOpenOption.READ))){
+                MappedByteBuffer buffer = fileChannel.map(FileChannel.MapMode.READ_ONLY, 0, fileChannel.size());
+                String file = Charset.forName("UTF-8").decode(buffer).toString();
+                if (contentPattern.matcher(file).find()) {
+                    res = 1;
+                }
 
-        //String word = criteria.getDate startDate = setTimeCustom(criteria.getStartDate(),0,0,0);
-        /*Do something
+            }
+            catch(IOException ex) {
+                System.out.println("exception: "+ex);
+                ex.printStackTrace();
+            }
+        }
 
-         */
         return res;
     }
 
@@ -319,5 +330,26 @@ public class Search implements ISearch {
 			break;
 		}
 		return res;
+    }
+    /**
+     * Method which look for the content.
+     *
+     * @param inputLine (required) String type, it has one line of path value got by search process.
+     * @return true if path has .txt extension.
+     */
+    public boolean isTextFile(String inputLine){
+        boolean textFound = false;
+        String extension = "";
+        String[] pathValues = inputLine.split("\\\\");
+        String fullFileName = pathValues[pathValues.length - 1];
+        String[] fileNameValues = fullFileName.split("\\.");
+        if ( fileNameValues.length > 1){
+            extension = fileNameValues[fileNameValues.length-1];
+        }
+        if (extension.equals("txt")){
+            textFound = true;
+        }
+        return textFound;
+
     }
 }

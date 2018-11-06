@@ -30,7 +30,7 @@ public class SearchWindow extends JFrame {
     /**
      * WIDTH variable ctte of int type used to set the width value on 900.
      */
-    private static final int WIDTH = 900;
+    private static final int WIDTH = 950;
 
     /**
      * HEIGHT variable ctte of int type used to set the height value on 400.

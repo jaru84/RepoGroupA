@@ -43,6 +43,11 @@ public class SearcherCriteria extends CustomFile {
     private String dateType;
 
     /**
+     * content variable of String type used to save the content search parameter.
+     */
+    private String content;
+
+    /**
      * Constructor for SearcherCriteria class where the values inserted to be find
      * will be stored as an object.
      */
@@ -52,6 +57,8 @@ public class SearcherCriteria extends CustomFile {
         startDate = null;
         endDate = null;
         dateType = "";
+        content = "";
+
     }
 
     /**
@@ -100,12 +107,30 @@ public class SearcherCriteria extends CustomFile {
     }
 
     /**
+     * Method setter to dateType value.
+     *
+     * @param content String type with a value of "Creation Date", "Modified Date", "Accessed Date"
+     */
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    /**
      * Method getter to start date value.
      *
      * @return the value of start date
      */
     public Date getStartDate() {
         return setTimeCustom(this.startDate, 0, 0, 0);
+    }
+
+    /**
+     * Method getter to start date value.
+     *
+     * @return the value of start date
+     */
+    public String getContent() {
+        return content;
     }
 
     /**
