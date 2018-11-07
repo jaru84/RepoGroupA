@@ -53,7 +53,7 @@ public class ValidatorTest {
 			exception = e;
 		}
 		assertNotNull(exception);
-		assertEquals("The path inserted is not valid directory.", exception.getMessage());
+		assertEquals("The path inserted does not exist.", exception.getMessage());
 	}
 
 	@Test

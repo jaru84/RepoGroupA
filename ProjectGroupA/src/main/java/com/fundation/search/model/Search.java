@@ -273,7 +273,7 @@ public class Search implements ISearch {
      * @return an int value (1) if the content is found.
      * @throws IOException It will be send to Controller and the error will be printed by console.
      */
-    public int matchContentCriteria(String inputline, SearcherCriteria criteria) throws IOException {
+    private int matchContentCriteria(String inputline, SearcherCriteria criteria) throws IOException {
         int res = 0;
         if (isTextFile(inputline)) {
             Pattern contentPattern = Pattern.compile(".*" + criteria.getContent() + ".*", Pattern.DOTALL);
@@ -298,7 +298,7 @@ public class Search implements ISearch {
      * @return an int value (1) if the file belongs to the range of dates specified.
      * @throws IOException if something fails during the matchDateCriteria an error message will be printed by console.
      */
-    public int matchDateCriteria(String inputline, SearcherCriteria criteria) throws IOException {
+    private int matchDateCriteria(String inputline, SearcherCriteria criteria) throws IOException {
         int res = 0;
         File tFile = new File(inputline);
         BasicFileAttributes dateFile;
@@ -333,7 +333,7 @@ public class Search implements ISearch {
      * @param inputLine (required) String type, it has one line of path value got by search process.
      * @return true if path has .txt extension.
      */
-    public boolean isTextFile(String inputLine) {
+    private boolean isTextFile(String inputLine) {
         boolean textFound = false;
         String extension = "";
         String[] pathValues = inputLine.split("\\\\");
