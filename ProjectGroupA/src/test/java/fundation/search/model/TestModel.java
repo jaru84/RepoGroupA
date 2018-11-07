@@ -220,6 +220,8 @@ public class TestModel {
      */
     @Test
     public void searchFile_IfSendDirectory() {
+        File directory = new File(currentPath + "test8");
+        directory.mkdirs();
         criteria.setPath(currentPath);
         criteria.setIsDirectory(true);
         criteria.setSize("0");
